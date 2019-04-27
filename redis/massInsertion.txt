@@ -1,0 +1,10 @@
+1. MASS INSERTION USING LUKE PROTOCOL:
+	a. the naive approach of sending one command after the other is slow because you have to pay for the round trip time for every command.
+	b. It is possible to use pipelining, but for mass insertion of many records you need to write new commands while you read replies at the same time to make sure you are inserting as fast as possible.
+	c. cat data.txt | redis-cli --pipe
+
+2. HOW THE PIPE MODE WORKS UNDER THE HOODS:
+	a. redis-cli --pipe tries to send data as fast as possible to the server.
+	b. At the same time it reads data when available, trying to parse it.
+	c. Once there is no more data to read from stdin, it sends a special ECHO command with a random 20 bytes string: we are sure this is the latest command sent, and we are sure we can match the reply checking if we receive the same 20 bytes as a bulk reply.
+	d. Once this special final command is sent, the code receiving replies starts to match replies with this 20 bytes. When the matching reply is reached it can exit with success.

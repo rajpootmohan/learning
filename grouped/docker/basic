@@ -1,0 +1,10 @@
+docker <command> <sub-command> (options)
+
+docker info                                              // info about docker
+docker                                                   // show all commands on console
+docker version                                           // show docker client and server version
+docker search <image_name>                               // search any images on docker hub
+docker pull <image_name>:<version-name>                  // download image from docker hub to local computer
+docker login -u <dockerHub-user-name>                    // docker login
+docker push <image-name>                                 // push image on docker
+docker image rm <image-id/repo-name>                     // delete docker images

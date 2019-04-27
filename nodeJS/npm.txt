@@ -1,0 +1,4 @@
+npm ls -g     // get all global installed node modules
+npm ls -g moment  // check for given node module installed globally
+npm uninstall dependency-name  // un-installing any dependenties
+npm update

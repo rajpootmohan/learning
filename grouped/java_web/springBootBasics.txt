@@ -1,0 +1,35 @@
+GOALS:
+	1. Enable building production ready applications quickly
+	2. Quick starter projects with auto configuration
+		a. Web
+		b. JPA
+	3. Provide common non-functional features
+		a. embedded servers - Tomcat, Jetty or Undertow
+		b. metrics
+		c. health checks 
+		d. externalized configuration
+
+WHAT SPRING BOOT IS NOT:
+	1. Zero code generation
+	2. Neither an application server nor a web server
+
+
+SPRING vs SPRING MVC vs SPRING BOOT:
+	1. SPRING:
+		a. provides DI (dependency Injection)
+		b. provides IOC (Inversion of control)
+		c. removes the problem of plumbing code / duplication code
+		d. good integration with other frameworks
+	2. SPRING MVC:
+		a. provides decoupled way of developing appliations. 
+		b. Concepts like Dispatcher Servlet, ModelAndView and ViewResolver.
+	3. SPRING BOOT:
+		a. Spring based applications have a lot of configuration
+		b. When we use spring MVC, we need to configure component scan, dispather servlet,
+		   a view resolver, web jars among other things.
+		c. If frameworks available in CLASSPATH then provider auto configuration for those.
+		d. provides auto starter:
+			1. spring-boot-starter-actuator: monitoring and tracing app
+			2. spring-boot-starter-undertow, spring-boot-starter-jetty, spring-boot-starter-tomcat
+			3. spring-boot-starter-logging
+			4. spring-boot-starter-log4j2    		

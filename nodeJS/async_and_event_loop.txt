@@ -1,0 +1,1 @@
+1. Javascript and V8 is synchronous which nodeJS is asynchronous.

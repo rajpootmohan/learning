@@ -1,0 +1,8 @@
+POINTERS :
+GLOBAL VARIABLES: No way to declare global variables.
+PREPROCESSOR: No Pre-processor in java
+GOTO: Although the Java language reserves goto as a keyword, there is no goto statement like the one used in C
+STRUCT, UNION, TYPEDEF, ENUM: No such Keywords
+FREELY PLACED VARIABLES: Java variables can be declared anywhere, as they are needed.
+FREELY PLACED METHODS: C requires that function declarations appear before they are invoked, but Java methods can be invoked before they have been declared.
+GARBAGE COLLECTION: The Java platform uses a garbage collector to automatically reclaim memory by recycling objects when they are no longer referenced.

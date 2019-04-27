@@ -1,0 +1,23 @@
+1. WILDCARD SEARCHES: can not use as first character of search
+* for 0 or more characters
+? for single character
+
+2. RANGE SEARCHES:
+created_at:[2002-01-01 TO 2003-01-01]
+title:{Aida TO Carmen}
+
+3. BOOLEAN OPERATORS:
+AND : "jakarta apache" AND "Apache Lucene" // both should be document
++   : +jakarta lucene // must contain jakarta and may contain lucene
+OR  : "jakarta apache" OR jakarta
+NOT : "jakarta apache" NOT "Apache Lucene"  // can not use with single term
+-   : "jakarta" -"Lucene" // contain jakarta but not lucene
+
+4. GROUPING:
+(jakarta OR apache) AND website
+
+5. FIELD GROUPING:
+title:(+return +"pink panther")
+
+6. ESCAPING SPECIAL CHARACTERS
++ - && || ! ( ) { } [ ] ^ " ~ * ? : \

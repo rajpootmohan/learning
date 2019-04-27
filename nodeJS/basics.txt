@@ -1,0 +1,44 @@
+1. FIRST-CLASS FUNCTIONS: Everything you can do with other types you can do with function. Like put them in array, set variables equal to them, etc.
+2. AN EXPRESSION: A block of code that results in a value.
+5. PRIMITIVE: A type of data that represents a single value. Means no object.
+6. PASS BY VALUE VS PASS BY REFERENCE: primitive values work as pass by value but objects work as pass by reference.
+7. IMMEDIATLY INVOKED FUNCTION EXPRESSIONS (IIFE): function which is immediatly invoked without affecting any other scope of variables and methods. Syntax is :
+        var firstName = "Random";
+        (function(lastName){
+          var firstName = "Mohan";
+          console.log(firstName);
+          console.log(lastName);
+        })("Singh");
+        console.log(firstName);
+// firstName variable scope would not affect by IIFE.
+10. If we assign something using = sign to a variable, then this variable creates new memory with new values and lost previous values;
+1. TEMPLATE LITERALS (ES6)
+        var name = 'John Doe';
+        var greet = 'Hello ' + name;
+        var greet2 = `Hello ${ name }`;   // template literals
+2. METHOD CALLING
+        var obj = {
+        	name: 'John Doe',
+        	greet: function() {
+        		console.log(`Hello ${ this.name }`);
+        	}
+        }
+
+        obj.greet();  // BASIC CALLING
+        obj.greet.call({ name: 'Jane Doe'}); // passing object would be this object
+        obj.greet.apply({ name: 'Jane Doe'}); // passing object would be this object
+   Difference in call vs apply is passing parameters in call would be independent but in case of apply they would be array.
+3. BUFFER:
+        var buf = new Buffer('Hello', 'utf8');
+        console.log(buf);
+        console.log(buf.toString());
+        console.log(buf.toJSON());
+        console.log(buf[2]);
+        buf.write('wo');
+        console.log(buf.toString());
+4. ES6 TYPED ARRAY:
+      var buffer = new ArrayBuffer(8);
+      var view = new Int32Array(buffer);
+      view[0] = 5;
+      view[1] = 15;
+      console.log(view);

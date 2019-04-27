@@ -1,0 +1,41 @@
+1. How to use sql db or mysql db without defining it in the database.yml ?
+A. You can use ActiveRecord anywhere
+	require “rubygems”
+	require “active_record”
+	ActiveRecord::Base.establish_connection({
+	               :adapter=> ‘postgresql’, :user=>’foo’, :password=> ‘abc’, :database=>’whatever’})
+
+2. Explain what is ORM (Object-Relationship-Model) in Rails?
+A. ORM or Object Relationship Model in Rails indicate that your classes are mapped to the table in the database, and objects are directly mapped to the rows in the table.
+
+3. Mention what are the positive aspects of Rails?
+A. Rails provides many features like: 
+	a. Meta-programming: Rails uses code generation but for heavy lifting it relies on meta-programming. Ruby is considered as one of the best language for Meta-programming.
+	b. Active Record: It saves object to the database through Active Record Framework. The Rails version of Active Record identifies the column in a schema and automatically binds them to your domain objects using metaprogramming
+	c. Scaffolding: Rails have an ability to create scaffolding or temporary code automatically
+	d. Convention over configuration: Unlike other development framework, Rails does not require much configuration, if you follow the naming convention carefully
+	e.Three environments: Rails comes with three default environment testing, development, and production.
+	f. Built-in-testing: It supports code called harness and fixtures that make test cases to write and execute.
+
+4. Mention what is the difference between the Observers and Callbacks in Ruby on Rails?
+	a. Rails Observers: Observers is same as Callback, but it is used when method is not directly associated to object lifecycle. Also, the observer lives longer, and it can be detached or attached at any time. For example, displaying values from a model in the UI and updating model from user input.
+	b. Rails Callback: Callbacks are methods, which can be called at certain moments of an object’s life cycle for example it can be called when an object is validated, created, updated, deleted, A call back is short lived. For example, running a thread and giving a call-back that is called when thread terminates
+
+5. Explain what is sweeper in Rails?
+A. Sweepers are responsible for expiring or terminating caches when model object changes.	
+
+6. Rails feature changes rails 3
+A. 1. introduction of bundler
+   2. Gemfile and Gemfile.lock (Where all your gem dependencies lies, instead of environment.rb) 
+   3. A new .rb file in config/ folder, named as application.rb (Which has everything that previously environment.rb had)
+   4. All the mailer script will now be in app/mailers folder, earlier we kept inside app/models.
+   5. Changes in the model based validation syntax: validates :name, :presence => true
+
+7. Rails feature changes from rails 4
+A. 1. Asynchronous Action Mailer    
+   2. Live-Server Streaming 
+   3. postgreSQL array support
+   4. Strong parameters
+   5. Remove Page and Action Caching
+   6. Where.not
+   7. work @ 1.9.3

@@ -1,0 +1,76 @@
+-------------------------------RAKE ---------------------------------------------------------
+
+=>bundle exec rake db:create
+  rake db:rollback
+  rake db:rollback STEP=3
+  rake db:reset   #task will drop the database, recreate it and load the current schema into it.
+
+=>rake -T         # rake --tasks  #returns all tasks which rake can do for you
+  rake -T db      # return only database tasks (like db:create, db:drop, ...)
+  rake db:schema:dump  => create a db/schema.rb file
+  rake db:schema:dump RAILS_ENV=development_type (i.e. development/production/test)
+  rake db:schema:load 
+
+=>rake db:migrate   => attemps to run all migrates which is not yet to be run  
+  rake db:migrate VERSION=version  => run required migrations for status =version
+  rake db:migrate:status  => showing current status like up/down with id
+  rake db:migrate:up VERSION=specific_version_number   => run UP action of specific_version_number
+  rake db:migrate:down VERSION=specific_version_number => run DOWN action of specific_version_number 
+  rake db:migrate:redo VERSION=spedific_version_number
+  rake db:migrate:redo STEP=4
+
+=>rake db:seed  # run db/seed.rb 
+
+=>CONTROLLER=users rake routes
+  rake routes
+
+=>rake about  # gives information about version numbers for Ruby, RubyGems, Rails, the Rails subcomponents, etc.  
+
+=>rake assets:precompile 
+  rake assets:clean
+
+=>rake doc:app # generates documentation for your application in doc/app.
+  rake doc:guides # generates Rails guides in doc/guides.
+  rake doc:rails # generates API documentation for Rails in doc/api.
+  rake doc:plugins # generates API documentation for all the plugins installed in the application in doc/plugins.
+  rake doc:clobber_plugins #removes the generated documentation for all plugins.  
+
+=>rake notes # will search through your code for comments beginning with FIXME, OPTIMIZE or TODO.   
+
+=>rake tmp:cache:clear clears tmp/cache.
+  rake tmp:sessions:clear clears tmp/sessions.
+  rake tmp:sockets:clear clears tmp/sockets.
+  rake tmp:clear clears all the three: cache, sessions and sockets.
+
+=>rake stats # looking at statistics on your code, displaying things like KLOCs and your code to test ratio.
+  rake secret # will give you a pseudo-random key to use for your session secret.
+  rake time:zones:all #lists all the timezones Rails knows about.
+  
+=>rake test # run test cases
+--------------------------------RAILS-------------------------------------------------------
+
+
+=>rails new project_name -d mysql OR
+  rails _version-name_ new project_name -d mysql
+  rais generate
+  rails generate scaffold User name:string email:string
+
+=>rails server
+  rails server -e production -p 4000  # -b option binds Rails to the specified ip, by default it is 0.0.0.0.
+                                      # You can run a server as a daemon by passing a -d option.
+  rails server --debugger                                    
+
+=>rails console OR rails c            # development environment for Rail
+  rails console environment_name      # development environment for Rail for specific environment
+  rails console --sandbox             # any modifications you make will be rolled back on exit
+
+=>rails generate controller FooBars baz quux
+  rails destroy  controller FooBars baz quux
+
+=>rails generate model Foo bar:string baz:integer  #model and corresponding migration is created
+  rails destroy model Foo                          #destory model and migration too
+  rails generate observer User                     #create observer for User model
+
+=>rails generate migration migrationName   => only migration file under db folder is created
+
+=>rails dbconsole  # rails db  # figures out which database you’re using and drops you into whichever command line

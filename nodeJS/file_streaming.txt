@@ -1,0 +1,25 @@
+1. FILE READING SYNCHRONOUSLY AND ASYNCHRONOUSLY:
+      var fs = require('fs');
+      console.log(greet);
+      var greet = fs.readFileSync(__dirname + '/greet.txt', 'utf8');
+      var greet2 = fs.readFile(__dirname + '/greet.txt', 'utf8', function(err, data) {
+      	console.log(data);
+      });
+      console.log('Done!');
+2.READING AND WRITING FILE IN CHUNKS:
+      var fs = require('fs');
+      var readable = fs.createReadStream(__dirname + '/greet.txt', { encoding: 'utf8', highWaterMark: 16 * 1024 });
+      var writable = fs.createWriteStream(__dirname + '/greetcopy.txt');
+      readable.on('data', function(chunk) {
+      	console.log(chunk);
+      	writable.write(chunk);
+      });
+3. COMPRESSING CHUNKS AND STORING: PIPE
+      var fs = require('fs');
+      var zlib = require('zlib');
+      var readable = fs.createReadStream(__dirname + '/greet.txt');
+      var writable = fs.createWriteStream(__dirname + '/greetcopy.txt');
+      var compressed = fs.createWriteStream(__dirname + '/greet.txt.gz');
+      var gzip = zlib.createGzip();
+      readable.pipe(writable);
+      readable.pipe(gzip).pipe(compressed);

@@ -1,0 +1,5 @@
+ElasticSearch as a NoSQL database:
+	1. No Transactions
+	2. Schema flexible
+	3. Elasticsearch does not have any features for authentication or authorization.
+		

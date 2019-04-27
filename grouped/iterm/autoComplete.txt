@@ -1,0 +1,1 @@
+cmd ;   : auto complete, list can be filtered by typing a subsequence

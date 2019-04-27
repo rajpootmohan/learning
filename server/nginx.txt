@@ -1,0 +1,22 @@
+1. Nginx was created as a solution for the c10K problem. c10K problem is to serve 10,000 concurrent visitors at a time.
+2. Nginx performed well and managed a large number of concurrent users with minimal resources.
+3. Nginx Performs well even at heavy loads. Nginx has some advanced features. They are:
+	A. Reverse Proxy
+	B. Load Balancing
+4. Nginx is growing faster as many webmasters started to using it for its performance. But, at the same time, the Usage of Apache web server also becoming low.
+5. Nginx has one main master process.It is recommended to have one master process per CPU.
+6. The master process creates multiple worker processes. Each worker process has only one thread.
+7. All the access are centralized and you have to make all changes in the main configuration file.
+8. The web server has all the control over the configuration. Individual users have to contact the admin for any changes that have to be made.
+9. Nginx modules are :
+	proxying support
+	compression
+	rate limiting
+	logging
+	rewriting
+	geolocation
+	authentication
+	encryption
+	streaming
+	mail functionality	
+	

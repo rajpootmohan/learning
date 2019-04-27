@@ -1,0 +1,56 @@
+1. JavaScript has a prototype-based object model instead of the more common class-based object model.
+2. The prototype-based model provides dynamic inheritance.
+3. what is inherited can vary for individual objects.
+4. Functions can be properties of objects, executing as loosely typed methods.
+5. JavaScript language resembles Java but does not have Java's static typing and strong type checking.
+6. JavaScript supports a runtime system based on a small number of data types representing numeric, Boolean, and string values.
+
+7. DECLARAION:
+   var : Declares a variable, optionally initializing it to a value.
+   let : Declares a block-scoped, local variable, optionally initializing it to a value.
+   const: Declares a block-scoped, read-only named constant.
+
+8. var x = 42. This syntax can be used to declare both local and global variables.
+9. x = 42. This always declares a global variable.
+10. The undefined value behaves as false when used in a boolean context.
+11. the null value behaves as 0 in numeric contexts and as false in boolean contexts.
+12. VARIABLE HOISTING: you can refer to a variable declared later, without getting an exception.
+13. In ECMAScript 2015, let (const) will not hoist the variable to the top of the block.
+14. only the function declaration gets hoisted to the top and not the function expression.
+15. the properties of objects assigned to constants are not protected.
+16. let variable declaration is block scoped, var didn't have block scoped.
+16. FUNCITON CLOSURE: A closure is a function having access to the parent scope, even after the parent function has closed.
+      var add = (function () {
+          var counter = 0;
+          return function () {return counter += 1;}
+      })();
+
+      add(); // counter = 1
+      add(); // counter = 2
+      add(); // counter = 3
+17. Falsy values: false, undefined, null, 0, Nan, ""
+18. Do not confuse the primitive boolean values true and false with the true and false values of the Boolean object. Both are different.
+19. SHORTER FUNCTION:
+            var a = [
+              'Hydrogen',
+              'Helium',
+              'Lithium',
+              'Beryllium'
+            ];
+            var a2 = a.map(function(s) { return s.length; });
+            console.log(a2); // logs [8, 6, 7, 9]
+            var a3 = a.map(s => s.length);
+            console.log(a3); // logs [8, 6, 7, 9]
+
+
+
+
+
+
+
+
+
+
+
+
+2. console.log("sdf " + 3/4);  //  sdf 0.75

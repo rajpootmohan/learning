@@ -1,0 +1,31 @@
+WHAT IS ELASTICSEARCH ?
+	A. Elasticsearch is a search engine based on Apache Lucene that supports full-text search engine with schema free JSON objects and HTTP web interface.
+	B. Elasticsearch can be used to search different kinds of documents that provide scalable search, multi-tenancy, and near real-time search.
+	C. Elasticsearch is a distributed, RESTful search analytics engine.
+
+SHARDS:
+	A. Lucene does not have a concept of a mapping, nor does a Lucene index or document have types.
+	B. In Lucene, a document is typeless and has an arbitrary number of fields.
+	C. These fields have certain types (string/numeric) and properties (stored/indexed/…)
+	D. The Mapping is an excellent abstraction to express how to transform a source document to a Lucene document with a bunch of fields.
+	E. There is nothing special with fields like _all, _source, or even _type as far as Lucene is concerned.
+	F. Storing the same amount of data in two Lucene indexes is more than twice as expensive as storing the same data in a single index. This is because Lucene index internals like term dictionaries will have to be duplicated. Also, there's a cost associated with having more files to maintain and more metadata to spend memory on.
+	G. searching more shards takes more time than searching fewer.
+
+FLOW OF INDEX REQUESTS:
+	A. The node accepting the request will be the coordinator. It consults the mappings to determine which shard to send the request to.
+	B. The request is sent to the primary of that shard.
+	C. The primary writes the operation to its translog, and relays the request to the replicas.
+	D. When a sufficient number of replicas have acknowledged, the primary returns success.
+	E. The coordinator returns success when all the sub-operations (in e.g. a bulk request) have succeeded.
+
+HOW SEARCH REQUEST WORKS:
+	A. Like with index requests, the search requests must be routed. A search will either hit all distinct shards, if no routing is specified — or a specific shard, if routing is specified.
+	B. query_then_fetch: there will be two rounds of searching.
+
+QUERY REWRITING:
+	A. Before a search request can be executed on a shard, the search needs to be rewritten and adapted to Lucene query graphs.
+
+DATA FLOW AND PARTITIONING STRATEGIES:
+	A. For time oriented data, such as logs, a common strategy is to partition data into indexes that hold data for a certain time range.
+	B. When the data becomes too old to be of interest, the data can easily be deleted by deleting the entire index for the obsolete time ranges, which is a lot cheaper than deleting a lot of data from an existing index.

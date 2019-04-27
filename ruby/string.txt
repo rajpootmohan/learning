@@ -1,0 +1,11 @@
+"Jimmy".reverse       // ymmiJ
+"Jimmy".length        // 5
+"Jimmy" * 5           // JimmyJimmyJimmyJimmyJimmy
+40.to_s.reverse       // 04
+"My honeydew".gsub("My", "my")   // my honeydew  // global substitute
+poem.lines            // convert \n ended string to array
+"test".split("") // ['t', 'e', 's', 't']     
+"test".chars // ['t', 'e', 's', 't']     
+"test".scan(/\w/) // ['t', 'e', 's', 't']
+"abcac".count('a') // 2
+ 

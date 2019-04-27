@@ -1,0 +1,4 @@
+ssh root@192.168.3.5  "command_here_for_run_on_this_vm"
+rsync                sync folder from local to vm or local to local
+ssh-copy-id          no need to type password again and again
+

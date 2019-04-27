@@ -1,0 +1,34 @@
+copy that "source ~/.rvm/scripts/rvm" command into the .bashrc file in home folder.
+
+rvm install 1.9.3
+
+gem install rails --version '~> 3.2.19'
+
+//for mysql 
+
+sudo apt-get install libmysqlclient-dev
+gem install mysql2
+
+//for git
+
+sudo apt-get update
+sudo apt-get install git
+
+//git commands
+
+git config --global alias.status st
+git config --global --unset-all user.name
+git config --global --unset-all alias.status
+
+//for git authentication or adding key to github
+
+cd ~/.ssh && ssh-keygen
+cat keygen.pub | xclip     //where keygen is the name of the file assigned by user
+//now copy paste the content of keygen.pub in github to make key
+ssh -vT git@github.com
+
+//now if u face the problem of pushing the code to your repository 
+//login on github.com and create the repo manually and then try push it will work.
+
+git remote add origin https://github.com/sunilgiriskg/junglee.git
+git push -u origin master

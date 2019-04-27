@@ -1,0 +1,19 @@
+PARTITION TOLERANCE: 
+In the context of a database cluster, cluster continues to function even if there is a “partition” (communications break) between two nodes (both nodes are up, but can’t communicate).
+
+QPS: query per second
+
+SHARDING: (Advantages)
+	A. High Availability
+	B. Faster Queries
+	C. More write Bandwidth
+	D. Data are denormalized
+	E. Data are parallelized across many physical instances
+	F. Date are kept small
+
+SHARDING: (Problems)
+	A. Rebalancing data
+	B. Joining data from multiple shards
+	C. Implementing shards is not supported.
+
+	

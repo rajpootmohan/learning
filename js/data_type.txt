@@ -1,0 +1,6 @@
+1. JavaScript is a dynamically typed language.
+2. In expressions involving numeric and string values with the + operator, JavaScript converts numeric values to strings.
+3. In statements involving other than + operator, JavaScript does not convert numeric values to strings.
+4. A regex literal is a pattern enclosed between slashes.   // var re = /ab+c/;
+5.  const MY_OBJECT = {'key': 'value'};
+    MY_OBJECT.key = 'otherValue';  // no issue, will be updated constant data

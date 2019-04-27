@@ -1,0 +1,23 @@
+1. REDIS GENERAL SECURITY MODEL:
+	a. Redis is designed to be accessed by trusted clients inside trusted environments.
+	b. Redis is not optimized for maximum security but for maximum performance and simplicity.
+
+2. NETWORK SECURITY:
+	bind 12.2.2.2
+
+3. PROTECTED MODE:
+	Redis is executed with the default configuration (binding all the interfaces) and without any password in order to access it, it enters a special mode called protected mode. In this mode Redis only replies to queries from the loopback interfaces, and reply to other clients connecting from other addresses with an error, explaining what is happening and how to configure Redis properly.
+
+4. AUTHENTICATION FEATURE:
+	a. When the authorization layer is enabled, Redis will refuse any query by unauthenticated clients. A client can authenticate itself by sending the AUTH command followed by the password.
+
+5. DATA ENCRYPTION SUPPORT:
+	Redis does not support encryption.
+
+6. DISABLING OF SPECIFIC COMMANDS:
+	a. It is possible to disable commands in Redis or to rename them into an unguessable name, so that normal clients are limited to a specified set of commands.
+	b. rename-command CONFIG ""
+
+7. STRING ESCAPING and NoSQL INJECTION:
+	a. The Redis protocol has no concept of string escaping,
+	b. so injection is impossible under normal circumstances using a normal client library. The protocol uses prefixed-length strings and is completely binary safe.

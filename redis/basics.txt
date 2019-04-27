@@ -1,0 +1,73 @@
+Redis: Remote Dictionary Server
+
+1. MEMCACHED:
+	A. Memcached is a simple volatile cache server.
+	B. It allows you to store key/value pairs where the value is limited to being a string up to 1MB.
+	C. If you need high performance or high availability there are 3rd party tools, products, and services available.
+
+2. REDIS:
+	A. Redis can act as a cache as well. It can store key/value pairs too. In redis they can even be up to 512MB.
+	B. Redis is more than a cache.
+	C. It is an in-memory data structure server.
+
+3. MEMCACHED vs REDIS:
+	A. memcached: You specify the cache size and as you insert items the daemon quickly grows to a little more than this size. There is never really a way to reclaim any of that space, short of restarting memcached. All your keys could be expired, you could flush the database, and it would still use the full chunk of RAM you configured it with.
+	B. redis: Setting a max size is up to you. Redis will never use more than it has to and will give you back memory it is no longer using.
+	C. Disk I/O dumping: A clear win for redis since it does this by default and has very configurable persistence. Memcached has no mechanisms for dumping to disk without 3rd party tools.
+	D. Scaling: Both give you tons of headroom before you need more than a single instance as a cache. Redis includes tools to help you go beyond that while memcached does not.
+
+4. SUPPORTED DATA TYPES BY REDIS:
+	A. Strings :
+		1. Simple text or binary values that can be up to 512MB in size.
+		2. SET name "tutorialspoint"   // blindly create key with name
+		3. setnx                       // set if key doesn't exist
+		4. GET name
+		5. append name "something"  // adding data into previous keys
+		6. incr age   // increment age by 1
+		7. incrby age 4 // increment age by 4
+		8. decr age   // decrement age by 1
+		9. decrby age 5  // decrement age by 5
+		10. strlen name // string length of name
+		11. mset [key] [value] [..key] [..value]   // multiple set
+		12. msetnx [key] [value] [..key] [..value]  // set multiple if key doesn't exist
+
+	B. Hashes :
+		1. One example use of a hash is for storing user profiles between applications.
+		2. HSET people john 13  // people: {john: 13}
+		3. HSET people sam 12   // people: {sam: 12}
+		4. HMSET people kim 9 ted 12 // multiple insert at a time
+		5. HGETALL people  // print john 13 and sam 12
+		6. HGET people john // print 13
+		7. HDEL people kim ted      // multiple delete at at time
+		8. HLEN people     // length of hash keys
+		9. HEXISTS people kim    // check if hash exists
+		10. HVALS people     // all the values
+
+	C. Lists :
+		1. Redis lists are ordered collections of strings.
+		2. They are optimized for inserting, reading, or removing values from the top or bottom (aka: left or right) of the list.
+		lpush mylist redis1  // create list of value list and assign at 0th location
+		rpush mylist redis2  // insert from end in mylist
+		lpushx animals whale  // push into list only if the list exists
+		rpushx animals dog    // push into list only if the list exists
+		lset colors 1 yellow   // Set a List Item to a different value based on the Index
+		lpop mylist           // get first item from mylist
+		rpop mylist           // get last item from mylist
+		linsert mylist before|after value2 value3    // instert value3 before|after value2
+		lrem mylist -number|+number value  // remove last|first number of value
+		lrange tutoriallist 0 10  // get all values of tutotiallist from index 0 to 10
+		llen mylist         // key length of mylist
+		lindex colors 2     // Get the Value of a List Index
+
+	D. Sets :
+		1. Sets are unordered collections of unique values. They are optimized to let you quickly check if a value is in the set, quickly add/remove values, and to measure overlap with other sets.
+		sadd tutoriallist redis  // create set tutoriallist
+		smembers tutoriallist    // get all members of tutoriallist
+		srem art oink           // Remove a set item based on value
+		sismember art pencil    // Check if an item is a member
+
+	E. Sorted Sets :
+		1. Sorted Sets are also collections of unique values. These ones, as the name implies, are ordered. They are ordered by a score, then lexicographically.
+		zadd bowling 50 jane    // Add/Create Sorted Set
+		zcard bowling           // Count how many items are in a Sorted Set
+		zcount bowling 100 200  // Count how many items are in a Sorted Set between a value of scores

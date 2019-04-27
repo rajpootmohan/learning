@@ -1,0 +1,25 @@
+VERBOSE: 
+	verbose output
+	GET /_cat/master?v
+
+HELP:
+	Each command accept a query string parameter help which will output its available columns.
+	GET /_cat/master?help
+
+HEADERS:
+	Each command accept a query string parameter h which forces only those column to appear.
+	GET /_cat/nodes?h=ip,port,heapPercent,name
+
+RESPONSE AS TEXT, JSON, SMILE, YAML OR CBOR
+	/_cat/indices?format=json&pretty
+
+SORT:
+	Each of the commands accepts a query string parameter s which sorts the table by the columns specified as the parameter value.
+	GET _cat/templates?v&s=order:desc,name
+
+CAT ALIASES:
+	aliases shows information about currently configured aliases to indices including filter and routing infos.
+	GET /_cat/aliases
+	GET /_cat/aliases/alias1
+	GET /_cat/aliases/alias1,alias2
+

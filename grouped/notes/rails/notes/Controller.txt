@@ -1,0 +1,89 @@
+gems act_as_list,exception_notification,nokogiri,
+
+=>Controller callbacks methods
+    before_action
+    after_action
+    around_action
+    skip_before_action
+    skip_after_action
+    skip_aroud_action
+
+=>If you need a different session storage mechanism, you can change it in the 
+  config/initializers/session_store.rb file:
+    YourApp::Application.config.session_store :active_record_store
+=>Rails sets up a session key (the name of the cookie) when signing the session data. These can also be
+  changed in config/initializers/session_store.rb:
+    YourApp::Application.config.session_store :cookie_store, :key => '_your_app_session'
+  You can also pass a :domain key and specify the domain name for the cookie:
+    YourApp::Application.config.session_store :cookie_store, :key => '_your_app_session', 
+      :domain => ".example.com"   
+
+=>FLASH HASH
+    flash[:notice], flash[:error]      
+    flash.keep     # Will persist all flash values.
+    flash.now[:error]
+
+=>Rendering xml and json data
+    respond_to do |format|
+      format.html # index.html.erb
+      format.xml  { render :xml => @users}
+      format.json { render :json => @users}
+    end
+
+=>
+=> http_basic_authenticate_with :name => "dhh", :password => "secret", :only => :destroy
+   only for desired action and specific need
+
+=> authenticate_or_request_with_http_digest
+     class AdminController < ApplicationController
+			  USERS = { "lifo" => "world" }
+			 
+			  before_filter :authenticate
+			 
+			  private
+			 
+			  def authenticate
+			    authenticate_or_request_with_http_digest do |username|
+			      USERS[username]
+			    end
+			  end
+			end
+
+=>send_file is a convenience method that lets you provide the name of a file on the disk and
+  it will stream the contents of that file for you.This will read and stream the file 4kB at
+  the time, avoiding loading the entire file into memory at once. You can turn off streaming
+  with the :stream option or adjust the block size with the :buffer_size option.			    
+    def download_pdf
+      client = Client.find(params[:id])
+      send_file("#{Rails.root}/files/clients/#{client.id}.pdf",
+                :filename => "#{client.name}.pdf",
+                :type => "application/pdf")
+    end
+
+=>send_data
+    def download_pdf
+	    client = Client.find(params[:id])
+	    send_data generate_pdf(client),
+	              :filename => "#{client.name}.pdf",
+	              :type => "application/pdf"
+	  end
+
+=>RESTful Downloads
+    respond_to do |format|
+      format.html
+      format.pdf { render :pdf => generate_pdf(@client) }
+    end
+  This can be done by adding the following line to the file config/initializers/mime_types.rb:
+    Mime::Type.register "application/pdf", :pdf
+
+=>You can filter certain request parameters from your log files by appending them to 
+  config.filter_parameters in the application configuration. These parameters will be 
+  marked [FILTERED] in the log.      
+    config.filter_parameters << :password
+
+=>Force HTTPS protocol
+    class DinnerController
+		  force_ssl #for all
+		  force_ssl :only => :cheeseburger
+		  force_ssl :except => :cheeseburger
+		end

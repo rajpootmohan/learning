@@ -1,0 +1,27 @@
+	=============  redis-cli  =============================
+
+flushdb    // flush the current database
+flushall   // removing all the caches
+keys *      // get all keys
+type key    // get the datatype of the key
+del key     // delete this specific key
+mget [key] [..key]  // get multiple keys
+config get *  // get all configurations
+CONFIG SET CONFIG_SETTING_NAME NEW_CONFIG_VALUE   // set config parameters
+
+pexpire key time_in_milliseconds    // expire this key in defined milliseconds
+ttl key                     // Check the Time to Live for an expiring Key
+persist key                 // change ttl to infinite
+rename name person        // rename a key
+renamenx person someone   // Rename a key if the new one does not exist
+
+** CONNECTION **
+echo <message>            // response will be message
+ping                      // pong
+select <index>            // select specific indexed database
+quit                      // exit from command line
+auth <password>           // put password for running the commands if requirepass enable
+
+** SERVER INFO **
+info                     // get server info
+client list              // get a list of client connections

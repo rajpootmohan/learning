@@ -1,0 +1,15 @@
+1. REPLICATION MECHANISM:
+	a. When a master and a slave instances are well-connected, the master keeps the slave updated by sending a stream of commands to the slave, in order to replicate the effects on the dataset happening in the master side due to: client writes, keys expired or evicted, any other action changing the master dataset.
+	b. When the link between the master and the slave breaks, for network issues or because a timeout is sensed in the master or the slave, the slave reconnects and attempts to proceed with a partial resynchronization: it means that it will try to just obtain the part of the stream of commands it missed during the disconnection.
+	c. When a partial resynchronization is not possible, the slave will ask for a full resynchronization. This will involve a more complex process in which the master needs to create a snapshot of all its data, send it to the slave, and then continue sending the stream of commands as the dataset changes.
+
+2. FACTS ABOUT REDIS REPLICATION:
+	a. Redis uses asynchronous replication, with asynchronous slave-to-master acknowledges of the amount of data processed.
+	b. A master can have multiple slaves.
+	c. Slaves are able to accept connections from other slaves. Aside from connecting a number of slaves to the same master, slaves can also be connected to other slaves in a cascading-like structure. Since Redis 4.0, all the sub-slaves will receive exactly the same replication stream from the master.
+	d. Redis replication is non-blocking on the master side. This means that the master will continue to handle queries when one or more slaves perform the initial synchronization or a partial resynchronization.
+	e. Replication is also largely non-blocking on the slave side. While the slave is performing the initial synchronization, it can handle queries using the old version of the dataset, assuming you configured Redis to do so in redis.conf. 
+	f. Replication can be used both for scalability, in order to have multiple slaves for read-only queries (for example, slow O(N) operations can be offloaded to slaves), or simply for improving data safety and high availability.
+
+3. slaveof <masterip> <masterport>
+	

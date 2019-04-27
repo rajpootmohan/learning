@@ -1,0 +1,6 @@
+8. module.exports is what the require function returns.
+9. exports and module.exports both are referencing same object.
+10. module are parts of v8 engine. But in ES6(2015) introduces module support in JS. So export method defination like
+    export function greet(){ console.log("es6 xport");}
+And how to include in your file is given below:
+    import * as greetr from 'greet';

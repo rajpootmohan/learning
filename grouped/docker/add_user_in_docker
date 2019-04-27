@@ -1,0 +1,8 @@
+// adding userName to docker group
+sudo usermod -aG docker ${USER}
+
+// apply new group membership
+su - ${USER}
+
+// check your group
+id -nG

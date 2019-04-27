@@ -1,0 +1,16 @@
+1. EXPIRE:
+	a. All the operations that conceptually alter the value stored at the key without replacing it with a new one will leave the timeout untouched.
+	b. Keys expiring information is stored as absolute Unix timestamps. This means that the time is flowing even when the Redis instance is not active.
+
+2. HOW REDIS EXPIRES KEYS:
+	a. Redis keys are expired in two ways: a passive way, and an active way.
+	b. A key is passively expired simply when some client tries to access it, and the key is found to be timed out.
+	c. Below is what Redis does 10 times per second:
+		1. Test 20 random keys from the set of keys with an associated expire.
+		2. Delete all the keys found expired.
+		3. If more than 25% of keys were expired, start again from step 1.
+
+3. EXPIRES ARE HANDLED IN THE REPLICATION LINK AND AOF FILE:
+	a. In order to obtain a correct behavior without sacrificing consistency, when a key expires, a DEL operation is synthesized in both the AOF file and gains all the attached slaves.
+	b. This way the expiration process is centralized in the master instance, and there is no chance of consistency errors.
+	

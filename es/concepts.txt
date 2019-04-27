@@ -1,0 +1,48 @@
+TRANSLOG:
+	1. Each shard copy also has a transaction log known as its translog associated with it.
+	2. All index and delete operations are written to the translog after being processed by the internal Lucene index but before they are acknowledged.
+	3. In the event of a crash, recent transactions that have been acknowledged but not yet included in the last Lucene commit can instead be recovered from the translog when the shard recovers.
+	4. An Elasticsearch flush is the process of performing a Lucene commit and starting a new translog.
+	5. The ability to perform a flush manually is also exposed through an API, although this is rarely needed.
+
+
+BUILDING INDEXES:
+	1. When building inverted indexes, there's a few things we need to prioritize: search speed, index compactness, indexing speed and the time it takes for new changes to become visible.
+	2. the index files Lucene write are IMMUTABLE, i.e. they are never updated.
+	3. When you delete a document from an index, the document is marked as such in a special deletion file, which is actually just a bitmap which is cheap to update. The index structures themselves are not updated.
+	4. updating a previously indexed document is a delete followed by a re-insertion of the document.
+	5. storing things like rapidly changing counters in a Lucene index is usually not a good idea – there is no in-place update of values.
+	6. When new documents are added (perhaps via an update), the index changes are first buffered in memory. Eventually, the index files in their entirety, are flushed to disk.
+
+INDEX SEGMENTS:
+	1. A Lucene index is made up of one or more IMMUTABLE index segments, which essentially is a "mini-index".
+	2. When you do a search, Lucene does the search on every segment, filters out any deletions, and merges the results from all the segments.
+	3. To keep the number of segments manageable, Lucene occasionally merges segments according to some merge policy as new segments are added.
+	4. When segments are merged, documents marked as deleted are finally discarded. This is why adding more documents can actually result in a smaller index size: it can trigger a merge.
+	5. New segments are created (either due to a flush or a merge), they also cause certain caches to be invalidated, which can negatively impact search performance.
+	6. The most common cause for flushes with Elasticsearch is probably the continuous index refreshing, which by default happens once every second.
+	7. As new segments are flushed, they become available for searching, enabling (near) real-time search.
+
+ELASTICSEATCH INDEXES:
+	1. An Elasticsearch index is made up of one or more shards, which can have zero or more replicas. These are all individual Lucene indexes. That is, an Elasticsearch index is made up of many Lucene indexes, which in turn is made up of index segments. When you search an Elasticsearch index, the search is executed on all the shards - and in turn, all the segments - and merged.
+
+TRANSACTIONS:
+	1. While Lucene has a concept of transactions, Elasticsearch does not.
+	2. Elasticsearch has a "transaction log" where documents to be indexed are appended. 
+	3. Appending to a log file is a lot cheaper than building segments, so Elasticsearch can write the documents to index somewhere durable - in addition to the in-memory buffer, which is lost on crashes.
+	4. You can also specify the consistency level required when you index. For example, you can require every replica to have indexed the document before the index operation returns.
+
+REQUEST COORDINATORS:
+	1. When you send a request to a node in Elasticsearch, that node becomes the coordinator of that request.
+	2. To be able to act as a coordinator, the node needs to know the cluster’s state. The cluster state is replicated to every node in the cluster. It has things like the shard routing table (which nodes host which indexes and shards), metadata about every node (such as where it runs and what attributes the node has), and index mappings (which can contain important routing configuration) and templates.
+
+ROUTING:
+	1. Documents are routed based on a routing key, and are placed on shard number \(\mathrm{hash}\left(key\right) \bmod n\), where \(n\) is the number of shards in the index.
+
+MEMORY: 
+	1. Hot parts of the index structures, such as term dictionaries, posting lists, etc., are assumed to (mostly) reside in the operating system's page cache. This implies that we cannot simply allocate everything to Elasticsearch.
+	2. Field values that are used for faceting, sorting or scripting are loaded into the field cache.
+	3. Filters can be cached as bitmaps in the filter cache, making further uses of the filter blazingly fast.
+	
+
+

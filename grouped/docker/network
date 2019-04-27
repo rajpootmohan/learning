@@ -1,0 +1,5 @@
+docker network ls                                        // docker network list
+docker network inspect <name or network-id>              // inspecting different type network
+docker network create <network-name>                     // create bridge type network
+docker network connect <network-name>                    // connect to existing network
+docker network disconnect <network-name>                 // disconnect from existing network

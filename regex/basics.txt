@@ -1,0 +1,61 @@
+Anchors — ^ and $
+    ^The        matches any string that starts with The
+    end$        matches a string that ends with end
+    ^The end$   exact string match (starts and ends with The end)
+    roar        matches any string that has the text roar in it
+
+Quantifiers — * + ? and {}
+    abc*        matches a string that has ab followed by zero or more c
+    abc+        matches a string that has ab followed by one or more c
+    abc?        matches a string that has ab followed by zero or one c
+    abc{2}      matches a string that has ab followed by 2 c
+    abc{2,}     matches a string that has ab followed by 2 or more c
+    abc{2,5}    matches a string that has ab followed by 2 up to 5 c
+    a(bc)*      matches a string that has a followed by zero or more copies of the sequence bc
+    a(bc){2,5}  matches a string that has a followed by 2 up to 5 copies of the sequence bc
+
+OR operator — | or []
+    a(b|c)     matches a string that has a followed by b or c
+    a[bc]      same as previous    
+
+Character classes — \d \w \s and .
+    \d         matches a single character that is a digit
+    \w         matches a word character (alphanumeric character plus underscore)
+    \s         matches a whitespace character (includes tabs and line breaks)
+    .          matches any character    
+    
+\d, \w and \s also present their negations with \D, \W and \S
+You must escape the characters ^.[$()|*+?{\with a backslash \ as they have special meaning.
+Notice that you can match also non-printable characters like tabs \t, new-lines \n, carriage returns \r.
+
+Flags
+    g (global) does not return after the first match, restarting the subsequent searches from the end of the previous match
+    m (multi-line) when enabled ^ and $ will match the start and end of a line, instead of the whole string
+    i (insensitive) makes the whole expression case-insensitive (for instance /aBc/i would match AbC)
+
+Bracket expressions — []
+    [abc]            matches a string that has either an a or a b or a c -> is the same as a|b|c
+    [a-c]            same as previous
+    [a-fA-F0-9]      a string that represents a single hexadecimal digit, case insensitively
+    [0-9]%           a string that has a character from 0 to 9 before a % sign
+    [^a-zA-Z]        a string that has not a letter from a to z or from A to Z. In this case the ^ is used as negation of the expression
+    Remember that inside bracket expressions all special characters (including the backslash \) lose their special powers: thus we will not apply the “escape rule”.
+
+Greedy and Lazy match
+    The quantifiers ( * + {}) are greedy operators, so they expand the match as far as they can through the provided text.
+    For example, <.+> matches <div>simple div</div> in This is a <div> simple div</div> test. In order to catch only the div tag we can use a ? to make it lazy:
+    <.+?>            matches any character one or more times included inside < and >, expanding as needed
+
+ Boundaries — \b and \B
+    \babc\b          performs a "whole words only" search -> Try it!
+    \b represents an anchor like caret (it is similar to $ and ^) matching positions where one side is a word character (like \w) and the other side is not a word character (for instance it may be the beginning of the string or a space character).
+    It comes with its negation, \B. This matches all positions where \b doesn’t match and could be if we want to find a search pattern fully surrounded by word characters.
+
+reserved characters
+    The following character have special meaning, and should be preceded by a \ (backslash) to represent a literal character:
+    +*?^$\.[]{}()|/
+
+creating groups
+    Groups multiple tokens together and creates a capture group for extracting a substring or using a backreference.
+
+    

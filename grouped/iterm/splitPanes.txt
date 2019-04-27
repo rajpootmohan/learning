@@ -1,0 +1,4 @@
+cmd d      : split window vertically
+cmd shft d : split window horizontally
+cmd-opt-arrow : navigate among split panes
+cmd-shift-enter : maximize the current pane and hide other panes vice versa

@@ -1,0 +1,24 @@
+1. EVENT: something that has happened in our app that we can respond to.
+2. There are 2 type of events:
+a. System events (C++ Core) libuv library like reading a file done, download data from internet
+b. Custom events (JS Core) Event Emitter
+3. EVENT LISTNER: the code that responds to an event.
+4. My Local Event Emitter:
+          function Emitter() {
+          	this.events = {};
+          }
+
+          Emitter.prototype.on = function(type, listener) {
+          	this.events[type] = this.events[type] || [];
+          	this.events[type].push(listener);
+          }
+
+          Emitter.prototype.emit = function(type) {
+          	if (this.events[type]) {
+          		this.events[type].forEach(function(listener) {
+          			listener();
+          		});
+          	}
+          }
+
+          module.exports = Emitter;

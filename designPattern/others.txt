@@ -1,0 +1,24 @@
+Q1) Design a chess game 
+A)  Added POJO classes first followed by Validator classes, Controller classes and then showed how the interactions between these classes happen.
+POJO classes include classes like Piece.
+Validator classes help valid moves (you dont want to muddle this logic in the controller).
+Controller class drives the game forward including the interaction between classes like Player.
+For extendibility, (in cases where the one player plays from console while another plays from a android game), it is essential to make Player class a base class and derive classes like ConsolePlayer, AndroidPlayer with some shared logic and then have specific methods like getMove() and broadcastEvent() (to broadcast in-game events) etc that are implemented differently and have different View objects.
+This same logic can be applied for any board game with different POJOs
+
+Q2) Design an app launcher for your phone with suggestions for apps to use. You have information 
+like the location of the user, areEarphonesConnected etc.
+A)  I gave a multi-class classification based Back-propagated Neural network implementation for this with an common initial age-demographic based neural network that learns further for the given users feedback. (Initially, train a neural network for a general populace with a different network for each age group). Did not have time to code a back prop neural network, so coded a feed forward neural network. 
+But in hindsight(the interviewer didn't check my code in-depth and might not have worked in ML), they were looking for a simpler solution. You can add tags to each app downloaded by the user. Eg Music tag for Spotify, Videos tag for Youtube, Navigation tag for Maps etc. Then have a map from attributes to tags. Eg. Earphones to Music and Videos, isPersonInTransit to Maps etc. Then have custom mappings with time events like 9:00 pm mapped to Reading or Music. These can get added when the user uses particular apps frequently at certain points of the day. We can implement a filtering system for this, like 9:00 pm → Music || Reading, further if earphones are connected, its probably Music, so music gets a higher score and for the top ranking tags, show appropriate Apps.
+
+
+Q3) Design a scrabble game. 
+A)  Added POJO classes first followed by Validator classes, Controller classes and then showed how the interactions between these classes happen.
+POJOs can be Coin, BagOfCoins, PlayersCoins, Move etc.
+The class representing the PlayersCoins and BagOfCoins can be derived from a base class.
+Validator class takes List<Move> and validates them against the rules of the game.
+ScrambleGame can be Controller class and coordinates between objects i.e. gets moves from the players asks the validator for correctness. Broadcasts these moves to the individuals views etc. Again, Player can be an abstract class and and classes like AndroidPlayer and consolePlayer can be derived from it.
+
+Q4) There is a hierarchy of groups with each groups having other groups and/or users  (No cycles present in the hierarchy). Given a group, the children have to fetched via a network call. So given a group, output all users(nested too) in it.
+A)  For the root group, get all the children, output the users and put the child groups in a AMQP queue. 
+Have consumers reading from the queues doing the same until there are no groups left. (This information can be put in Redis like a counting semaphore).

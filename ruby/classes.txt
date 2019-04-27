@@ -1,0 +1,35 @@
+// Ruby class
+class Greeter
+  def initialize(name = "World")
+    @name = name
+  end
+  def say_hi
+    puts "Hi #{@name}!"
+  end
+  def say_bye
+    puts "Bye #{@name}, come back soon."
+  end
+end
+
+// calling method of a class
+a = Greeter.new("world")
+a.say_hi    // Hi world
+
+// Ruby class
+irb(main):044:0> class Greeter
+irb(main):045:1>   attr_accessor :name
+irb(main):046:1> end
+
+// In Ruby, you can open a class up again and modify it.
+
+# Say bye to everybody
+def say_bye
+  if @names.nil?
+    puts "..."
+  elsif @names.respond_to?("join")
+    # Join the list elements with commas
+    puts "Goodbye #{@names.join(", ")}.  Come back soon!"
+  else
+    puts "Goodbye #{@names}.  Come back soon!"
+  end
+end

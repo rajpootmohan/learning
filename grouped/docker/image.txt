@@ -1,0 +1,2 @@
+docker build -t rajpootmohan/linux_tweet_app:1.0 .       // building a docker image
+docker image ls                                          // list all images

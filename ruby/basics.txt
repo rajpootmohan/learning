@@ -1,0 +1,6 @@
+puts "me"    // me
+Math.pi      // math class operations
+
+
+	
+

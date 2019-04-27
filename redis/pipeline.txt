@@ -1,0 +1,5 @@
+RTT (Round Trip Time): there is a time for the packets to travel from the client to the server, and back from the server to the client to carry the reply.
+
+PIPELINING: A Request/Response server can be implemented so that it is able to process new requests even if the client didn't already read the old responses. This way it is possible to send multiple commands to the server without waiting for the replies at all, and finally read the replies in a single step. When pipelining is used, many commands are usually read with a single read() system call, and multiple replies are delivered with a single write() system call. Because of this, the number of total queries performed per second initially increases almost linearly with longer pipelines, and eventually reaches 10 times the baseline obtained not using pipelining.
+
+

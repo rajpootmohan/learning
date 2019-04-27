@@ -1,0 +1,25 @@
+// run docker image/container ( always start a new container )
+docker container run <image/container-name>:<version-name>  // -it interactive tty mode
+          // --rm deletes the container once it's exited from
+          // -P Publish all exposed ports to random ports
+          // -d or --detach Run container in background and print container ID
+          // --name given name to container
+          // -e --env list ser environment list
+          // -p <client-port>:<container-port> custom port to which client forward connections to container
+          // --net <network-name> launch our containers inside this network
+
+
+docker container exec -it <container-name> <command>     // create a new process inside container
+docker attach <container-name>                           // attach to existed running container
+docker container inspect CONTAINER_NAME                  // docker inspecting container
+docker container stats                                   // docker container stats
+docker container logs <container-name>                   // docker logs
+docker container top <container-name>                    // list running processes in specific container
+docker container rm <container-id>                       // delete docker container
+docker container stop <container-id>                     // stop docker container
+docker container start <container-name or container-id>  // start existing docker container
+docker container ls  -a  // all containers
+                     -q  // display only numeric IDs
+docker rename <old-container-name> <new-container-name>  // ranaming docker
+docker container port <container-name>                   // show the ports running by this container
+docker commit -m "What did you do to the image" -a "Author Name" container-id repository/new_image_name

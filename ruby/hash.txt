@@ -1,0 +1,6 @@
+ratings = Hash.new {0}   // created empty hash with default value 0
+books = {}
+books["Gravitys Rainbow"] = :splendid
+books.length                             // return 1
+books.keys    // ["Gravitys Rainbow"]
+books.values   // [:splendid]

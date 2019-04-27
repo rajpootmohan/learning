@@ -1,0 +1,14 @@
+TABLE DESIGN GENERALITIES:
+
+1. How Will your Table Primarily be Used?
+	A. If you will be updating certain pieces of data often, it is often best to have those in their own table.
+2. What Kind of Data Types are Required?
+	A. if there are a limited number of valid entries for a specific field that takes string values, you could use the "enum" type instead of "varchar".
+3. Which Columns Will You be Querying?
+	A. Indexing columns that you expect to use for searching helps immensely.
+	B. Use Explain to Find Points to Index in Queries
+
+OPTIMIZING QUERIES FOR SPEED:
+
+1. Certain operations are more computationally intensive than others. There are often multiple ways of getting the same result, some of which will avoid costly operations.
+2. If your queries use "or" comparisons, and the two components parts are testing different fields, your query can be longer than necessary.

@@ -1,0 +1,7 @@
+1. The myth about the file name and class name should be same only when the class is declared in public.
+2. Using any predefined class in Java won’t cause such compiler error as Java predefined classes are not keywords.
+4. Java + operator is overloaded so that it can concatenate String objects.
+5. Methods can only be declared as members of a class; you can't define a method outside of a Java class.
+6. Java method that accepts no parameters must be declared with empty parentheses.
+7. Java language does not take a variable-length parameter list. In C++, we use ellipses (...) notation.
+8. Java arrays are objects

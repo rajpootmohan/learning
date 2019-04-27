@@ -1,0 +1,54 @@
+=>View Helpers for Debugging
+  =>debug :will return a tag that renders the object using the YAML format.
+    debug @post
+  =>to_yaml :displaying an instance variable, or any other object or method, in YAML format can be 
+             achieved this way.
+    @post.to_yaml
+  =>inspect :This will print the object value as a string.
+    [1, 2, 3, 4, 5].inspect           #[1, 2, 3, 4, 5] 
+
+=>The Logger
+  =>Log Levels are :debug, :info, :warn, :error, and :fatal, corresponding to the log level numbers
+ 	  from 0 up to 4 respectively.	
+  =>You can specify an alternative logger in your environment.rb
+      Rails.logger = Logger.new(STDOUT)
+			Rails.logger = Log4r::Logger.new("Application Log")              
+			Rails.logger.level = 0 # at any time
+	=>Or in the Initializer section
+	    config.logger = Logger.new(STDOUT)
+			config.logger = Log4r::Logger.new("Application Log")
+			config.log_level = :warn
+ 	=>To write in the current log use the logger.(debug|info|warn|error|fatal) method from within a 	 
+ 	  controller, model or mailer.
+
+=>Debugging with ruby-debug
+  =>sudo gem install debugger
+  =>rails server --debugger
+  =>commands used in debugging:
+    =>help
+    =>list/l(-/=)
+    =>where
+    =>frame _n_
+    =>instance_variables
+    =>var
+    =>var const/global/instance/local
+    =>display _var_name_  # for watching variables
+    =>step+/step- _n_  # move forwards and backwards n steps
+    =>next
+    =>break line_no
+    =>break file:line_no [if expression]
+    =>break class(.|\#)method [if expression]
+    =>nfo breakpoints _n_ or info break _n_  # to list breakpoints info
+    =>delete _n_ # to remove the breakpoint number n
+    =>continue [line-specification] (or c): resume program execution, at the address where your script last stopped;
+    =>finish [frame-number] (or fin): execute until the selected stack frame returns. If no frame number is given, 
+                                      the application will run until the currently selected frame returns
+    =>edit [file:line]: edit file using the editor specified by the EDITOR environment variable
+    =>tmate _n_ (abbreviated tm): open the current file in TextMate. It uses n-th frame if n is specified.
+    =>quit :To exit the debugger
+    =>set reload: Reload source code when changed.
+    =>set autolist: Execute list command on every breakpoint.
+    =>set listsize _n_: Set number of source lines to list by default to n.
+    =>set forcestep: Make sure the next and step commands always move to a new line
+
+

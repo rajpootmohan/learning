@@ -1,0 +1,25 @@
+
+1. Apache is the first choice for many server administrators due to its power, compatibility and support for many platforms.
+2. The Apache is easily extensible through loading the dynamic module.
+3. Apache process many interpreted languages and it does not use any other external software for that.
+4. The .htaccess file is powerful and lets you control some aspects of web server directly without accessing the web server configuration file.
+5. The directives written within this file are so effective and the result reflects immediately without restarting the server.
+6. .htaccess file controls:
+		a. URL rewrites,
+		b. Access restrictions,
+		c. Authorization
+		d. Authentication
+		e. Caching policies
+7. If there are more .htaccess file, they all should be interpreted.
+8. Apache can work as both underlying file system and web space. The file system is the one the Apache depends on the most.
+9. If you want to use Location block instead of the file system, you have to use URI.
+10. Frequently used modules:
+		a. Rewriting URLs
+		b. Authenticating clients
+		c. Hardening the server
+		d. Logging
+		e. Caching
+		f. Compression
+		g. Proxying
+		h. Rate limiting
+		i. Encrypting

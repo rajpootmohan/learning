@@ -1,0 +1,108 @@
+why you might want to replicate data?
+	1. To keep data geographically close to your users (and thus reduce latency);
+	2. To allow the system to continue working even if some parts of the system have failed (and thus increase availability);
+	3. To scale out the number of machines that can serve read queries (and thus increase read throughput).
+
+
+Leaders and Followers:
+	1. One of the replicas is designated the leader (also known as master or primary). When clients want to write to the database, they must send their request to the leader, which first writes the new data to its local storage.
+	2. The other replicas are known as followers (read replicas, slaves, or hot standby). Whenever the leader writes new data to its local storage, it also sends the data change to all of its followers as part of a replication log or change stream. Each follower takes the log from the leader and updates its local copy of the database accordingly, by applying all writes in the same order as they were processed on the leader.
+	3. When a client wants to read from the database, it can query either the leader or any of the followers. However, writes are only accepted on the leader (the follow‐ ers are read-only from the client’s point of view).
+	4. Synchronous vs. asynchronous replication
+	5. Setting up new followers:
+		1. Take a consistent snapshot of the leader’s database at some point in time — if possible, without taking a lock on the entire database. Most databases have this feature, as it is also required for backups. In some cases, third-party tools are needed, such as innobackupex for MySQL
+		2. Copy the snapshot to the new follower node.
+		3. The follower connects to the leader, and requests all data changes that happened since the snapshot was taken. This requires that the snapshot is associated with an exact position in the leader’s replication log. That position has various differ‐ ent names: for example, PostgreSQL calls it log sequence number, and MySQL calls it binlog coordinates.
+		4. When the follower has processed the backlog of data changes since the snapshot, we say it has caught up. It can now continue to process data changes from the leader as they happen.
+	6. Handling node outages:
+		1. Follower failure: catch-up recovery
+		2. Leader failure: failover
+			1. Determining that the leader has failed.
+			2. Choosing a new leader.
+			3. Reconfiguring the system to use the new leader.
+	7. Failover is fraught with things that can go wrong:
+		1. If asynchronous replication is used, the new leader may not have received all writes from the old leader before it failed. If the former leader rejoins the cluster after a new leader has been chosen, what should happen to those writes? The new leader may have received conflicting writes in the meantime. The most common solution is for the old leader’s unreplicated writes to simply be discarded, which may violate clients’ durability expectations.
+		2. Discarding writes is especially dangerous if other storage systems outside of the database need to be coordinated with the database contents.
+		3. In certain fault scenarios (see Chapter 8), it could happen that two nodes both believe that they are the leader. This situation is called split brain, and it is dan‐ gerous: if both leaders accept writes, and there is no process for resolving con‐ flicts (see “Multi-leader replication” on page 161), data is likely to be lost or corrupted. As a safety catch, some systems have a mechanism to shut down one node if two leaders are detected.ii However, if you’re unlucky, you can end up with both nodes being shut down
+		4. What is the right timeout before the leader is declared dead? A longer timeout means a longer time to recovery in the case where the leader fails. However, if the timeout is too short, there could be unnecessary failovers.
+	8. Implementation of replication logs:
+		1. Statement-based replication: the leader logs every write request (statement) that it executes, and sends that statement log to its followers.Although this may sound reasonable, there are various ways in which this approach to replication can break down:
+			1. Any statement that calls a non-deterministic function, for example NOW() to get the current date and time, or RAND() to get a random number, is likely to gener‐ ate a different value on each replica.
+			2. If statements use an auto-incrementing column, or if they depend on the existing data in the database (e.g. UPDATE ... WHERE <some condition>), they must be executed in exactly the same order on each replica, otherwise they may have a different effect. This can be limiting when there are multiple concurrently exe‐ cuting transactions.
+			3. Statements that have side-effects (e.g. triggers, stored procedures, user-defined functions) may result in different side-effects occurring on each replica, unless the side-effects are absolutely deterministic.
+		2. Write-ahead log (WAL) shipping: the log is an append-only sequence of bytes containing all writes to the database. We can use the exact same log to build a replica on another node: besides writing the log to disk, the leader also sends it across the network to its followers. When the follower processes this log, it builds a copy of the exact same data struc‐ tures as found on the leader.
+			1. The main disadvantage is that the log describes the data on a very low level: a WAL con‐ tains details of which bytes were changed in which disk block. This makes replication closely coupled to the storage engine. If the database changes its storage format from one version to another, it is typically not possible to run different versions of the database software on the leader and the followers.
+		3. Logical log replication: A logical log for a relational database is usually a sequence of records describing writes to database tables at the granularity of a row:
+			1. For an inserted row, the log contains the new values of all columns.
+			2. For a deleted row, the log contains enough information to uniquely identify the row that was deleted. Typically this would be the primary key, but if there is no primary key on the table, the old values of all columns need to be logged.
+			3. For an updated row, the log contains enough information to uniquely identify the updated row, and the new values of all columns (or at least the new values of all columns that changed).
+		4. Trigger-based replication: if you want to only replicate a subset of the data, or want to replicate from one kind of data‐ base to another, or if you need conflict resolution logic, then you may need to move replication up to the application layer.
+	9. Problems With Replication Lag:
+		1. if you tried to synchronously replicate to all followers, a single node failure or network outage would make the entire system unavailable for writing. And the more nodes you have, the likelier that one is down, so a fully synchronous configuration would be a very unreliable.
+		2. if an application reads from asynchronous followers, it may see outda‐ted information if the follower has fallen behind. This leads to apparent inconsisten‐ cies in the database: if you run the same query on the leader and a follower at the same time, you may get different results, because not all writes have been reflected in the follower.
+	10. Solutions for replication lag:
+		1. Reading your own writes
+		2. Monotonic reads: Our second example of an anomaly that can occur when reading from asynchronous followers: it’s possible for a user to see things moving backwards in time.One way of achieving monotonic reads is to make sure that each user always makes their reads from the same replica (different users can read from different replicas). For example, the replica can be chosen based on a hash of their user ID, rather than randomly.
+		3. Consistent prefix reads: This guarantee says that if a sequence of writes happens in a certain order, then anyone reading those writes will see them appear in the same order.
+
+Multi-leader replication
+	1. Use cases for multi-leader replication : It rarely makes sense to use a multi-leader setup within a single datacenter, because the benefits rarely outweigh the added complexity.
+		1. Multi-datacenter operation: Imagine you have a database with replicas in several different datacenters (perhaps so that you can tolerate failure of an entire datacenter, or perhaps in order to be closer to your users). With a normal leader-based replication setup, the leader has to be in one of the datacenters, and all writes must go through that datacenter.
+		2. Clients with offline operation: 
+	2. single-leader and multi-leader configurations fare in a multi- datacenter deployment:
+		1. Performance
+		2. Tolerance of datacenter outages
+		3. Tolerance of network problems	
+	3. Handling write conflicts:
+		1. Synchronous vs. asynchronous conflict detection	
+		2. Conflict avoidance
+		3. Converging towards a consistent state
+		4. Custom conflict resolution logic
+	4. Multi-leader replication topologies
+		1. Circular topology
+		2. Star topology
+		3. All-to-all topology
+
+Leaderless replication
+	1. Writing to the database when a node is down:
+		1. Imagine you have a database with three replicas, and one of the replicas is currently unavailable — perhaps it is being rebooted to install a system update. In a leader- based configuration, if you want to continue processing writes, you may need to per‐ form a failover.
+		2. Read repair: When a client makes a read from several nodes in parallel, it can detect any stale responses. The client sees that replica 3 has a stale value, and writes the newer value back to that replica. This works well for values that are frequently read.
+		3. Anti-entropy process: In addition, some datastores have a background process that constantly looks for differences in the data between replicas, and copies any missing data from one replica to another. Unlike the replication log in leader-based replication, this anti-entropy process does not copy writes in any particular order, and there may be a significant delay before data is copied.
+		4. Quorums for reading and writing
+		5. Sloppy quorums and hinted handoff
+			1. In a large cluster (with significantly more than n nodes) it’s likely that the client can connect to some database nodes during the network interruption, just not to the nodes that it needs to assemble a quorum for a particular value. If we accept writes anyway, and write them to some nodes that are reachable but aren’t among the n nodes on which the value usually lives? This is known as a sloppy quorum.
+			2. Once the network interruption is fixed, any writes that one node temporarily accepted on behalf of another node are sent to the appropriate “home” nodes. This is called hinted handoff.
+		6. Multi-datacenter operation
+		7. Detecting concurrent writes
+			1. Last write wins (discarding concurrent writes)	
+
+
+
+	
+			
+			
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

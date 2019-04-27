@@ -1,0 +1,85 @@
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+	logallrefupdates = true
+[remote "origin"]
+	url = git@bitbucket.org:paytmteam/ffservice-cinemas.git
+	fetch = +refs/heads/*:refs/remotes/origin/*
+[color]
+    ui = auto
+    diff = auto
+    status = auto
+    branch = auto
+[alias]
+    spull = !git-svn fetch && git-svn rebase
+    spush = !git-svn dcommit
+    send = !git spull && git spush
+    co = checkout
+    ci = commit
+    ca = commit -a
+    br = branch
+    st = status
+    lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+    undo = reset --hard
+    changes=diff --name-status -r
+    diffstat=diff --stat -r
+    serve = daemon --reuseaddr --verbose  --base-path=. --export-all ./.git
+    whois = "!sh -c 'git log -i -1 --pretty=\"format:%an <%ae>\n\" --author=\"$1\"' -"
+    whatis = show -s --pretty='tformat:%h (%s, %ad)' --date=short
+    edit-unmerged = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; gedit `f`"
+    add-unmerged = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; git add `f`"
+[branch "master"]
+	remote = origin
+	merge = refs/heads/master
+[branch "staging"]
+	remote = origin
+	merge = refs/heads/staging
+[branch "production"]
+	remote = origin
+	merge = refs/heads/production
+[branch "staging_custom"]
+	remote = origin
+	merge = refs/heads/staging_custom
+[branch "beta_test_move"]
+	remote = origin
+	merge = refs/heads/beta_test_move
+[branch "MOVIES-1516-adding-state-of-the-cinema-t"]
+	remote = origin
+	merge = refs/heads/MOVIES-1516-adding-state-of-the-cinema-t
+[branch "MOVIES-1494"]
+	remote = origin
+	merge = refs/heads/MOVIES-1494
+[branch "mPanelClean"]
+	remote = origin
+	merge = refs/heads/mPanelClean
+[branch "mLoyal_redeem"]
+	remote = origin
+	merge = refs/heads/mLoyal_redeem
+[branch "MOVIES-1646-price-breakup-handling-for-b"]
+	remote = origin
+	merge = refs/heads/MOVIES-1646-price-breakup-handling-for-b
+[branch "beta"]
+	remote = origin
+	merge = refs/heads/beta
+[branch "feature/pvReorg"]
+	remote = origin
+	merge = refs/heads/feature/pvReorg
+[branch "beta_common"]
+	remote = origin
+	merge = refs/heads/beta_common
+[branch "PVRevamp"]
+	remote = origin
+	merge = refs/heads/PVRevamp
+[branch "staging_filters"]
+	remote = origin
+	merge = refs/heads/staging_filters
+[branch "staging_wave_test"]
+	remote = origin
+	merge = refs/heads/staging_wave_test
+[branch "master_dev"]
+	remote = origin
+	merge = refs/heads/master_dev
+[branch "staging_common"]
+	remote = origin
+	merge = refs/heads/staging_common

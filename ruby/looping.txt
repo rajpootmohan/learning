@@ -1,0 +1,16 @@
+@names.each do |name|
+  puts "Hello #{name}!"
+end
+
+for i in 0..5
+   puts "Value of local variable is #{i}"
+end
+
+3.times do
+  print 'Welcome '
+end
+
+while $i < $num  do
+   puts("Inside the loop i = #$i" )
+   $i +=1
+end

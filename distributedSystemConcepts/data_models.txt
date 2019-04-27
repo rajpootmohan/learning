@@ -1,0 +1,5 @@
+Relational vs. document databases
+	1. Which data model leads to simpler application code?
+	2. Schema flexibility in the document model
+	3. Data locality for queries
+	4. Convergence of document and relational databases

@@ -1,0 +1,45 @@
+B-tree :
+	1. B-trees break the database down into fixed-size blocks or pages, traditionally 4 kB in size, and read or write one page at a time. This corre‐ sponds more closely to the underlying hardware, as disks are also arranged in fixed- size blocks.
+	2. B-tree with n keys always has a height of O(log n)
+	3. Update-in-place vs. append-only logging : In order to make the database resilient to crashes, it is normal for B-tree implementa‐ tions to include an additional data structure on disk: a write-ahead log (WAL, also known as redo log). This is an append-only file to which every B-tree modification must be written before it can be applied to the pages of the tree itself. When the data‐ base comes back up after a crash, this log is used to restore the B-tree back to a con‐ sistent state.
+	4. A B-tree index must therefore write every piece of data at least twice: once to the log, and once to the tree page itself (and perhaps again as pages are split). 
+
+B-tree optimizations :
+	1. Instead of overwriting pages and maintaining a WAL for crash recovery, some databases like LMDB use a copy-on-write scheme [20]. A modified page is writ‐ ten to a different location, and a new version of parent pages in the tree is cre‐ ated, pointing at the new location.
+	2. We can save space in pages by not storing the entire key, but abbreviating it. Especially in pages on the interior of the tree, keys only need to provide enough information to act as boundaries between key ranges. Packing more keys into a page allows the tree to have a higher branching factor, and thus fewer levels.
+	3. Additional pointers have been added to the tree, for example each leaf page may have references to its sibling pages to the left and right, which allows scanning keys in order without jumping back to parent pages.
+
+Multi-column indexes :
+	The most common type of multi-column index is called a concatenated index, which simply combines several fields into one key by appending one column to another (the index definition specifies in which order the fields are concatenated). This is like an old-fashioned paper phone book, which provides an index from (lastname, first‐ name) to phone number. Due to the sort order, the index can be used to find all the people with a particular last name, or all the people with a particular lastname- firstname combination. However, the index is useless if you want to find all the peo‐ ple with a particular first name.
+
+Fuzzy indexes :
+	All the indexes discussed so far assume that you have exact data, and allow you to query for exact values of a key, or a range of values of a key with a sort order. What they don’t allow you to do is search for similar keys, such as misspelled words. Such fuzzy querying requires different techniques.		
+
+Transaction processing systems (OLTP):
+	Main read pattern : Small number of records per query, fetched by key
+	Main write pattern : Random-access, low-latency writes from user input
+	Primarily used by : End user/customer, via web application
+	What data represents : Latest state of data (current point in time)
+	Dataset size : Gigabytes to terabytes
+
+Analytic systems (OLAP)
+	Main read pattern : Aggregate over large number of records 
+	Main write pattern : Bulk import (ETL) or event stream
+	Primarily used by : Internal analyst, for decision support
+	What data represents : History of events that happened over time
+	Dataset size : Terabytes to petabytes
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+

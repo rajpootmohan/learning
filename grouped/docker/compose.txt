@@ -1,0 +1,5 @@
+docker-compose up  // create multi-containers
+                   // -d detach mode
+
+docker-compose ps          // get docker-compose processes
+docker-compose stop        // stop docker-compose

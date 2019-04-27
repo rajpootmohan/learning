@@ -1,0 +1,46 @@
+TERM FREQUENCY tf ( t in d ) : term frequency in a document
+	A. measure of how often a term appears in the document.
+	B. the number of time t appears in the currently scored document d
+
+INVERSE DOCUMENT FREQUENCY ( t ): idf
+	A. measure of whether the term is common or rare across all documents.
+	B. obtained by dividing the total number of documents by the number of documents containing the term, and then taking the logarithm of that quotient.
+
+FIELDS:
+	Fields are the smallest individual unit of data in Elasticsearch. Each field has a defined type and contains a single piece of data that can be, for example, a boolean, string or array expression. A collection of fields are together a single Elasticsearch document.
+
+DOCUMENTS: 
+	Documents are JSON objects that are stored within an Elasticsearch index and are considered the base unit of storage. In the world of relational databases, documents can be compared to a row in table. Documents also contain reserved fields that constitute the document metadata such as:
+		_index – the index where the document resides
+		_type – the type that the document represents
+		_id – the unique identifier for the document
+
+TYPES: 
+	Elasticsearch types are used within documents to subdivide similar types of data wherein each type represents a unique class of documents. Types consist of a name and a mapping and are used by adding the _type field. This field can then be used for filtering when querying a specific type.
+
+MAPPINGS: 
+	Like a schema in the world of relational databases, mapping defines the different types that reside within an index. It defines the fields for documents of a specific type — the data type (such as string and integer) and how the fields should be indexed and stored in Elasticsearch.
+
+INDEX:
+	Indices, the largest unit of data in Elasticsearch, are logical partitions of documents and can be compared to a database in the world of relational databases.
+
+SHARDS:
+	Shards are a single Lucene index. Each index is comprised of shards across one or many nodes. When you create an index, you can define how many shards you want. After creating indices, you can not change the number of shards. A "shard" is the basic scaling unit for Elasticsearch. As documents are added to the index, it is routed to a shard.
+
+REPLICAS:
+	Replicas are Elasticsearch fail-safe mechanisms and are basically copies of your index’s shards. Replicas also serve read requests, so adding replicas can help to increase search performance. To ensure high availability, replicas are not placed on the same node as the original shards (called the “primary” shard) from which they were replicated.
+
+ANALYZERS:
+	Analyzers are used during indexing to break down phrases or expressions into terms. Defined within an index, an analyzer consists of a single tokenizer and any number of token filters.
+
+NODES: 
+	DATA NODES: stores data and executes data-related operations such as search and aggregation.
+	MASTER NODES: in charge of cluster-wide management and configuration actions such as adding and removing nodes.
+	CLIENT NODES: forwards cluster requests to the master node and data-related requests to data nodes.
+	INGESTION NODES: for pre-processing documents before indexing.
+
+CLUSTER: 
+	An Elasticsearch cluster is comprised of one or more Elasticsearch nodes. As with nodes, each cluster has a unique identifier that must be used by any node attempting to join the cluster.
+
+INVERTED INDEX: 
+	The inverted index maps terms to documents (and possibly positions in the documents) containing the term. Since the terms in the dictionary are sorted, we can quickly find a term, and subsequently its occurrences in the postings-structure. This is contrary to a "forward index", which lists terms related to a specific document.

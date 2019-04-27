@@ -1,0 +1,27 @@
+PUT vs POST:
+	1. You have to ask "what are you performing the action to?" to distinguish what you should be using. Let's assume you're designing an API for asking questions. If you want to use POST then you would do that to a list of questions. If you want to use PUT then you would do that to a particular question.
+	2. Some considerations:
+		1. Do you name your URL objects you create explicitly, or let the server decide? If you name them then use PUT. If you let the server decide then use POST.
+		2. PUT is idempotent, so if you PUT an object twice, it has no effect. This is a nice property, so I would use PUT when possible.
+		3. You can update or create a resource with PUT with the same object URL
+		4. With POST you can have 2 requests coming in at the same time making modifications to a URL, and they may update different parts of the object.
+	3. POST:
+		1. Used to modify and update a resource
+		2. 	POST /questions/<existing_question> HTTP/1.1
+			Host: www.example.com/
+		3. Note that the following is an error:
+			POST /questions/<new_question> HTTP/1.1
+			Host: www.example.com/
+		4. If the URL is not yet created, you should not be using POST to create it while specifying the name. This should result in a 'resource not found' error because <new_question> does not exist yet. You should PUT the <new_question> resource on the server first.
+		5. You could though do something like this to create a resources using POST:
+		6. POST /questions HTTP/1.1
+			Host: www.example.com/
+			Note that in this case the resource name is not specified, the new objects URL path would be returned to you.
+	4. PUT:
+		1. Used to create a resource, or overwrite it. While you specify the resources new URL.
+		2. For a new resource:
+			PUT /questions/<new_question> HTTP/1.1
+			Host: www.example.com/
+		3. To overwrite an existing resource:
+			PUT /questions/<existing_question> HTTP/1.1
+			Host: www.example.com/		

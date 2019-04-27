@@ -1,0 +1,45 @@
+********** TYPE OF PARTITIONING ***************************
+
+1. RANGE PARTITIONING:
+	a. It is accomplished by mapping ranges of objects into specific Redis instances. For example, I could say users from ID 0 to ID 10000 will go into instance R0, while users form ID 10001 to ID 20000 will go into instance R1 and so forth.
+	b. it has the disadvantage of requiring a table that maps ranges to instances. This table needs to be managed and a table is needed for every kind of object, so therefore range partitioning in Redis is often undesirable because it is much more inefficient than other alternative partitioning approaches.
+
+2. HASH PARTITIONING: 
+	a. Take the key name and use a hash function (e.g., the crc32 hash function) to turn it into a number. For example, if the key is foobar, crc32(foobar) will output something like 93024922.
+	b. Use a modulo operation with this number in order to turn it into a number between 0 and 3, so that this number can be mapped to one of my four Redis instances. 93024922 modulo 4 equals 2, so I know my key foobar should be stored into the R2 instance.
+
+3. CONSISTENT HASHING:
+
+******* DIFFERENT IMPLEMENTAIONS OF PARTITIONING  *********
+
+1. CLIENT SIDE PARTITIONING:
+	means that the clients directly select the right node where to write or read a given key. Many Redis clients implement client side partitioning.
+
+2. PROXY ASSISTED PARTITIONING: 
+	means that our clients send requests to a proxy that is able to speak the Redis protocol, instead of sending requests directly to the right Redis instance. The proxy will make sure to forward our request to the right Redis instance accordingly to the configured partitioning schema, and will send the replies back to the client. The Redis and Memcached proxy Twemproxy implements proxy assisted partitioning.
+
+3. QUERY ROUTING: 
+	means that you can send your query to a random instance, and the instance will make sure to forward your query to the right node.
+
+****************** REDIS PARTITIONING **********************
+
+1. REDIS CLUSTER:
+	a. Redis Cluster is the preferred way to get automatic sharding and high availability.
+	b. Redis Cluster is a mix between query routing and client side partitioning.
+
+2. TWEMPROXY:
+	a. It is single threaded, it is written in C, and is extremely fast.
+	b. Twemproxy supports automatic partitioning among multiple Redis instances, with optional node ejection if a node is not available (this will change the keys-instances map, so you should use this feature only if you are using Redis as a cache).
+	c. It is not a single point of failure since you can start multiple proxies and instruct your clients to connect to the first that accepts the connection.
+	d. Basically Twemproxy is an intermediate layer between clients and Redis instances, that will reliably handle partitioning for us with minimal additional complexities.	
+
+1. DISADVANTAGES OF PARTITIONING:
+	a. Operations involving multiple keys are usually not supported.
+	b. Redis transactions involving multiple keys can not be used.
+	c. When partitioning is used, data handling is more complex, for instance you have to handle multiple RDB / AOF files, and to make a backup of your data you need to aggregate the persistence files from multiple instances and hosts.
+	d. Adding and removing capacity can be complex. 
+
+2. DATA STORE or CACHE ?
+	a. If Redis is used as a cache scaling up and down using consistent hashing is easy.
+	b. If Redis is used as a store, a fixed keys-to-nodes map is used, so the number of nodes must be fixed and cannot vary.
+

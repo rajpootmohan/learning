@@ -1,0 +1,40 @@
+1. INHERITENCE USING Object.create
+        var person = {
+          firstName: '',
+          lastName: '',
+          greet: function(){
+            return this.firstName + ' ' + this.lastName;
+          }
+        }
+        var me = Object.create(person);
+        me.firstName = "mohan";
+        me.lastName = "singh";
+        console.log(me.greet());
+2. util.inherits(class, SuperClass); // inheriting from superClass to Class. uses Object.create internally.
+3. We have to call parent constructor for setting the this variables if we want to set parent this object. Calling would be like :
+          <parent_constructor_name>.call(this);
+3. FUNCTION CONSTRUCTOR: A normal function that is used to construct objects.
+4. FUNCTIONAL INHERITENCE:
+        var Person = function(firstName, lastName){
+          this.firstName = firstName;
+          this.lastName = lastName;
+        }
+        Person.prototype.greet = function () {
+          console.log("Hi " + this.firstName + " " + this.lastName);
+        };
+
+        var me = new Person("Mohan", "Singh");
+        console.log(me.firstName);
+        me.greet();
+5. ES6 CLASSES
+        var EventEmitter = require('events');
+        class Greetr extends EventEmitter {
+        	constructor() {
+        		super();
+        		this.greeting = 'Hello world!';
+        	}
+        	greet(data) {
+        		console.log(`${ this.greeting }: ${ data }`);
+        		this.emit('greet', data);
+        	}
+        }

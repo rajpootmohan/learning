@@ -1,0 +1,31 @@
+Best Practices for Designing a Pragmatic RESTful API
+	1. An API is a user interface for a developer - so put some effort into making it pleasant
+	2. Use RESTful URLs and actions
+	3. Use SSL everywhere, no exceptions
+	4. An API is only as good as its documentation - so have great documentation
+	5. Version via the URL, not via headers
+	6. Use query parameters for advanced filtering, sorting & searching
+	7. Provide a way to limit which fields are returned from the API
+	8. Return something useful from POST, PATCH & PUT requests
+	9. HATEOAS isn't practical just yet
+	10.Use JSON where possible, XML only if you have to
+	11.You should use camelCase with JSON, but snake_case is 20% easier to read
+	12.Pretty print by default & ensure gzip is supported
+	13.Don't use response envelopes by default
+	14.Consider using JSON for POST, PUT and PATCH request bodies
+	15.Paginate using Link headers
+	16.Provide a way to autoload related resource representations
+	17.Provide a way to override the HTTP method
+	18.Provide useful response headers for rate limiting
+	19.Use token based authentication, transported over OAuth2 where delegation is needed
+	20.Include response headers that facilitate caching
+	21.Define a consumable error payload
+	22.Effectively use HTTP Status codes
+
+Versioning
+	1. Always version your API. Versioning helps you iterate faster and prevents invalid requests from hitting updated endpoints. It also helps smooth over any major API version transitions as you can continue to offer old API versions for a period of time.
+	2. There are mixed opinions around whether an API version should be included in the URL or in a header. Academically speaking, it should probably be in a header. However, the version needs to be in the URL to ensure browser explorability of the resources across versions (remember the API requirements specified at the top of this post?).
+	3. I'm a big fan of the approach that Stripe has taken to API versioning - the URL has a major version number (v1), but the API has date based sub-versions which can be chosen using a custom HTTP request header. In this case, the major version provides structural stability of the API as a whole while the sub-versions accounts for smaller changes (field deprecations, endpoint changes, etc).
+	4. An API is never going to be completely stable. Change is inevitable. What's important is how that change is managed. Well documented and announced multi-month deprecation schedules can be an acceptable practice for many APIs. It comes down to what is reasonable given the industry and possible consumers of the API.
+
+	

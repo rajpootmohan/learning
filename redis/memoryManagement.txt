@@ -1,0 +1,28 @@
+1. Using 32 bit instances:
+	a. Redis compiled with 32 bit target uses a lot less memory per key, since pointers are small.
+	b. Such an instance will be limited to 4 GB of maximum memory usage.
+	b. To compile Redis as 32 bit binary use make 32bit.
+	c. RDB and AOF files are compatible between 32 bit and 64 bit instances.
+
+2. Bit and byte level operations:
+	a. Redis 2.2 introduced new bit and byte level operations: GETRANGE, SETRANGE, GETBIT and SETBIT.
+	b. You can treat the Redis string type as a random access array.
+
+3. Use hashes when possible:
+	a. Small hashes are encoded in a very small space, so you should try representing your data using hashes whereever possible.
+	b. Instead of using different keys for name, surname, email, password, use a single hash with all the required fields.
+
+4. maxmemory <bytes>
+	a. Set a memory usage limit to the specified amount of bytes.
+	b. if you have slaves attached it is suggested that you set a lower limit for maxmemory so that there is some free RAM on the system for slave output buffers.
+
+
+5. MAXMEMORY POLICTY: Redis will select what to remove when maxmemory is reached. You can select among five behaviors:
+	# volatile-lru -> Evict using approximated LRU among the keys with an expire set.
+	# allkeys-lru -> Evict any key using approximated LRU.
+	# volatile-lfu -> Evict using approximated LFU among the keys with an expire set.
+	# allkeys-lfu -> Evict any key using approximated LFU.
+	# volatile-random -> Remove a random key among the ones with an expire set.
+	# allkeys-random -> Remove a random key, any key.
+	# volatile-ttl -> Remove the key with the nearest expire time (minor TTL)
+	# noeviction -> Don't evict anything, just return an error on write operations.

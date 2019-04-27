@@ -1,0 +1,191 @@
+ethods are:
+  where select group order reorder reverse_order limit offset joins includes lock readonly from having
+
+c = Client.find(10)
+c = Client.first!
+c = Client.last!
+c = Client.find([1, 10]) # Or even Client.find(1, 10)
+
+=>FIND_EACH
+    User.find_each(:start => 2000, :batch_size => 5000) do |user|
+      NewsLetter.weekly_deliver(user)
+    end
+
+=>FIND_IN_BATCHES
+    # Give add_invoices an array of 1000 invoices at a time
+    Invoice.find_in_batches(:include => :invoice_lines) do |invoices|
+      export.add_invoices(invoices)
+    end
+
+Client.where("orders_count = ? AND locked = ?", params[:orders], false)
+
+Client.where("created_at >= :start_date AND created_at <= :end_date",
+  {:start_date => params[:start_date], :end_date => params[:end_date]})
+
+Client.where(:created_at => (params[:start_date].to_date)..(params[:end_date].to_date))
+
+Client.where(:locked => true)
+Client.where('locked' => true)
+
+Client.where(:orders_count => [1,3,5])
+
+Client.order("created_at")
+
+Client.order("created_at DESC")
+# OR
+Client.order("created_at ASC")
+
+Client.order("orders_count ASC, created_at DESC")
+
+Client.select("viewable_by, locked")
+#If the select method is used, all the returning objects will be read only.
+
+query = Client.select(:name).uniq
+# => Returns unique names
+query.uniq(false)
+# => Returns all names, even if there are duplicates
+
+Client.limit(5)
+
+Client.limit(5).offset(30)
+
+Order.select("date(created_at) as ordered_date, sum(price) as total_price").group("date(created_at)")
+
+Order.select("date(created_at) as ordered_date, sum(price) as total_price").group("date(created_at)").having("sum(price) > ?", 100)
+
+Post.where('id > 10').limit(20).order('id asc').except(:order)
+
+Post.where('id > 10').limit(20).order('id desc').only(:order, :where)
+
+class Post < ActiveRecord::Base
+  ..
+  has_many :comments, :order => 'posted_at DESC'
+end
+
+Post.first.comments.reorder('name')
+
+Client.where("orders_count > 10").order(:name).reverse_order
+
+=>READONLY: Active Record provides readonly method on a relation to explicitly disallow modification or
+            deletion of any of the returned object.
+client = Client.readonly.first
+client.visits += 1
+client.save
+
+=>Locking Records for Update
+    1.Optimistic Locking: Optimistic locking allows multiple users to access the same record for edits,
+     and assumes a minimum of conflicts with the data.In order to use optimistic locking, the table needs
+     to have a column called lock_version. Each time the record is updated, Active Record increments
+     the lock_version column. If an update request is made with a lower value in the lock_version field
+     than is currently in the lock_version column in the database, the update request will fail with an
+     ActiveRecord::StaleObjectError.
+
+     2.Pessimistic Locking: Pessimistic locking uses a locking mechanism provided by the underlying
+     database. Using lock when building a relation obtains an exclusive lock on the selected rows.
+     Relations using lock are usually wrapped inside a transaction for preventing deadlock conditions.
+       Item.transaction do
+          i = Item.lock.first
+          i.name = 'Jones'
+          i.save
+       end
+
+Client.joins('LEFT OUTER JOIN addresses ON addresses.client_id = clients.id')
+
+Category.joins(:posts) # will produce given query
+  SELECT categories.* FROM categories
+  INNER JOIN posts ON posts.category_id = categories.id
+
+Post.joins(:category, :comments)
+  SELECT posts.* FROM posts
+  INNER JOIN categories ON posts.category_id = categories.id
+  INNER JOIN comments ON comments.post_id = posts.id
+
+Post.joins(:comments => :guest)
+  SELECT posts.* FROM posts
+  INNER JOIN comments ON comments.post_id = posts.id
+  INNER JOIN guests ON guests.comment_id = comments.id
+
+Category.joins(:posts => [{:comments => :guest}, :tags])
+  SELECT categories.* FROM categories
+  INNER JOIN posts ON posts.category_id = categories.id
+  INNER JOIN comments ON comments.post_id = posts.id
+  INNER JOIN guests ON guests.comment_id = comments.id
+  INNER JOIN tags ON tags.post_id = posts.id
+
+time_range = (Time.now.midnight - 1.day)..Time.now.midnight
+Client.joins(:orders).where('orders.created_at' => time_range)
+OR
+time_range = (Time.now.midnight - 1.day)..Time.now.midnight
+Client.joins(:orders).where(:orders => {:created_at => time_range})
+
+Post.includes(:category, :comments)
+#This loads all the posts and the associated category and comments for each post.
+
+Post.includes(:comments).where("comments.visible", true)
+  #This would generate a query which contains a LEFT OUTER JOIN whereas the joins
+   method would generate one using the INNER JOIN function instead.
+SELECT "posts"."id" AS t0_r0, ... "comments"."updated_at" AS t1_r5 FROM "posts" LEFT OUTER JOIN "comments"
+ON "comments"."post_id" = "posts"."id" WHERE (comments.visible = 1)
+  #If there was no where condition, this would generate the normal set of two queries.
+
+class Post < ActiveRecord::Base
+  scope :published, where(:published => true)
+end
+Category.first.posts.published # => [published posts belonging to this category]
+
+class Post < ActiveRecord::Base
+  def self.1_week_before(time)
+    where("created_at < ?", time)
+  end
+end
+category.posts.1_week_before(time)
+
+client = Client.find_by_first_name("Ryan")
+orders = client.orders.scoped
+orders.where("created_at > ?", 30.days.ago)
+
+class Client < ActiveRecord::Base
+  default_scope where("removed_at IS NULL")
+end
+#DEFAUL QUERY will be like............... SELECT * FROM clients WHERE removed_at IS NULL
+
+Client.unscoped.all
+
+Dynamic Finders: If you have a field called first_name on your Client model for example, you get
+                find_by_first_name and find_all_by_first_name
+
+Client.find_by_first_name_and_locked("Ryan", true).
+Client.find_or_create_by_first_name(:first_name => "Andy", :locked => false)
+Client.where(:first_name => 'Andy').first_or_create(:locked => false)
+
+Client.find_by_sql("SELECT * FROM clients
+  INNER JOIN orders ON clients.id = orders.client_id
+  ORDER clients.created_at desc")
+
+Client.where(:active => true).pluck(:id)
+Client.uniq.pluck(:role)
+
+Client.exists?(1)
+
+Client.exists?(1,2,3)
+# or
+Client.exists?([1,2,3])
+
+Client.where(:first_name => 'Ryan').exists?
+
+Client.exists?
+
+Client.count
+# SELECT count(*) AS count_all FROM clients
+
+Client.where(:first_name => 'Ryan').count
+# SELECT count(*) AS count_all FROM clients WHERE (first_name = 'Ryan')
+
+Client.count(:age)
+Client.average("orders_count")
+Client.minimum("age")
+Client.maximum("age")
+Client.sum("orders_count")
+
+=>EXPLAIN
+    User.where(:id => 1).joins(:posts).explain

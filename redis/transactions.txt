@@ -1,0 +1,24 @@
+1. TRANSACTIONS:
+	a. All the commands in a transaction are serialized and executed sequentially.
+	b. Either all of the commands or none are processed, so a Redis transaction is also atomic.
+
+2. ERRORS INDSIDE A TRANSACTIONS:
+	a. A command may fail to be queued, so there may be an error before EXEC is called.
+	b. Server will remember that there was an error during the accumulation of commands, and will refuse to execute the transaction returning also an error during EXEC, and discarding the transaction automatically.
+	c. A command may fail after EXEC is called, for instance since we performed an operation against a key with the wrong value.
+	d. Errors happening after EXEC instead are not handled in a special way: all the other commands will be executed even if some command fails during the transaction.
+	e. It's important to note that even when a command fails, all the other commands in the queue are processed – Redis will not stop the processing of commands.
+
+3. WHY REDIS DOES NOT SUPPORT ROLLBACKS ?
+	a. Redis commands can fail only if called with a wrong syntax (and the problem is not detectable during the command queueing), or against keys holding the wrong data type: this means that in practical terms a failing command is the result of a programming errors, and a kind of error that is very likely to be detected during development, and not in production.
+	b. Redis is internally simplified and faster because it does not need the ability to roll back.
+
+4. OPTIMISTIC LOCKING USING CHECK-AND-SET : 
+	a. WATCH is used to provide a check-and-set (CAS) behavior to Redis transactions.
+	b. WATCHed keys are monitored in order to detect changes against them. If at least one watched key is modified before the EXEC command, the whole transaction aborts, and EXEC returns a Null reply to notify that the transaction failed.
+
+5. COMMANDS:
+	multi                      // started transactions
+	exec                       // execute transactions
+	discard                    // discard transactions
+	

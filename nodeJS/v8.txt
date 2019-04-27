@@ -1,0 +1,4 @@
+1. v8 is written in C++ so node also.
+2. ECMASCRIPT: standard javascipt is based on. Need standard becuase of many engines.
+4. We can add features in javascript by writing code in CPP which include v8 code.
+3. JAVASCRIPT ENGINE: A program that converts javascript code into something the computer processor can understand. v8 is a javascript engine.

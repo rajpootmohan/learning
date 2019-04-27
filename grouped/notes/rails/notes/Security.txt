@@ -1,0 +1,66 @@
+=>CSRF (Cross Site Request Forgery): you close browser without logout, someone
+    write script with your other request.
+=>Preventing CSRF
+    *require user authentication
+    *regularly logout inactive users
+    *GET request should be read only
+    *Action that expect POST requests should only respond to POST requests
+    *authenticity token is added as a hidden field in every post request
+    *put protect_from_forgery in application controller
+=>Disabling CSRF
+    *For whole controller
+       skip_before_action :verify_authenticity_token
+    *For whole controller excepting some of the actions
+       protect_from_forgery :except=>[:import,:export] 
+=>CSRF Token for Javascript and ajax
+    <%= csrf_meta_tag %>
+
+=>BCRYPT
+    has_secure_password written in model, it provides
+      attr_reader :password
+      validates_confirmation_of :password
+      validates_presense_of :password_digest
+      object.autheticate(password)  #method for authentication
+      password=                     #for setting password
+
+=>Cookies
+     Maintains on client,
+     Add state to a website,
+     Web server sends data in a cookie file to the browser, which then saves it,
+     Browser sends cookie data with each request for that web server,
+     Have a maximum size of 4K,
+     Resides on user's computer (can be deleted, read, or altered)
+
+     cookies[:username] = "John Smith"
+     cookies[:username] = {:value=>"John Smith",:expires=>1.week.from_now}
+     <%= cookies[:username] %>
+
+=>Sessions
+    Designed to address the limitations of cookies     
+    Web server sends an ID in a cookie to the browser, which then saves it
+    Browsers send cookie data with each request for that web server
+    Web server or application uses cookie ID to locate the session file
+    Extra time to retrieve session file for each request
+    Old session files accumulate
+    Session cookie still resides on the user's computer(can be deleted,hijacked)
+
+    session[:username] = "John Smith"
+    <%= session[:username] %>
+
+=>Session Storage(Cookie Storage)    
+    Fast, 4K, no bloat, no hijacking
+    Encoded, Not encrypted
+    Digest value stored to prevent tampering
+
+=>ESCAPING OUTPUT
+    html_escape(),h()  #convert to string (it is default)
+    raw()              #leave it as it is for this time
+    html_safe          #safe html for all time
+    html_safe?         #check html safe or not?
+    strip_links(html)  #Remove html links from text
+    strip_tags(html)   #Remove all HTML tags from text
+    sanitize(html,options) 
+    sanitize(string,:tags=>['em','a']) #remove all tags excepting white list given
+   
+=>ESCAPING JAVASCRIPT
+     escape_javascript() or j()    

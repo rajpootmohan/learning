@@ -1,0 +1,15 @@
+Cross Site Scripting :
+   I'd be very interested in ways to insert some of my JS into your page.
+   You manually escape untrusted input, using the h() method.
+   Rails 3 and 4 are much better. Output is escaped by default.
+   Defence : you need to escape any text that a user has entered.
+
+Cross site request forgery: 
+   If a user wants to change their password, they post a form, right? So what happens if the form isn't on your website?
+   The request still goes through. Attackers can exploit this fact.
+   I know you're logged in to your app as an admin
+   I create a "change password" form disguised as something else
+   You submit the form and, without realizing it, you've changed your password.
+   Defence : rails sidesteps this class of attack by offering CSRF protection. You may know it as "that weird text that gets put in 
+             all my forms for some reason.
+

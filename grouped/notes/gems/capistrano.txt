@@ -1,0 +1,18 @@
+Directory Structure:
+  app/releases
+  app/shared
+  app/current ---> releases/20160717124356
+
+cap deploy: 
+  deploy:update_code    // check new release in releases directory
+  deploy:symlink        // create symlink to the new release
+  deploy:restart
+
+
+
+
+PATH=/bin:/usr/local/bin:/usr/local/sbin:/usr/local/bin/bundle:/usr/sbin:/usr/bin:/sbin:/bin:/home/ubuntu/.rvm/gems/ruby-2.2.4@kalakaars.com/bin
+GEM_HOME=/home/ubuntu/.rvm/gems/ruby-2.2.4
+
+
+

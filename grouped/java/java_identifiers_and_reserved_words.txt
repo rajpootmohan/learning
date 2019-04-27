@@ -1,0 +1,12 @@
+1. java identifiers are class names, method names, variable names and label names.
+2. identifiers should contain only [ a-z , A-Z, 0-9, $, _ ]
+3. identifier names can't start from digits.
+4. There in no length of limit in java identifiers.
+5. Reserved words can't be used as identifier names.
+6. Pre-defined Class names and Interface names can be used as identifier names.
+
+RESERVED WORDS: 1. Keywords (50) In which 2 Keywords didn't used ( goto and const)
+                2. Reserved literals (3)
+
+ 7. In java, return type is mandatory.
+ 

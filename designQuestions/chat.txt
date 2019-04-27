@@ -1,0 +1,88 @@
+Q: What is the scale that we are looking at? 
+A: Let's assume the scale of Facebook Messages. Let's say we need to hand around 10B message sends a day and around 300M users.
+
+Q: Do we only need to support 1:1 conversations or group conversations as well? 
+A: Let's assume we are building things just for 1:1 conversations. We will extend it to group conversations if need be.
+
+Q: Do we need to support attachments? 
+A: For now, let's assume that we don’t. We will only look at building plain-text messaging system.
+
+Q: What is a reasonable limit to the size of a message? 
+A: Let's assume that we are building a chat messaging system. As such, we would expect every message to be shorter in length. We can impose a limit here on the maximum size of such a message. Let's say we will only handle messages less than 64Kb in size and reject the others.
+
+Q: What about the notification system for new messages received? 
+A: Considering the size of the discussion here ( 45 mins in the interview ), we will not delve into the notification system for messages.
+
+Q: Given the number of messages being sent, what is the amount of message sent data size we are generating everyday?
+A: Number of message sends : 10B 
+Assuming each message on average has 160 characters , that results in 10B * 160 = 1.6TB assuming no message metadata.
+
+Q: What is the expected storage size?
+A: From the previous section, we know that we generate 1.6TB data everyday if we only store one copy of the message. If we were to provision for 10 years, we are looking at 1.6 * 365 * 10 TB which is approximately 6 Petabytes.
+
+Q: Is Latency a very important metric for us?
+A: Yes. Chat is supposed to be realtime, and hence the end to end time actually matters.
+
+Q: How important is Consistency for us?
+A: Definitely, yes. Its not okay if someone sends me a sequence of message and I don’t see some of them. That could lead to huge confusion. Think of cases when you miss an emergency message or missed messages cause misunderstanding between individuals.
+
+Q: How important is Availability for us?
+A: Availability is good to have. If we had to choose between consistency and availability, consistency wins.
+
+Q: What are the operations that we need to support?
+A: Send a message to another person
+For a user, fetch the most recent conversations
+For every conversation, fetch the most recent messages
+
+Q: How do we handle the case where our application server dies?
+A: The simplest thing that could be done here is to have multiple application server. They do not store any data (stateless) and all of them behave the exact same way when up. So, if one of them goes down, we still have other application servers who would keep the site running.
+
+Q: How does our client know which application servers to talk to. How does it know which application servers have gone down and which ones are still working?
+A: We introduce load balancers. Load balancers are a set of machines (an order of magnitude lower in number) which track the set of application servers which are active ( not gone down ). Client can send request to any of the load balancers who then forward the request to one of the working application servers randomly. 
+
+Q: How would you take care of application layer fault tolerance?
+A: If we have only one application server machine, our whole service would become unavailable. Machines will fail and so will network. So, we need to plan for those events. Multiple application server machines along with load balancer is the way to go.
+
+Q: Are joins required?
+A: NoSQL databases are inefficient for joins or handling relations. As such, NoSQL databases store everything in a denormalized fashion. In this case, we do have relations like 
+user -> messages
+user -> conversations
+conversation -> messages
+SQL seems to win on this parameter on ease of use.
+
+Q: How much data would we have to store?
+A: If the size of the data is so small that it fits on a single machine’s main memory, SQL is a clear winner. SQL on a single machine has next to zero maintenance overhead and has great performance with right index built. If your index can fit into RAM, its best to go with a SQL solution. In our earlier estimations, we had already established that we will need to provision petabytes of data which most definitely does not fit on a single machine. 
+So, a SQL solution will have a sharding overhead. Most NoSQL solutions however are built with the assumption that the data does not fit on a single machine and hence have sharding builtin. NoSQL wins on this parameter.
+
+Q: What is the read-write pattern?
+A: Messaging is going to be very write heavy. Unlike photos or tweets or posts which are written once and then consumed a lot of times by a lot of people, messaging is written once and consumed by the other participant once. 
+For a write heavy system with a lot of data, RDBMS usually don’t perform well. Every write is not just an append to a table but also an update to multiple index which might require locking and hence might interfere with reads and other writes. 
+However, there are NoSQL DBs like HBase where writes are cheaper. NoSQL seems to win here.
+
+Q: RDBMS or NoSQL?
+A: Things to consider : 
+Are joins required?
+Size of the DB
+Technology Maturity
+From the looks of it, NoSQL seems like a better fit. Let's proceed with NoSQL for now.
+
+Q: How would we store the data? Discuss schema
+A: As discussed before, with NoSQL, we need to store the data in denormalized form. 
+First thing first, this means that every user would have his/her own copy of the mailbox. That means that we will store 2 copies of the message, one for each participant for every message send. 
+Let's delve into how the schema would look. We’ll assume that we are using HBase for this problem. 
+If this is your first time designing schema, we strongly recommend you go through a primer here . 
+For schema design, its good to recognize our access patterns. To achieve that, let's look at our major operations :
+For a user, append a message to a conversation
+Fetch timestamp ordered conversations for a user ( Most recent )
+Fetch most recent messages in a conversation for a user ( Most recent )
+As you can see, the first lookup for all three operations is for the user. In NoSQL context, it hence makes sense to have userId as the row ID ( Data is sharded based on users ). 
+Now, within the user, we will need to lookup conversations, recent conversations and recent messages. 
+One naive approach is to fetch the whole list of conversations or all the messages in a conversation and then filter the data we need. This however is really slow ( Remember that one of our design goals was to have low latency ). Even more so, in cases when some popular users get a lot of message and have a huge mailbox (in GBs).
+Let's see, how we would solve each read request one by one.
+Recent conversations : We can separately store conversationId : timestamp mapping in the same row ( In case of HBase, in a separate column family). This will not be a lot of data and its okay to read it completely (ofcourse, with caching).
+Recent messages in a conversation : Loading all the messages or loading all the messages in a conversation would make this really expensive. Doing the same thing with messageIds is still an improvement in terms of the amount of data that we have to load. 
+As an improvement, if key in the same index is conversationID_timestamp, we can use a prefix search of conversationID and use the most recent messages based on timestamp in the key ( assuming, the data is stored sorted with the key ).
+
+
+
+

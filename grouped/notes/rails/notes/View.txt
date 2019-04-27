@@ -1,0 +1,219 @@
+=>Rendering a page forcefully using action (OR Rendering template)
+   render(:template => 'demo/hello') OR
+   render('demo/hello') OR
+   render('hello') // no need to specify directory name if default is using
+   * render will tell Rails what view it should use but redirect_to sends a new request to 
+     the browser
+
+=>We can use redirection to any specific page (like www.lynda.com). Redirection to a specific 
+  page
+    redirect_to(:controller => 'demo', :action => 'index') OR
+    redirect_to(:action => 'index')   // if controller is same
+
+=>RENDER
+    render :nothing => true             #render nothing
+    render :edit                        #rendering an action's view
+    render 'products/show'              #rendering an action's template from another controller 
+    render :template => 'products/show' #rendering an action's template from another controller 
+    render "/u/apps/warehouse_app/current/app/views/products/show"  #render a arbitrary file
+    render :inline => "<% products.each do |p| %><p><%= p.name %></p><% end %>"
+    render :text => "OK"                #rendering text
+    render :xml => @product             #rendering xml
+    render :js => "alert('Hello Rails');" #rendering vanilla javascript
+
+=>REDIRECT
+    redirect_to photos_url
+
+=>JAVASCRIPT_INCLUDE_TAG
+    <%= javascript_include_tag('application') %> 
+    <%= javascript_tag("alert('Are you sure?');") %>
+    <%= javascript_include_tag "main" %>
+    <%= javascript_include_tag "main", "columns" %>
+    <%= javascript_include_tag "main", "/photos/columns" %>
+    <%= javascript_include_tag "main", "columns", :cache => true %>
+
+=>STYLESHEET_LINK_TAG
+    <%= stylesheet_link_tag 'application', :media => 'all' %>
+    <%= stylesheet_link_tag "main" %>
+    <%= stylesheet_link_tag "main", "columns" %>
+
+=>IMAGE HELPER
+    <%= image_tag('logo.png') %>
+
+=>YIELD :You can also create a layout with multiple yielding regions.
+    <html>
+		  <head>
+		  <%= yield :head %>
+		  </head>
+		  <body>
+		  <%= yield %>
+		  </body>
+		</html>
+
+    <% content_for :head do %>
+		  <title>A simple page</title>
+		<% end %>
+		 
+		<p>Hello, Rails!</p>
+
+=>PARTIALS
+    <%= render "menu" %>       #Naming partials
+    <%= render :partial => "link_area", :layout => "graybar" %>  #Partial layouts
+
+    * Every partial also has a local variable with the same name as the partial (minus the underscore).
+      You can pass an object in to this local variable via the :object option:
+         <%= render :partial => "customer", :object => @new_customer %>
+         Within the customer partial, the customer variable will refer to @new_customer from the parent view.
+
+    <h1>Products</h1>
+    <%= render :partial => "product", :collection => @products %>
+    # When you pass a collection to a partial via the :collection option, the partial will be inserted 
+      once for each member in the collection:
+
+=>FORM_TAG and TEXT_FIELD_TAG
+    <%= form_tag(:action => 'create') do %>
+      <%= text_field_tag('subject[name]') %>
+      <%= text_field_tag('subject[position]') %>
+      <%= submit_tag ("Create Subject") %>
+    <% end %>
+    
+=>FORM_TAG and TEXT_FIELD
+    <%= form_tag(:action => 'create') do %>
+      <%= text_field(:subject,:name) %>
+      <%= text_field(:subject,:position) %>
+      <%= text_field(:subject,:visible) %>
+      <%= submit_tag("Create Subject") %>
+    <% end %>
+    
+=>FORM_FOR
+    <%= form_for(:subject,:url=>{:action=>'create'},:html=>{:multipart=>true}) do |f| %>
+      <%= f.text_field(:name,:size=>40,:maxlength=>40) %>
+      <%= f.password_field(:password,:size=>40,:maxlength=>40) %>
+      <%= f.text_area(:description,:size=>"40x5") %>
+      <%= f.hidden_field(:token) %>
+      <%= f.radio_button(:content_type,"text") %>
+      <%= f.radio_button(:content_type,"HTML") %>
+      <%= f.label(:visible) %>
+      <%= f.check_box(:visible) %>
+      <%= f.file_field(:logo) %>
+      <%= submit_tag("Submit") %>
+    <% end %>
+
+    <%= form_for([@post, @post.comments.build]) do |f| %>
+      // after submit, call is going to comments/create
+
+
+=>FORM FIELD USING ASSOCIATION
+    if you had a Person model with an associated ContactDetail model you could 
+    create a form for creating both like so:
+
+      <%= form_for @person, :url => { :action => "create" } do |person_form| %>
+			  <%= person_form.text_field :name %>
+			  <%= fields_for @person.contact_detail do |contact_details_form| %>
+			    <%= contact_details_form.text_field :phone_number %>
+			  <% end %>
+			<% end %>
+
+=>SELECT HELPER
+    select(object,attribute,choices,options={},html_options={})    
+      options: 
+        :selected => object.attribute
+        :include_blank => false
+        :prompt => false
+        :disabled => false
+    form_for(:section,:url=>{:action=>'create'}) do |f|
+      f.select(:position, 1..5)                            #range
+      f.select(:content_type,['text','HTML'])              #array
+      f.select(:visible,{"Visible"=>1, "Hidden"=>2})       #hash
+      f.select(:page_id,Page.all.map{|p| [p.name,p.id]})   #Array of arrays
+      submit_tag("Submit")
+    end
+      
+=>DATE TIME HELPER
+    date_select(object,attribute,options={},html_options={})
+    Options:
+      :start_year => Time.now.year-5
+      :end_year => Time.now.year+5
+      :order =>[:year,:month,:day]
+      :discard_year => false
+      :discard_month => false
+      :discard_day => false
+      :include_blank => false
+      :prompt => false
+      :use_month_numbers => false
+      :add_month_numbers => false
+      :use_short_month => false
+      :date_separator => ""
+
+    time_select(object,attribute,options={},html_options={})
+    Options:
+      :include_seconds => false
+      :minute_step  => 1
+      :include_blank => false
+      :prompt => false
+      :time_separator => ":"
+
+    date_time_select(object,attribute,options={},html_options={})
+    Options:
+      #all date_select and time_select options
+      :date_time_separator => "-"
+
+=> RUBY DATE TIME FORMATTING
+     datetime.strftime(formatstring)
+     datetime.strftime("%B %d, %Y %H:%M")
+
+=> Put common fuctions in application_helper to use any controllers.
+
+=>=> application.html.erb contains layout for all html pages
+   If you don't want to use this layout to your html, just put
+     layout false
+     layout "sample"   if u want sample.html.erb as a layout file
+
+=> Partials used for DRY
+     render(:partial => 'form', :locals =>{:f => f})     
+
+=> TEXT HELPERS
+     text = "this is some long sample text.It incluedes line breaks\n and double-line-breaks.
+     \n\n. It rambles on and on and on.\n"
+
+     word_wrap(text, :line_width => 30)                 #puts \n after 30 chars
+     simple_format(text)                                #print text using \n as <br> and \n\n as <p>
+     simple_format(word_wrap(text,:line_width=>30))     #simple format + word wrap
+     truncate(text,:length=>40,:ommission=>"...")       #truncate text after 40 chars and use ommission
+     excerpt(text,'something',:radius=>7,:ommission=>"...")  # find string and truncate and use ommission both side
+     highlight(text,'sample text')                       #highlight text
+     highlight(text,['sample','or'],:highlighter=>'<em>\1</em>') #highlight tag with specific tag
+     "student".pluralize                                 #convert to plural
+     "ox".pluralize
+     pluralize(2,'product')                              #pluralize depends on number
+     5.times{ cycle('red','yellow','green') }                    #result one by one in a cycle
+      
+=> NUMBER HELPERS
+     :delimiter   #delimits thousands , default is ','
+     :separator   #decimal separator , default is '.'
+     :precision   #decimal places to show, default varies(2-3)
+
+     number_to_currency(34.5)                                             # $34.50
+     number_to_currency(34.5,:precision=>0,:unit=>'kr',:format=>"%n %u")  # 34 kr
+     number_to_percentage(34.5)                                           # 34.500%
+     number_to_percentage(34.5,:pricision=>1,:separator=>',')             # 34,5%
+     number_with_precision(34.56789)                                      # 34.568
+     number_with_precision(34.56789,:precision=>6)                        # 34.567890
+     number_with_delimiter(3456789)                                       # 3,456,789
+     number_with_delimiter(3456789,:delimite=>' ')                        # 3 456 789
+     number_to_human(123456789)                                           # 123 Million
+     number_to_human(123456789,:precision=>5)                             #123.46 Million
+     number_to_human_size(1234567)                                        # 1.18 MB
+     number_to_human_size(1234567,:precision=>2)                          # 1.2 MB
+     number_to_phone(123456789)                                           # 123-456-789
+
+=>ASSET PIPELINE BENEFITS (app/assets/.....)
+    * concatenates CSS and javascript files
+    * compress CSS and javascript
+    * precompiles CSS and javascript
+    * Allow writing assets in other languages(sass,coffeescript/erb)
+    * Adds assets fingerprinting
+    * Using cache
+    * application.css is manifest file which tells which css file combine,load,etc..
+    * In development environment, it skips concatenation,compression,fingerprinting
+

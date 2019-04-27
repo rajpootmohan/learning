@@ -1,0 +1,7 @@
+1. Java is strongly typed. For example boolean x = 1; is compile time error.
+2. Java is not pure object oriented language. Because it doesn't support
+   OPERATOR OVERLOADING
+   MULTIPLE INHERITANCE
+   PRIMITIVE DATA TYPES
+3. Primitive Data types are:
+   byte, short, int, long, float, double, char, boolean

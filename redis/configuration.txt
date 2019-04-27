@@ -1,0 +1,7 @@
+1. PASSING ARGUMENTS VIA THE COMMAND LINE:
+	./redis-server --port 6380 --slaveof 127.0.0.1 6379
+
+2. CHANGING REDIS CONFIGURATION WHILE THE SERVER IS RUNNING: 
+	a. config get
+	b. config set
+	

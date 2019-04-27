@@ -1,0 +1,32 @@
+1. DIFFERENT RANGE OF PERSISTENCE:
+	a. The RDB persistence performs point-in-time snapshots of your dataset at specified intervals.
+	b. the AOF persistence logs every write operation received by the server, that will be played again at server startup, reconstructing the original dataset. Commands are logged using the same format as the Redis protocol itself, in an append-only fashion.
+	c. If you wish, you can disable persistence at all, if you want your data to just exist as long as the server is running.
+	d. It is possible to combine both AOF and RDB in the same instance. Notice that, in this case, when Redis restarts the AOF file will be used to reconstruct the original dataset since it is guaranteed to be the most complete.
+
+2. RDB ADVANTAGES:
+	a. RDB is a very compact single-file point-in-time representation of your Redis data. RDB files are perfect for backups. 
+	b. RDB is very good for disaster recovery, being a single compact file can be transferred to far data centers, or on Amazon S3.
+	c. RDB maximizes Redis performances since the only work the Redis parent process needs to do in order to persist is forking a child that will do all the rest. The parent instance will never perform disk I/O or alike.
+	d. RDB allows faster restarts with big datasets compared to AOF.
+
+3. RDB DISADVANTAGES:
+	a. RDB is NOT good if you need to minimize the chance of data loss in case Redis stops working.
+	b. RDB needs to fork() often in order to persist on disk using a child process. Fork() can be time consuming if the dataset is big, and may result in Redis to stop serving clients for some millisecond or even for one second
+
+4. AOF ADVANTAGES:
+	a. Using AOF Redis is much more durable: you can have different fsync policies: no fsync at all, fsync every second, fsync at every query.
+	b. The AOF log is an append only log, so there are no seeks, nor corruption problems if there is a power outage. Even if the log ends with an half-written command for some reason (disk full or other reasons) the redis-check-aof tool is able to fix it easily.
+	c. Redis is able to automatically rewrite the AOF in background when it gets too big.
+	d. AOF contains a log of all the operations one after the other in an easy to understand and parse format. You can even easily export an AOF file. 
+
+5. AOF DISADVANTAGES: 
+	a. AOF files are usually bigger than the equivalent RDB files for the same dataset.
+	b. AOF can be slower than RDB depending on the exact fsync policy.
+
+6. SNAPSHOTTING:
+	save <seconds> <changes>
+	save 60 1000 //dump the dataset to disk every 60 seconds if at least 1000 keys changed.
+
+7. APPEND-ONLY FILE:
+	appendonly yes	

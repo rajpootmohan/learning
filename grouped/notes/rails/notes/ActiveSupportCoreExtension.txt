@@ -1,0 +1,266 @@
+=>host = config[:host].presence || 'localhost'
+    #The presence method returns its receiver if present?, and nil otherwise.
+
+=>By definition all objects are duplicable? except nil, false, true, symbols, numbers, and class and 
+  module objects.    
+
+=>try is like Object#send except that it returns nil if sent to nil.
+=>The method acts_like provides a way to check whether some class acts like some other class based on
+  a simple convention: a class that provides the same interface as String defines
+    some_klass.acts_like?(:string)
+
+=>All objects in Rails respond to the method to_param, which is meant to return something that represents
+  them as values in a query string, or as URL fragments.    
+  
+=>instance_variable_names :returns the names of the defined instance variables.
+=>instance_values :returns a hash that maps instance variable names 
+
+=>Silencing Warnings, Streams, and Exceptions
+  =>The methods silence_warnings and enable_warnings change the value of $VERBOSE accordingly for the 
+    duration of their block, and reset it afterwards  
+  =>silence_stream(STDOUT) do
+		  # STDOUT is silent here
+		end
+  =>The quietly method addresses the common use case where you want to silence STDOUT and STDERR, 
+    even in subprocesses:	
+      quietly { system 'bundle install' }
+
+=>in? :tests if an object is included in another object or a list of objects      
+    1.in?(1,2)          # => true
+
+=>ATTRIBUTES
+  =>alias_attribute :Model attributes have a reader, a writer, and a predicate. You can alias a model 
+    attribute having the corresponding three methods defined for you in one shot      
+    alias_attribute :login, :email
+  =>attr_accessor_with_default :The method attr_accessor_with_default serves the same purpose as the 
+    Ruby macro attr_accessor but allows you to set a default value for the attribute.
+    class Url
+		  attr_accessor_with_default :port, 80
+		end
+	Url.new.port # => 80  
+  =>Internal Attributes :Active Support defines the macros attr_internal_reader, attr_internal_writer, 
+    and attr_internal_accessor. They behave like their Ruby built-in attr_* counterparts, except they 
+    name the underlying instance variable in a way that makes collisions less likely.	
+      # library
+			class ThirdPartyLibrary::Crawler
+			  attr_internal :log_level
+			end
+			 
+			# client code
+			class MyCrawler < ThirdPartyLibrary::Crawler
+			  attr_accessor :log_level
+			end
+
+	=>Parents
+	  =>parent :The parent method on a nested named module returns the module that contains its 
+	            corresponding constant.
+	  =>parents :The method parents calls parent on the receiver and upwards until Object is reached.          
+
+	=>Constants
+	  =>local_constants :The method local_constants returns the names of the constants that have been 
+	                     defined in the receiver module.
+	  =>Qualified Constant Names:
+	      Object.qualified_const_defined?("Math::PI")       # => true
+				Object.qualified_const_get("Math::PI")            # => 3.141592653589793
+				Object.qualified_const_set("Math::Phi", 1.618034) # => 1.618034
+				Math.qualified_const_get("E") # => 2.718281828459045
+
+  =>class_attribute :The method class_attribute declares one or more inheritable class attributes 
+                     that can be overridden at any level down the hierarchy.
+      :instance_writer => false  # for not generating the writer
+      :instance_reader => false  # for not generating the reader
+
+=>subclasses :The subclasses method returns the subclasses of the receiver.
+=>descendants :The descendants method returns all classes that are < than its receiver.
+
+=>" \n  foo\n\r \t bar \n".squish # => "foo bar"
+=>"Oh dear! Oh dear! I shall be late!".truncate(20)  # => "Oh dear! Oh dear!..."
+     Ellipsis can be customized with the :omission option.
+
+=>"Total is %<total>.02f" % {:total => 43.1}  # => Total is 43.10
+=>"I say %{foo}" % {:foo => "wadus"}          # => "I say wadus"
+=>"I say %{woo}" % {:foo => "wadus"}          # => KeyError
+=>"foo".starts_with?("f") # => true
+=>"foo".ends_with?("o")   # => true
+
+=>Access
+    "hello".at(0)  # => "h"
+		"hello".at(4)  # => "o"
+		"hello".at(-1) # => "o"
+		"hello".at(10) # => ERROR if < 1.9, nil in 1.9
+		"hello".from(0)  # => "hello"
+		"hello".from(2)  # => "llo"
+		"hello".from(-2) # => "lo"
+		"hello".from(10) # => "" if < 1.9, nil in 1.9
+
+=>"table".pluralize     # => "tables"
+	"ruby".pluralize      # => "rubies"
+	"equipment".pluralize # => "equipment"		
+	"dude".pluralize(0) # => "dudes"
+	"dude".pluralize(1) # => "dude"
+	"dude".pluralize(2) # => "dudes"
+	"tables".singularize    # => "table"
+	"rubies".singularize    # => "ruby"
+	"equipment".singularize # => "equipment"
+	
+=>"product".camelize    # => "Product"
+	"admin_user".camelize # => "AdminUser"
+  "visual_effect".camelize(:lower)    #=> visualEffect
+
+=>"Product".underscore   # => "product"
+	"AdminUser".underscore # => "admin_user"
+	"Backoffice::Session".underscore # => "backoffice/session"
+
+=>"alice in wonderland".titleize # => "Alice In Wonderland"
+	"fermat's enigma".titleize     # => "Fermat's Enigma"	
+
+=>"name".dasherize         # => "name"
+	"contact_data".dasherize # => "contact-data"	
+
+=>"Product".demodulize                        # => "Product"
+	"Backoffice::UsersController".demodulize    # => "UsersController"
+	"Admin::Hotel::ReservationUtils".demodulize # => "ReservationUtils"	
+
+=>"Product".deconstantize                        # => ""
+	"Backoffice::UsersController".deconstantize    # => "Backoffice"
+	"Admin::Hotel::ReservationUtils".deconstantize # => "Admin::Hotel"
+
+=>"John Smith".parameterize # => "john-smith"
+	"Kurt Gödel".parameterize # => "kurt-godel"		
+
+=>"Person".tableize      # => "people"
+	"Invoice".tableize     # => "invoices"
+	"InvoiceLine".tableize # => "invoice_lines"
+
+=>"people".classify        # => "Person"
+	"invoices".classify      # => "Invoice"
+	"invoice_lines".classify # => "InvoiceLine"
+
+=>"name".humanize           # => "Name"
+	"author_id".humanize      # => "Author"
+	"comments_count".humanize # => "Comments count"		
+
+=>"User".foreign_key           # => "user_id"
+	"InvoiceLine".foreign_key    # => "invoice_line_id"
+	"Admin::Session".foreign_key # => "session_id"
+	"User".foreign_key(false) # => "userid"
+
+=>CONVERSION
+  =>"a".ord # => 97
+		"à".ord # => 224, in ISO-8859-1
+
+	=>"foo".getbyte(0)  # => 102, same as "foo".ord
+		"foo".getbyte(1)  # => 111
+		"foo".getbyte(9)  # => nil
+		"foo".getbyte(-1) # => 111	
+
+  =>"2010-07-27".to_date              # => Tue, 27 Jul 2010
+		"2010-07-27 23:37:00".to_time     # => Tue Jul 27 23:37:00 UTC 2010
+		"2010-07-27 23:37:00".to_datetime # => Tue, 27 Jul 2010 23:37:00 +0000
+
+  =>BYTES
+      bytes
+			kilobytes
+			megabytes
+			gigabytes
+			terabytes
+			petabytes
+			exabytes		
+			2.kilobytes   # => 2048
+			3.megabytes   # => 3145728
+			3.5.gigabytes # => 3758096384
+			-4.exabytes   # => -4611686018427387904
+			1.megabyte # => 1048576
+
+	=>2.multiple_of?(1) # => true
+		1.multiple_of?(2) # => false		
+
+	=>1.ordinalize    # => "1st"
+		2.ordinalize    # => "2nd"
+		53.ordinalize   # => "53rd"
+		2009.ordinalize # => "2009th"
+		-21.ordinalize  # => "-21st"
+		-134.ordinalize # => "-134th"	
+
+	=>Math::E.round(4) # => 2.7183
+	
+	=>[1, 2, 3].sum # => 6
+		(1..100).sum  # => 5050	
+
+=>[2, 3, 4].inject(1) {|product, i| product*i } # => 24
+=>[1, 2].inject({}) {|h, i| h[i] = i**2; h} # => {1 => 1, 2 => 4}		
+=>%w(a b c d).to(2) # => %w(a b c)
+=>[].to(7)          # => []
+=>%w(a b c d).from(2)  # => %w(c d)
+=>%w(a b c d).from(10) # => []
+=>[].from(0)           # => []
+=>%w(a b c d).third # => c
+=>%w(a b c d).fifth # => nil
+=>shape_type = [Circle, Square, Triangle].sample
+		# => Square, for example
+=>shape_types = [Circle, Square, Triangle].sample(2)
+		# => [Triangle, Circle], for example
+
+=>[1, 2, 3].in_groups_of(2) # => [[1, 2], [3, nil]]
+  [1, 2, 3].in_groups_of(2, 0) # => [[1, 2], [3, 0]]
+
+=>[0, 1, -5, 1, 1, "foo", "bar"].split(1)  # => [[0], [-5], [], ["foo", "bar"]]  		
+
+=>{:a => 1, :b => 1}.merge(:a => 0, :c => 2)  # => {:a => 0, :b => 1, :c => 2}
+
+=>{nil => nil, 1 => 1, :a => :a}.stringify_keys  #=> {"" => nil, "a" => :a, "1" => 1}
+=>{nil => nil, 1 => 1, "a" => "a"}.symbolize_keys #=> {1 => 1, nil => nil, :a => "a"}
+
+=>{:a => 1}.assert_valid_keys(:a)  # passes
+  {:a => 1}.assert_valid_keys("a") # ArgumentError
+
+=>{:a => 1, :b => 2, :c => 3}.slice(:a, :c) # => {:c => 3, :a => 1}
+  {:a => 1, :b => 2, :c => 3}.slice(:b, :X) # => {:b => 2} # non-existing keys are ignored  
+
+=>hash = {:a => 1, :b => 2}
+	rest = hash.extract!(:a) # => {:a => 1}
+	hash                     # => {:b => 2}
+
+=>(1..10).step(2) # => [1, 3, 5, 7, 9]
+  1..10).include?(3..7)  # => true
+  (1..10).overlaps?(7..11)  # => true
+	(1..10).overlaps?(0..7)   # => true
+	(1..10).overlaps?(11..27) # => false
+
+=>d = Date.new(2010, 5, 8) # => Sat, 08 May 2010
+	d.prev_year              # => Fri, 08 May 2009
+	d.next_year              # => Sun, 08 May 2011
+	d.prev_month             # => Thu, 08 Apr 2010
+	d.next_month             # => Tue, 08 Jun 2010
+	d.beginning_of_week          # => Mon, 03 May 2010
+	d.beginning_of_week(:sunday) # => Sun, 02 May 2010
+	d.end_of_week                # => Sun, 09 May 2010
+	d.end_of_week(:sunday)       # => Sat, 08 May 2010
+	d.next_week              # => Mon, 10 May 2010
+	d.next_week(:saturday)   # => Sat, 15 May 2010
+	d.prev_week(:saturday)   # => Sat, 01 May 2010
+	d.prev_week(:friday)     # => Fri, 30 Apr 2010
+	d.beginning_of_month     # => Sat, 01 May 2010
+	d.end_of_month           # => Mon, 31 May 2010
+
+	date.years_ago(10) # => Wed, 07 Jun 2000
+	date.years_since(10) # => Sun, 07 Jun 2020
+ 
+  Date.new(2012, 2, 29).years_ago(3)     # => Sat, 28 Feb 2009
+	Date.new(2012, 2, 29).years_since(3)   # => Sat, 28 Feb 2015
+
+	Date.new(2010, 4, 30).months_ago(2)   # => Sun, 28 Feb 2010
+	Date.new(2010, 4, 30).months_since(2) # => Wed, 30 Jun 2010
+
+	Date.new(2010, 5, 24).weeks_ago(1)    # => Mon, 17 May 2010
+	Date.new(2010, 5, 24).weeks_ago(2)    # => Mon, 10 May 2010
+
+	date = Date.new(2010, 6, 6)
+	date.advance(:years => 1, :weeks => 2)  # => Mon, 20 Jun 2011
+	date.advance(:months => 2, :days => -2) # => Wed, 04 Aug 2010
+
+	Date.new(2010, 12, 23).change(:year => 2011, :month => 11)
+	# => Wed, 23 Nov 2011
+
+	
+                   

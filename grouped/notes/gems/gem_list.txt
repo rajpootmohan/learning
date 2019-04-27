@@ -1,0 +1,54 @@
+awesome-print gem for console view with color and indentation
+better_errors        gem for showing proper error in browser
+pry rails            binding.pry puts in controller, and break point work from here
+Quiet Assets         gem for hinding info of assets in log window
+Localtunnel          using ur localhost to any other machine
+
+active_admin  for Admin of specific model
+carrier_wave
+rabl          for json templating
+
+==============================================================================================
+#PLIVO         sending text messages and calls through url
+
+require 'rubygems'
+require 'plivo'
+include Plivo
+
+AUTH_ID = "Your AUTH_ID"
+AUTH_TOKEN = "Your AUTH_TOKEN"
+
+p = RestAPI.new(AUTH_ID, AUTH_TOKEN)
+
+# Send SMS
+params = {
+    'src' => '1111111111', # Sender's phone number with country code
+    'dst' => '2222222222', # Receiver's phone Number with country code
+    'text' => 'Hi, from Plivo', # Your SMS Text Message - English
+    'url' => 'http://example.com/report/', # The URL to which with the status of the message is sent
+    'method' => 'POST' # The method used to call the url
+}
+response = p.send_message(params)
+puts response
+
+# Sample Output
+# [202,
+#   {
+#       "api_id"=>"492f5288-9f27-11e4-b153-22000abcaa64",
+#       "message"=>"message(s) queued",
+#       "message_uuid"=>["494b5c4e-9f27-11e4-b1a4-22000ac693b1"]
+#   }
+# ]
+
+==============================><===================>>
+ LOCALTUNNEL 
+
+STEP 1: Firstly, you need to install the client library for Localtunnel. So just install it by installing the ‘localtunnel’ gem or write it in your Gemfile:-
+gem 'localtunnel'
+and run ‘bundle install’ STEP 2: Run your local web server on any port! Let’s say you’re running on port 8080.
+$rails s -p 8080
+STEP 3: Now run localtunnel by specifying it the on port to be shared as:-
+$ localtunnel 8080
+It will establish a connection between your local server running at 8080 and localtunnel.com. Note that for first time you run the localtunnel, it needs you to specify your ssh public key for authentication. Here’s an example:
+$ localtunnel -k ~/.ssh/id_rsa.pub 8080
+After running the above commands, you will see something like this: – Port 8080 is now publicly accessible from http://xyz.localtunnel.com … Enjoy Tunnelling your apps !!

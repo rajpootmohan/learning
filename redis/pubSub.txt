@@ -1,0 +1,10 @@
+SCOPING: Pub/Sub has no relation to the key space. It was made to not interfere with it on any level, including database numbers.
+
+COMMANDS: 
+	subscribe <channelName>   // subscribing specific channel for getting the messages
+	psubscribe <pattern>      // subscribing channels using pattern
+	publish <channelName> <message>  // publish message on given channel name
+	unsubscribe               // unsubscribing from all channels
+	punsubscribe <pattern>     // unsubscribing from satisfied pattern channels
+	unsubscribe <channelName> // unsubscribing from specific channel name
+	pubsub channels <pattern>  // printing channels using pattern

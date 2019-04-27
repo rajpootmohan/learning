@@ -1,0 +1,392 @@
+=> gems  annotate_models, foreigner, DynamicForm
+
+=>attr_accessible: field_name
+    It specifies a whitelist of attributes that are allowed to be updated in bulk
+
+=>Use of migration => create/update/drop table, add/update/delete column
+    a. keep database schema with application code
+    b. executable and repeatable
+    c. allows sharing schema changes
+    d. write ruby code instead of sql
+
+
+=>CREATE TABLE FORMAT THROUGH MIGRATION
+    create_table "table" do |t|
+      t.column "name", :type,option   OR
+      t.type "name", option
+    end
+
+    t.references :category  # put category_id in table
+    t.references :attachment, :polymorphic => {:default => 'Photo'} # for polymorphic relation
+
+    TABLE COLUMN OPTION
+    :limit     => size
+    :default   => value
+    :null      => true/false
+    :precision => number
+    :scale     => number
+
+    SUPPORTED TYPE:
+    	:binary
+			:boolean
+			:date
+			:datetime
+			:decimal
+			:float
+			:integer
+			:primary_key
+			:string
+			:text
+			:time
+			:timestamp
+
+
+=>TABLE ALTERING USING MIGRATION
+    drop_table (table_name)
+    rename_table(table, new_name)
+    add_column(table, column, type, option)
+    remove_column(table, column)
+    rename_column(table, column, new_name)
+    change_column(table, column, type, option)
+    add_index(table, column, option)  options are  :unique=>true/false ,:name=>'your_custom_name'
+    remove_index(table, column)
+    execute("any SQL string")
+
+=>There is no need to deploy a new instance of an app by replaying the entire migration history.schema.rb is much simpler and faster to
+   just load into the database a description of the current schema.
+=>There is however a trade-off: db/schema.rb cannot express database specific items such as foreign key constraints, triggers,
+   or stored procedures. While in a migration you can execute custom SQL statements, the schema dumper cannot reconstitute those
+   statements from the database. If you are using features like this, then you should set the schema format to :sql.
+=>Although Active Record does not provide any tools for working directly with such features, the execute method can be used to
+execute arbitrary SQL. You could also use some plugin like foreigner which add foreign key support to Active Record
+(including support for dumping foreign keys in db/schema.rb).
+
+=>Active Record uses the new_record? instance method to determine whether an object is already in the database or not.
+=>To verify whether or not an object is valid, Rails uses the valid? method.
+=>invalid? is simply the inverse of valid?.
+
+=>VALIDATIONS METHODS
+    *validates_presense_of
+       attributes must not be blank(nil,false,'',' ',[],{})
+       :message=>"can't be blank"
+    *validates_length_of
+       :is,:maximum,:minimum,:within,:in
+       :wrong_length=>"is the wrong length (should be {{count}} characters)"
+       :too_short=>"is too short (minimum is {{count}} characters)"
+       :too_long=>"is too long (maximum is {{count}} characters)"
+    *validates_numericality_of #must be integer or floating point number
+       :equal_to,:greater_than,:less_than,:greater_than_or_equal_to,:less_than_or_equal_to
+       :odd,:even,:only_integer
+       :message => "is not a number"
+    *validates_inclusion_of  #must be in a list of choices array/range
+       :in
+       :message=> "is not included in the list"
+    *validates_exclusion_of  #must not be in list of choices array/range
+       :in
+       :message => "is reserved"
+    *validates_format_of     #must match a regular expression
+       :with
+       :message => "is invalid"
+    *validates_uniqueness_of  #must not exist in the database
+       :case_sensitive
+       :scope
+       :message => "has already been taken"
+    *validates_acceptance_of  #attribute must be "accepted", create virtual attribute
+       :accept (expected value, "1")
+       :message => "must be accepted"
+    *validates_confirmation_of  #create virtual attribute, only validates when confirmation value is not nil
+       :message=> "doesn't match confirmation"
+    *validates_associated    #associated object/objects must all be valid
+        #first argument is an association name
+        #does not fail if object does not exist
+
+    *validates_with GoodnessValidator, :fields => [:first_name, :last_name] #GoodnessValidator is class
+    *validates_each :name, :surname do |record, attr, value|
+       record.errors.add(attr, 'must start with upper case') if value =~ /\A[a-z]/
+     end
+     *with_options :if => :is_admin? do |admin|
+        admin.validates :password, :length => { :minimum => 10 }
+        admin.validates :email, :presence => true
+      end
+
+    Common methods for most of the validation
+      :allow_nil => true
+      :allow_blank => true
+      :on => :save/:create/:update
+      :if => :method / :unless => :method
+
+
+=>SEXY VALIDATION METHODS
+    validates :attribute, :presence => boolean,
+                          :numericality => boolean,
+                          :length => options_hash,
+                          :format => {:with => regex},
+                          :inclusion => {:in => array_or_range},
+                          :exclusion => {:in => array_or_range},
+                          :acceptance => boolean,
+                          :uniqueness => boolean,
+                          :confirmation => boolean
+
+=>CUSTOM VALIDATIONS
+   validate :custom_validation_for_username
+   def custom_validation_for_username
+     if :username =="abra_ka_dabra"
+       errors.add(:username, "has been restricted from use.")
+     end
+   end
+
+=>VALIDATION ERRORS
+   *You can add error messages that are related to the object’s state as a whole, instead of being related to a specific attribute.like
+     errors[:base] << "This person is invalid because ..."
+
+   *DynamicForm gem provides two helper methods error_messages and error_messages_for in your view templates.   <%= f.error_messages %>
+      <%= error_messages_for :product %>
+      <%= f.error_messages :header_message => "Invalid product!",
+          :message => "You'll need to fix the following fields:",
+          :header_tag => :h3 %>
+
+   .field_with_errors – Style for the form fields and labels with errors.
+   #error_explanation – Style for the div element with the error messages.
+   #error_explanation h2 – Style for the header of the div element.
+   #error_explanation p – Style for the paragraph holding the message that appears right below the header of the div element.
+   #error_explanation ul li – Style for the list items with individual error messages.
+
+   object.errors     #Array containing any errors added by validations
+   object.errors.clear
+   object.errors.size
+   object.errors.each {|attr,msg| ...}
+   object.errors.full_messages.each {|msg| ...}
+   After Submit Error fields take class name as field_with_errors
+
+=>CALLBACKS FOR VALIDATION
+    Creating an Object
+	    before_validation
+			after_validation
+			before_save
+			around_save
+			before_create
+			around_create
+			after_create
+			after_save
+		Updating an Object
+		  before_validation
+			after_validation
+			before_save
+			around_save
+			before_update
+			around_update
+			after_update
+			after_save
+    Destroying an Object
+      before_destroy
+			around_destroy
+			after_destroy
+
+		*after_initialize callback will be called whenever an Active Record object is instantiated, either by directly using new or when a record is loaded from the database.
+		*The after_find callback will be called whenever Active Record loads a record from the database. after_find is called before after_initialize if both are defined.
+		*There are two additional callbacks that are triggered by the completion of a database transaction: after_commit and after_rollback.
+
+=>RELATIONAL CALLBACK
+    has_many :posts, :dependent => :destroy
+
+=>OBSERVER
+    Observers are similar to callbacks, but with important differences. Whereas callbacks can pollute a model with code that
+    isn’t directly related to its purpose, observers allow you to add the same functionality without changing the code of the model.
+      $ rails generate observer User
+
+    You have to register the observer for use
+      config.active_record.observers = :user_observer
+
+    Share Observer (You have to register in config files)
+      class MailerObserver < ActiveRecord::Observer
+			  observe :registration, :user
+
+			  def after_create(model)
+			    # code to send confirmation email...
+			  end
+			end
+
+=>ASSOCIATIONS
+  =>Rails supports six types of associations:
+		belongs_to.
+		has_one.
+		has_many.
+		has_many :through.
+		has_one :through.
+		has_and_belongs_to_many.
+  =>Choosing Between has_many :through and has_and_belongs_to_many
+      The simplest rule of thumb is that you should set up a has_many :through relationship if you need to work with the relationship model as an independent entity. If you don’t need to do anything with the relationship model, it may be simpler to set up a has_and_belongs_to_many relationship.
+  =>Polymorphic Associations
+      a model can belong to more than one other model, on a single association
+        class Picture < ActiveRecord::Base
+				  belongs_to :imageable, :polymorphic => true
+				end
+
+				class Employee < ActiveRecord::Base
+				  has_many :pictures, :as => :imageable
+				end
+
+				class Product < ActiveRecord::Base
+				  has_many :pictures, :as => :imageable
+				end
+
+	=>Controlling Caching
+	    stomer.orders                 # retrieves orders from the database
+			customer.orders.size            # uses the cached copy of orders
+			customer.orders(true).empty?    # discards the cached copy of orders
+      				                        # and goes back to the database
+
+  =>Active Record provides the :inverse_of option so that you can inform it of these relations:
+      class Customer < ActiveRecord::Base
+			  has_many :orders, :inverse_of => :customer
+			end
+
+			class Order < ActiveRecord::Base
+			  belongs_to :customer, :inverse_of => :orders
+			end
+
+			*Now Active Record will only load one copy of the customer object, preventing inconsistencies and making your application more
+       efficient.
+			*There are a few limitations to inverse_of support:
+					They do not work with :through associations.
+					They do not work with :polymorphic associations.
+					They do not work with :as associations.
+					For belongs_to associations, has_many inverse associations are ignored.
+
+  =>When you declare a belongs_to association, the declaring class automatically gains four methods related to the association:
+		association(force_reload = false)
+		association=(associate)
+		build_association(attributes = {})
+		create_association(attributes = {})
+
+	=>The belongs_to association supports these options:
+			:autosave
+			:class_name
+			:conditions
+			:counter_cache
+			:dependent
+			:foreign_key
+			:include
+			:inverse_of
+			:polymorphic
+			:readonly
+			:select
+			:touch
+			:validate
+
+  =>When you declare a has_one association, the declaring class automatically gains four methods related to the association:
+		association(force_reload = false)
+		association=(associate)
+		build_association(attributes = {})
+		create_association(attributes = {})
+
+  =>The has_one association supports these options:
+      :as
+			:autosave
+			:class_name
+			:conditions
+			:dependent
+			:foreign_key
+			:include
+			:inverse_of
+			:order
+			:primary_key
+			:readonly
+			:select
+			:source
+			:source_type
+			:through
+			:validate
+
+  =>When you declare a has_many association, the declaring class automatically gains 13 methods related to the association:
+      collection(force_reload = false)
+			collection<<(object, …)
+			collection.delete(object, …)
+			collection=objects
+			collection_singular_ids
+			collection_singular_ids=ids
+			collection.clear
+			collection.empty?
+			collection.size
+			collection.find(…)
+			collection.where(…)
+			collection.exists?(…)
+			collection.build(attributes = {}, …)
+			collection.create(attributes = {})
+
+  =>The has_many association supports these options:
+      :as
+			:autosave
+			:class_name
+			:conditions
+			:counter_sql
+			:dependent
+			:extend
+			:finder_sql
+			:foreign_key
+			:group
+			:include
+			:inverse_of
+			:limit
+			:offset
+			:order
+			:primary_key
+			:readonly
+			:select
+			:source
+			:source_type
+			:through
+			:uniq
+			:validate
+
+  =>When you declare a has_and_belongs_to_many association, the declaring class automatically gains 13 methods related to the association:
+		  collection(force_reload = false)
+			collection<<(object, …)
+			collection.delete(object, …)
+			collection=objects
+			collection_singular_ids
+			collection_singular_ids=ids
+			collection.clear
+			collection.empty?
+			collection.size
+			collection.find(…)
+			collection.where(…)
+			collection.exists?(…)
+			collection.build(attributes = {})
+			collection.create(attributes = {})
+
+	=>The has_and_belongs_to_many association supports these options:
+	    :association_foreign_key
+			:autosave
+			:class_name
+			:conditions
+			:counter_sql
+			:delete_sql
+			:extend
+			:finder_sql
+			:foreign_key
+			:group
+			:include
+			:insert_sql
+			:join_table
+			:limit
+			:offset
+			:order
+			:readonly
+			:select
+			:uniq
+			:validate
+
+	=>Association Callbacks
+	    before_add
+			after_add
+			before_remove
+			after_remove
+
+			class Customer < ActiveRecord::Base
+			  has_many :orders, :before_add => :check_credit_limit
+
+			  def check_credit_limit(order)
+			    ...
+			  end
+			end

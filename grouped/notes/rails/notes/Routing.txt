@@ -1,0 +1,109 @@
+=>resources :photos
+    HTTP 		Verb				Path		action	used for
+		GET			/photos				index		display a list of all photos
+		GET			/photos/new			new			return an HTML form for creating a new photo
+		POST		/photos				create		create a new photo
+		GET			/photos/:id			show		display a specific photo
+		GET			/photos/:id/edit	edit		return an HTML form for editing a photo
+		PUT			/photos/:id			update		update a specific photo
+		DELETE		/photos/:id			destroy		delete a specific photo
+
+=>resource :geocoder
+    HTTP 		Verb			Path			action	used for
+		GET			/geocoder/new	new				return an HTML form for creating the geocoder
+		POST		/geocoder		create			create the new geocoder
+		GET			/geocoder		show			display the one and only geocoder resource
+		GET			/geocoder/edit	edit			return an HTML form for editing the geocoder
+		PUT			/geocoder		update			update the one and only geocoder resource
+		DELETE		/geocoder		destroy			delete the geocoder resource	
+
+=>Controller Namespaces and Routing
+    namespace :admin do
+		  resources :posts, :comments
+		end	
+		If you want to route /posts (without the prefix /admin) to Admin::PostsController, you could use
+		  scope :module => "admin" do
+			  resources :posts, :comments
+			end
+		If you want to route /admin/posts to PostsController (without the Admin:: module prefix), you could use
+		  scope "/admin" do
+			  resources :posts, :comments
+			end
+
+		resources :magazines do
+		  resources :ads
+		end		
+
+=>Creating Paths and URLs From Objects
+    resources :magazines do
+		  resources :ads
+		end
+
+		<%= link_to "Ad details", magazine_ad_path(@magazine, @ad) %>
+		<%= link_to "Ad details", url_for([@magazine, @ad]) %>
+		<%= link_to "Ad details", [@magazine, @ad] %>
+
+=>Adding More RESTful Actions
+  =>Adding Member Routes
+      resources :photos do
+			  member do
+			    get 'preview'
+			  end
+			end
+			# This will recognize /photos/1/preview with GET
+
+	=>Adding Collection Routes
+	    resources :photos do
+			  collection do
+			    get 'search'
+			  end
+			end
+			# This will enable Rails to recognize paths such as /photos/search with GET
+
+=>match ':controller/:action/:id/:user_id'
+  match ':controller(/:action(/:id))', :controller => /admin\/[^\/]+/							
+  match ':controller/:action/:id/with_user/:user_id'
+  match 'photos/:id' => 'photos#show'
+  match 'photos/:id' => 'photos#show', :defaults => { :format => 'jpg' }
+  match 'exit' => 'sessions#destroy', :as => :logout
+  match 'photos/show' => 'photos#show', :via => :get
+  get 'photos/show'
+  match 'photos/show' => 'photos#show', :via => [:get, :post]
+  match 'photos/:id' => 'photos#show', :constraints => { :id => /[A-Z]\d{5}/ }
+  match 'photos/:id' => 'photos#show', :id => /[A-Z]\d{5}/
+  match "photos", :constraints => {:subdomain => "admin"}
+
+=>Route globbing
+    match 'photos/*other' => 'photos#unknown'
+    match 'books/*section/:title' => 'books#show'
+    match '*a/foo/*b' => 'test#index'
+    match '*pages' => 'pages#show'
+    match '*pages' => 'pages#show', :format => false
+    match '*pages' => 'pages#show', :format => true
+
+=>Redirection
+    match "/stories" => redirect("/posts")     
+    match "/stories/:name" => redirect("/posts/%{name}")
+    match "/stories/:name" => redirect {|params| "/posts/#{params[:name].pluralize}" }
+    match "/stories" => redirect {|p, req| "/posts/#{req.subdomain}" }
+
+=>root :to => 'pages#main'
+
+=>resources :photos, :controller => "images"
+  resources :photos, :constraints => {:id => /[A-Z][A-Z][0-9]+/}
+  resources :photos, :as => "images"
+  resources :photos, :path_names => { :new => 'make', :edit => 'change' }
+  resources :photos, :only => [:index, :show]
+  resources :photos, :except => :destroy
+
+
+=>scope "admin" do
+	  resources :photos, :as => "admin_photos"
+	end
+	 
+	resources :photos
+
+=>ActiveSupport::Inflector.inflections do |inflect|
+	  inflect.irregular 'tooth', 'teeth'
+	end
+

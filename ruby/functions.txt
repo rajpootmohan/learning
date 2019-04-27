@@ -1,0 +1,22 @@
+// function hi
+def hi
+	puts "hi mo"
+end
+
+// calling function hi
+hi  // hi mo
+hi()  // similar to hi
+
+// function hi with params
+def hi(name)
+	puts "hi #{name}"
+end
+
+//calling function hi with params
+hi(mohan)   // hi mohan
+
+// default params in function
+def hi (name = "world")
+	puts "hi #{name}"
+end
+

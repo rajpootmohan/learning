@@ -1,0 +1,39 @@
+ACID
+	1. Atomicity : The ability to abort a transaction on error, and have all writes from that transaction discarded, is the defining feature of ACID atomicity.
+	2. Consistency : In the context of ACID, consistency refers to an application-specific notion of the database being in a “good state”.
+	3. Isolation : Isolation in the sense of ACID means that concurrently executing transactions are isolated from each other: they cannot step on each others’ toes. The classic database textbooks formalize isolation as serializability, which means that each transaction can pretend that it is the only transaction running on the entire database. The database ensures that when the transactions have committed, the result is the same as if they had run serially (one after another), even though in reality they may have run con‐ currently
+	4. Durability : Durability is the promise that once a transaction has com‐ mitted successfully, any data it has written will not be forgotten, even if there is a hardware fault or the database crashes.
+
+Single-object and multi-object operations
+	1. Single-object writes: Atomicity and isolation also apply when a single object is being changed. For exam‐ ple, imagine you are writing a 20 kB JSON document to a database:
+		1. If the network connection is interrupted after the first 10 kB have been sent, does the database store that unparseable 10 kB fragment of JSON?
+		2. If the power fails while the database is in the middle of overwriting the previous value on disk, do you end up with the old and the new value spliced together?
+		3. If another client reads that document while the write is in progress, will it see a partially updated value?
+	2. The need for multi-object transactions
+		1. In a relational data model, a row in one table often has a foreign key reference to a row in another table. (Similarly, in a graph-like data model, a vertex has edges to other vertices.) Multi-object transactions allow you ensure that these refer‐ ences remain valid: when inserting several records that refer to each other, the foreign keys have to be correct and up-to-date, otherwise the data becomes non‐ sensical.
+		2. In a document data model, the fields that need to be updated together are often within the same document, which is treated as a single object — no multi-object transactions are needed when updating a single document. However, document databases lacking join functionality also encourage denormalization (see “Rela‐ tional vs. document databases today” on page 38). When denormalized informa‐ tion needs to be updated, like in the example of Figure 7-2, you need to update several documents in one go. Transactions are very useful in this situation, to prevent denormalized data from going out of sync.
+		3. In a database with secondary indexes (almost everything except pure key-value stores), the indexes also need to be updated every time you change a value. These indexes are different database objects from a transaction point of view: for exam‐ ple, without transaction isolation, it’s possible for a record to appear in one index but not another, because the update to the second index hasn’t happened yet.
+	3. Handling errors and aborts
+		1. A key feature of a transaction is that in the case of a problem, it can be aborted and retried. ACID databases are based on this philosophy: if the database is in danger of violating its guarantee of atomicity, isolation or durability, it would rather abandon the transaction entirely than allow it to continue.
+		2. Not all systems follow that philosophy: especially datastores with leaderless replica‐ tion (see “Leaderless replication” on page 171) work much more on a “best effort” basis, which could be summarized as “the database will do as much as it can, and if it runs into an error, it won’t undo something it has already done” — so it’s the application’s responsibility to recover from errors.	
+
+Weak isolation levels:
+	1. Read committed : The most basic level of transaction isolation is read committed. It makes two guarantees:
+		1. When reading from the database, you will only see data that has been committed (no dirty reads).
+			1. Imagine one transaction has written some data to the database, but has not yet committed or aborted. Can another transaction see that uncommitted data? If yes, that is called a dirty read.
+		2. When writing to the database, you will only overwrite data that has been com‐ mitted (no dirty writes).
+			1. what happens if the earlier write is part of a transaction that has not yet committed, so the later write overwrites an uncommitted value? This is called a dirty write [27]. Transactions running at read committed isolation level must prevent dirty writes, usually by delaying the second write until the first write’s transaction has committed or aborted.
+	2. Implementing read committed :
+		1. Most commonly, databases prevent dirty writes by using row-level locks: when a transaction wants to modify a particular object (row or document), it must first acquire a lock on that object. It must then hold that lock until the transaction is com‐ mitted or aborted. Only one transaction can hold the lock for any given object; if another transaction wants to write to the same object, it must wait until the first transaction is committed or aborted before it can acquire the lock and continue.
+		2. most databases prevent dirty reads using the approach illustrated in Figure 7-4: for every object that is written, the database remembers both the old com‐ mitted value, and also the new value set by the transaction that currently holds the write lock. While the transaction is ongoing, any other transactions that read the object are simply given the old value. Only when the new value is committed, trans‐ actions switch over to reading the new value.
+	3. Snapshot isolation and repeatable read : 
+		page 228-257 read first
+		
+
+
+
+
+
+
+
+		

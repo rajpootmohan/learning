@@ -1,0 +1,4 @@
+1. NGINX vs APACHE
+ 	A. Single Nginx threads serve multiple requests whereas in Apache single thread only serves one connection
+ 	B. Nginx is leading in this contest and performed 2.5 times faster than Apache in serving static content when tested with 1000 concurrent connections.
+ 	

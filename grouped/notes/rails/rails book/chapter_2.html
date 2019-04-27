@@ -1,0 +1,1484 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!-- saved from url=(0053)http://ruby.railstutorial.org/chapters/a-demo-app#top -->
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Learn Web Development with the Ruby on Rails Tutorial | A Demo App</title>
+    
+<meta name="robots" content="all">
+<meta name="MSSmartTagsPreventParsing" content="true">
+<meta name="description" content="Ruby on Rails Tutorial: Learn Rails by Example by Michael Hartl">
+<meta name="keywords" content="Learn Ruby Rails Tutorial web development Rails 3">
+<meta name="author" content="Michael Hartl">
+<meta property="og:title" content="Ruby on Rails Tutorial: Learn Rails by Example">
+<meta property="og:site_name" content="Ruby on Rails Tutorial">
+<meta property="og:image" content="http://railstutorial.org/images/layout/logo.png">
+<meta property="og:url" content="http://railstutorial.org/">
+<meta property="og:type" content="article">
+<meta property="og:description" content="Ruby on Rails Tutorial: Learn Web Development with Rails by Michael Hartl teaches web development with Ruby on Rails. Rails Tutorial is fully up-to-date with Rails 3.0 and Rails 3.2.">
+    <link href="./Learn Web Development with the Ruby on Rails Tutorial   A Demo App_files/polytexnic.css" media="screen" rel="stylesheet" type="text/css">
+    <link href="./Learn Web Development with the Ruby on Rails Tutorial   A Demo App_files/pygments.css" media="screen" rel="stylesheet" type="text/css">
+
+      <link href="./Learn Web Development with the Ruby on Rails Tutorial   A Demo App_files/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+      
+    <link href="./Learn Web Development with the Ruby on Rails Tutorial   A Demo App_files/print.css" media="print" rel="stylesheet" type="text/css">
+    <!--[if lte IE 7]><link href="/stylesheets/ie.css?1364087846" media="screen" rel="stylesheet" type="text/css" /><![endif]-->
+    <!--[if lt IE 7]>  <div style='border: 1px solid #F7941D; background: #FEEFDA; text-align: center; clear: both; height: 75px; position: relative;'>    <div style='position: absolute; right: 3px; top: 3px; font-family: courier new; font-weight: bold;'><a href='#' onclick='javascript:this.parentNode.parentNode.style.display="none"; return false;'><img src='http://www.ie6nomore.com/files/theme/ie6nomore-cornerx.jpg' style='border: none;' alt='Close this notice'/></a></div>    <div style='width: 640px; margin: 0 auto; text-align: left; padding: 0; overflow: hidden; color: black;'>      <div style='width: 75px; float: left;'><img src='http://www.ie6nomore.com/files/theme/ie6nomore-warning.jpg' alt='Warning!'/></div>      <div style='width: 275px; float: left; font-family: Arial, sans-serif;'>        <div style='font-size: 14px; font-weight: bold; margin-top: 12px;'>You are using an outdated browser</div>        <div style='font-size: 12px; margin-top: 6px; line-height: 12px;'>For a better experience using this site, please upgrade to a modern web browser.</div>      </div>      <div style='width: 75px; float: left;'><a href='http://www.firefox.com' target='_blank'><img src='http://www.ie6nomore.com/files/theme/ie6nomore-firefox.jpg' style='border: none;' alt='Get Firefox 3.5'/></a></div>      <div style='width: 75px; float: left;'><a href='http://www.browserforthebetter.com/download.html' target='_blank'><img src='http://www.ie6nomore.com/files/theme/ie6nomore-ie8.jpg' style='border: none;' alt='Get Internet Explorer 8'/></a></div>      <div style='width: 73px; float: left;'><a href='http://www.apple.com/safari/download/' target='_blank'><img src='http://www.ie6nomore.com/files/theme/ie6nomore-safari.jpg' style='border: none;' alt='Get Safari 4'/></a></div>      <div style='float: left;'><a href='http://www.google.com/chrome' target='_blank'><img src='http://www.ie6nomore.com/files/theme/ie6nomore-chrome.jpg' style='border: none;' alt='Get Google Chrome'/></a></div>    </div>  </div>  <![endif]-->
+    <link href="http://feeds.feedburner.com/railstutorial" rel="alternate" title="Rails Tutorial News" type="application/rss+xml">
+
+    
+    <script src="./Learn Web Development with the Ruby on Rails Tutorial   A Demo App_files/widgets.js" charset="utf-8"></script>    
+    
+  <!--<base href="http://ruby.railstutorial.org/chapters/a-demo-app">--><base href=".">
+  <script type="text/javascript" src="./Learn Web Development with the Ruby on Rails Tutorial   A Demo App_files/MathJax.js">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [['$','$'],["\\(","\\)"]]},
+    processEscapes: true,
+    "HTML-CSS": {
+      availableFonts: ["TeX"]
+    }
+  });
+</script>    
+
+
+  <style type="text/css">.MathJax_Hover_Frame {border-radius: .25em; -webkit-border-radius: .25em; -moz-border-radius: .25em; -khtml-border-radius: .25em; box-shadow: 0px 0px 15px #83A; -webkit-box-shadow: 0px 0px 15px #83A; -moz-box-shadow: 0px 0px 15px #83A; -khtml-box-shadow: 0px 0px 15px #83A; border: 1px solid #A6D ! important; display: inline-block; position: absolute}
+.MathJax_Hover_Arrow {position: absolute; width: 15px; height: 11px; cursor: pointer}
+</style><style type="text/css">#MathJax_About {position: fixed; left: 50%; width: auto; text-align: center; border: 3px outset; padding: 1em 2em; background-color: #DDDDDD; color: black; cursor: default; font-family: message-box; font-size: 120%; font-style: normal; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; -khtml-border-radius: 15px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_Menu {position: absolute; background-color: white; color: black; width: auto; padding: 5px 0px; border: 1px solid #CCCCCC; margin: 0; cursor: default; font: menu; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 5px; -webkit-border-radius: 5px; -moz-border-radius: 5px; -khtml-border-radius: 5px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_MenuItem {padding: 1px 2em; background: transparent}
+.MathJax_MenuTitle {background-color: #CCCCCC; margin: -5px 0 0 0; text-align: center; font-style: italic; font-size: 80%; color: #444444; padding: 2px 0; overflow: hidden}
+.MathJax_MenuArrow {position: absolute; right: .5em; color: #666666}
+.MathJax_MenuActive .MathJax_MenuArrow {color: white}
+.MathJax_MenuCheck {position: absolute; left: .7em}
+.MathJax_MenuRadioCheck {position: absolute; left: .7em}
+.MathJax_MenuLabel {padding: 1px 2em 3px 1.33em; font-style: italic}
+.MathJax_MenuRule {border-top: 1px solid #DDDDDD; margin: 4px 3px}
+.MathJax_MenuDisabled {color: GrayText}
+.MathJax_MenuActive {background-color: #606872; color: white}
+.MathJax_Menu_Close {position: absolute; width: 31px; height: 31px; top: -15px; left: -15px}
+</style><style type="text/css">#MathJax_Zoom {position: absolute; background-color: #F0F0F0; overflow: auto; display: block; z-index: 301; padding: .5em; border: 1px solid black; margin: 0; font-weight: normal; font-style: normal; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; box-shadow: 5px 5px 15px #AAAAAA; -webkit-box-shadow: 5px 5px 15px #AAAAAA; -moz-box-shadow: 5px 5px 15px #AAAAAA; -khtml-box-shadow: 5px 5px 15px #AAAAAA; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_ZoomOverlay {position: absolute; left: 0; top: 0; z-index: 300; display: inline-block; width: 100%; height: 100%; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+#MathJax_ZoomEventTrap {position: absolute; left: 0; top: 0; z-index: 302; display: inline-block; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+</style><style type="text/css">.MathJax_Preview {color: #888}
+#MathJax_Message {position: fixed; left: 1em; bottom: 1.5em; background-color: #E6E6E6; border: 1px solid #959595; margin: 0px; padding: 2px 8px; z-index: 102; color: black; font-size: 80%; width: auto; white-space: nowrap}
+#MathJax_MSIE_Frame {position: absolute; top: 0; left: 0; width: 0px; z-index: 101; border: 0px; margin: 0px; padding: 0px}
+.MathJax_Error {color: #CC0000; font-style: italic}
+</style><style type="text/css">.fb_hidden{position:absolute;top:-10000px;z-index:10001}
+.fb_invisible{display:none}
+.fb_reset{background:none;border-spacing:0;border:0;color:#000;cursor:auto;direction:ltr;font-family:"lucida grande", tahoma, verdana, arial, sans-serif;font-size:11px;font-style:normal;font-variant:normal;font-weight:normal;letter-spacing:normal;line-height:1;margin:0;overflow:visible;padding:0;text-align:left;text-decoration:none;text-indent:0;text-shadow:none;text-transform:none;visibility:visible;white-space:normal;word-spacing:normal}
+.fb_link img{border:none}
+.fb_dialog{background:rgba(82, 82, 82, .7);position:absolute;top:-10000px;z-index:10001}
+.fb_dialog_advanced{padding:10px;-moz-border-radius:8px;-webkit-border-radius:8px;border-radius:8px}
+.fb_dialog_content{background:#fff;color:#333}
+.fb_dialog_close_icon{background:url(http://static.ak.fbcdn.net/rsrc.php/v2/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 0 transparent;_background-image:url(http://static.ak.fbcdn.net/rsrc.php/v2/yL/r/s816eWC-2sl.gif);cursor:pointer;display:block;height:15px;position:absolute;right:18px;top:17px;width:15px;top:8px\9;right:7px\9}
+.fb_dialog_mobile .fb_dialog_close_icon{top:5px;left:5px;right:auto}
+.fb_dialog_padding{background-color:transparent;position:absolute;width:1px;z-index:-1}
+.fb_dialog_close_icon:hover{background:url(http://static.ak.fbcdn.net/rsrc.php/v2/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 -15px transparent;_background-image:url(http://static.ak.fbcdn.net/rsrc.php/v2/yL/r/s816eWC-2sl.gif)}
+.fb_dialog_close_icon:active{background:url(http://static.ak.fbcdn.net/rsrc.php/v2/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 -30px transparent;_background-image:url(http://static.ak.fbcdn.net/rsrc.php/v2/yL/r/s816eWC-2sl.gif)}
+.fb_dialog_loader{background-color:#f2f2f2;border:1px solid #606060;font-size:24px;padding:20px}
+.fb_dialog_top_left,
+.fb_dialog_top_right,
+.fb_dialog_bottom_left,
+.fb_dialog_bottom_right{height:10px;width:10px;overflow:hidden;position:absolute}
+/* @noflip */
+.fb_dialog_top_left{background:url(http://static.ak.fbcdn.net/rsrc.php/v2/ye/r/8YeTNIlTZjm.png) no-repeat 0 0;left:-10px;top:-10px}
+/* @noflip */
+.fb_dialog_top_right{background:url(http://static.ak.fbcdn.net/rsrc.php/v2/ye/r/8YeTNIlTZjm.png) no-repeat 0 -10px;right:-10px;top:-10px}
+/* @noflip */
+.fb_dialog_bottom_left{background:url(http://static.ak.fbcdn.net/rsrc.php/v2/ye/r/8YeTNIlTZjm.png) no-repeat 0 -20px;bottom:-10px;left:-10px}
+/* @noflip */
+.fb_dialog_bottom_right{background:url(http://static.ak.fbcdn.net/rsrc.php/v2/ye/r/8YeTNIlTZjm.png) no-repeat 0 -30px;right:-10px;bottom:-10px}
+.fb_dialog_vert_left,
+.fb_dialog_vert_right,
+.fb_dialog_horiz_top,
+.fb_dialog_horiz_bottom{position:absolute;background:#525252;filter:alpha(opacity=70);opacity:.7}
+.fb_dialog_vert_left,
+.fb_dialog_vert_right{width:10px;height:100%}
+.fb_dialog_vert_left{margin-left:-10px}
+.fb_dialog_vert_right{right:0;margin-right:-10px}
+.fb_dialog_horiz_top,
+.fb_dialog_horiz_bottom{width:100%;height:10px}
+.fb_dialog_horiz_top{margin-top:-10px}
+.fb_dialog_horiz_bottom{bottom:0;margin-bottom:-10px}
+.fb_dialog_iframe{line-height:0}
+.fb_dialog_content .dialog_title{background:#6d84b4;border:1px solid #3b5998;color:#fff;font-size:14px;font-weight:bold;margin:0}
+.fb_dialog_content .dialog_title > span{background:url(http://static.ak.fbcdn.net/rsrc.php/v2/yd/r/Cou7n-nqK52.gif)
+no-repeat 5px 50%;float:left;padding:5px 0 7px 26px}
+body.fb_hidden{-webkit-transform:none;height:100%;margin:0;left:-10000px;overflow:visible;position:absolute;top:-10000px;width:100%
+}
+.fb_dialog.fb_dialog_mobile.loading{background:url(http://static.ak.fbcdn.net/rsrc.php/v2/ya/r/3rhSv5V8j3o.gif)
+white no-repeat 50% 50%;min-height:100%;min-width:100%;overflow:hidden;position:absolute;top:0;z-index:10001}
+.fb_dialog.fb_dialog_mobile.loading.centered{max-height:590px;min-height:590px;max-width:500px;min-width:500px}
+#fb-root #fb_dialog_ipad_overlay{background:rgba(0, 0, 0, .45);position:absolute;left:0;top:0;width:100%;min-height:100%;z-index:10000}
+#fb-root #fb_dialog_ipad_overlay.hidden{display:none}
+.fb_dialog.fb_dialog_mobile.loading iframe{visibility:hidden}
+.fb_dialog_content .dialog_header{-webkit-box-shadow:white 0 1px 1px -1px inset;background:-webkit-gradient(linear, 0 0, 0 100%, from(#738ABA), to(#2C4987));border-bottom:1px solid;border-color:#1d4088;color:#fff;font:14px Helvetica, sans-serif;font-weight:bold;text-overflow:ellipsis;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0;vertical-align:middle;white-space:nowrap}
+.fb_dialog_content .dialog_header table{-webkit-font-smoothing:subpixel-antialiased;height:43px;width:100%
+}
+.fb_dialog_content .dialog_header td.header_left{font-size:12px;padding-left:5px;vertical-align:middle;width:60px
+}
+.fb_dialog_content .dialog_header td.header_right{font-size:12px;padding-right:5px;vertical-align:middle;width:60px
+}
+.fb_dialog_content .touchable_button{background:-webkit-gradient(linear, 0 0, 0 100%, from(#4966A6),
+color-stop(0.5, #355492), to(#2A4887));border:1px solid #29447e;-webkit-background-clip:padding-box;-webkit-border-radius:3px;-webkit-box-shadow:rgba(0, 0, 0, .117188) 0 1px 1px inset,
+rgba(255, 255, 255, .167969) 0 1px 0;display:inline-block;margin-top:3px;max-width:85px;line-height:18px;padding:4px 12px;position:relative}
+.fb_dialog_content .dialog_header .touchable_button input{border:none;background:none;color:#fff;font:12px Helvetica, sans-serif;font-weight:bold;margin:2px -12px;padding:2px 6px 3px 6px;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0}
+.fb_dialog_content .dialog_header .header_center{color:#fff;font-size:16px;font-weight:bold;line-height:18px;text-align:center;vertical-align:middle}
+.fb_dialog_content .dialog_content{background:url(http://static.ak.fbcdn.net/rsrc.php/v2/y9/r/jKEcVPZFk-2.gif) no-repeat 50% 50%;border:1px solid #555;border-bottom:0;border-top:0;height:150px}
+.fb_dialog_content .dialog_footer{background:#f2f2f2;border:1px solid #555;border-top-color:#ccc;height:40px}
+#fb_dialog_loader_close{float:left}
+.fb_dialog.fb_dialog_mobile .fb_dialog_close_button{text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0}
+.fb_dialog.fb_dialog_mobile .fb_dialog_close_icon{visibility:hidden}
+.fb_iframe_widget{position:relative;display:-moz-inline-block;display:inline-block}
+.fb_iframe_widget iframe{position:absolute}
+.fb_iframe_widget_lift{z-index:1}
+.fb_iframe_widget span{display:inline-block;position:relative;text-align:justify;vertical-align:text-bottom}
+.fb_hide_iframes iframe{position:relative;left:-10000px}
+.fb_iframe_widget_loader{position:relative;display:inline-block}
+.fb_iframe_widget_fluid{display:inline}
+.fb_iframe_widget_fluid span{width:100%}
+.fb_iframe_widget_loader iframe{min-height:32px;z-index:2;zoom:1}
+.fb_iframe_widget_loader .FB_Loader{background:url(http://static.ak.fbcdn.net/rsrc.php/v2/y9/r/jKEcVPZFk-2.gif) no-repeat;height:32px;width:32px;margin-left:-16px;position:absolute;left:50%;z-index:4}
+.fb_button_simple,
+.fb_button_simple_rtl{background-image:url(http://static.ak.fbcdn.net/rsrc.php/v2/yH/r/eIpbnVKI9lR.png);background-repeat:no-repeat;cursor:pointer;outline:none;text-decoration:none}
+.fb_button_simple_rtl{background-position:right 0}
+.fb_button_simple .fb_button_text{margin:0 0 0 20px;padding-bottom:1px}
+.fb_button_simple_rtl .fb_button_text{margin:0 10px 0 0}
+a.fb_button_simple:hover .fb_button_text,
+a.fb_button_simple_rtl:hover .fb_button_text,
+.fb_button_simple:hover .fb_button_text,
+.fb_button_simple_rtl:hover .fb_button_text{text-decoration:underline}
+.fb_button,
+.fb_button_rtl{background:#29447e url(http://static.ak.fbcdn.net/rsrc.php/v2/yL/r/FGFbc80dUKj.png);background-repeat:no-repeat;cursor:pointer;display:inline-block;padding:0 0 0 1px;text-decoration:none;outline:none}
+.fb_button .fb_button_text,
+.fb_button_rtl .fb_button_text{background:#5f78ab url(http://static.ak.fbcdn.net/rsrc.php/v2/yL/r/FGFbc80dUKj.png);border-top:solid 1px #879ac0;border-bottom:solid 1px #1a356e;color:#fff;display:block;font-family:"lucida grande",tahoma,verdana,arial,sans-serif;font-weight:bold;padding:2px 6px 3px 6px;margin:1px 1px 0 21px;text-shadow:none}
+a.fb_button,
+a.fb_button_rtl,
+.fb_button,
+.fb_button_rtl{text-decoration:none}
+a.fb_button:active .fb_button_text,
+a.fb_button_rtl:active .fb_button_text,
+.fb_button:active .fb_button_text,
+.fb_button_rtl:active .fb_button_text{border-bottom:solid 1px #29447e;border-top:solid 1px #45619d;background:#4f6aa3;text-shadow:none}
+.fb_button_xlarge,
+.fb_button_xlarge_rtl{background-position:left -60px;font-size:24px;line-height:30px}
+.fb_button_xlarge .fb_button_text{padding:3px 8px 3px 12px;margin-left:38px}
+a.fb_button_xlarge:active{background-position:left -99px}
+.fb_button_xlarge_rtl{background-position:right -268px}
+.fb_button_xlarge_rtl .fb_button_text{padding:3px 8px 3px 12px;margin-right:39px}
+a.fb_button_xlarge_rtl:active{background-position:right -307px}
+.fb_button_large,
+.fb_button_large_rtl{background-position:left -138px;font-size:13px;line-height:16px}
+.fb_button_large .fb_button_text{margin-left:24px;padding:2px 6px 4px 6px}
+a.fb_button_large:active{background-position:left -163px}
+.fb_button_large_rtl{background-position:right -346px}
+.fb_button_large_rtl .fb_button_text{margin-right:25px}
+a.fb_button_large_rtl:active{background-position:right -371px}
+.fb_button_medium,
+.fb_button_medium_rtl{background-position:left -188px;font-size:11px;line-height:14px}
+a.fb_button_medium:active{background-position:left -210px}
+.fb_button_medium_rtl{background-position:right -396px}
+.fb_button_text_rtl,
+.fb_button_medium_rtl .fb_button_text{padding:2px 6px 3px 6px;margin-right:22px}
+a.fb_button_medium_rtl:active{background-position:right -418px}
+.fb_button_small,
+.fb_button_small_rtl{background-position:left -232px;font-size:10px;line-height:10px}
+.fb_button_small .fb_button_text{padding:2px 6px 3px;margin-left:17px}
+a.fb_button_small:active,
+.fb_button_small:active{background-position:left -250px}
+.fb_button_small_rtl{background-position:right -440px}
+.fb_button_small_rtl .fb_button_text{padding:2px 6px;margin-right:18px}
+a.fb_button_small_rtl:active{background-position:right -458px}
+.fb_share_count_wrapper{position:relative;float:left}
+.fb_share_count{background:#b0b9ec none repeat scroll 0 0;color:#333;font-family:"lucida grande", tahoma, verdana, arial, sans-serif;text-align:center}
+.fb_share_count_inner{background:#e8ebf2;display:block}
+.fb_share_count_right{margin-left:-1px;display:inline-block}
+.fb_share_count_right .fb_share_count_inner{border-top:solid 1px #e8ebf2;border-bottom:solid 1px #b0b9ec;margin:1px 1px 0 1px;font-size:10px;line-height:10px;padding:2px 6px 3px;font-weight:bold}
+.fb_share_count_top{display:block;letter-spacing:-1px;line-height:34px;margin-bottom:7px;font-size:22px;border:solid 1px #b0b9ec}
+.fb_share_count_nub_top{border:none;display:block;position:absolute;left:7px;top:35px;margin:0;padding:0;width:6px;height:7px;background-repeat:no-repeat;background-image:url(http://static.ak.fbcdn.net/rsrc.php/v2/yU/r/bSOHtKbCGYI.png)}
+.fb_share_count_nub_right{border:none;display:inline-block;padding:0;width:5px;height:10px;background-repeat:no-repeat;background-image:url(http://static.ak.fbcdn.net/rsrc.php/v2/yX/r/i_oIVTKMYsL.png);vertical-align:top;background-position:right 5px;z-index:10;left:2px;margin:0 2px 0 0;position:relative}
+.fb_share_no_count{display:none}
+.fb_share_size_Small .fb_share_count_right .fb_share_count_inner{font-size:10px}
+.fb_share_size_Medium .fb_share_count_right .fb_share_count_inner{font-size:11px;padding:2px 6px 3px;letter-spacing:-1px;line-height:14px}
+.fb_share_size_Large .fb_share_count_right .fb_share_count_inner{font-size:13px;line-height:16px;padding:2px 6px 4px;font-weight:normal;letter-spacing:-1px}
+.fb_share_count_hidden .fb_share_count_nub_top,
+.fb_share_count_hidden .fb_share_count_top,
+.fb_share_count_hidden .fb_share_count_nub_right,
+.fb_share_count_hidden .fb_share_count_right{visibility:hidden}
+.fb_connect_bar_container div,
+.fb_connect_bar_container span,
+.fb_connect_bar_container a,
+.fb_connect_bar_container img,
+.fb_connect_bar_container strong{background:none;border-spacing:0;border:0;direction:ltr;font-style:normal;font-variant:normal;letter-spacing:normal;line-height:1;margin:0;overflow:visible;padding:0;text-align:left;text-decoration:none;text-indent:0;text-shadow:none;text-transform:none;visibility:visible;white-space:normal;word-spacing:normal;vertical-align:baseline}
+.fb_connect_bar_container{position:fixed;left:0 !important;right:0 !important;height:42px !important;padding:0 25px !important;margin:0 !important;vertical-align:middle !important;border-bottom:1px solid #333 !important;background:#3b5998 !important;z-index:99999999 !important;overflow:hidden !important}
+.fb_connect_bar_container_ie6{position:absolute;top:expression(document.compatMode=="CSS1Compat"? document.documentElement.scrollTop+"px":body.scrollTop+"px")}
+.fb_connect_bar{position:relative;margin:auto;height:100%;width:100%;padding:6px 0 0 0 !important;background:none;color:#fff !important;font-family:"lucida grande", tahoma, verdana, arial, sans-serif !important;font-size:13px !important;font-style:normal !important;font-variant:normal !important;font-weight:normal !important;letter-spacing:normal !important;line-height:1 !important;text-decoration:none !important;text-indent:0 !important;text-shadow:none !important;text-transform:none !important;white-space:normal !important;word-spacing:normal !important}
+.fb_connect_bar a:hover{color:#fff}
+.fb_connect_bar .fb_profile img{height:30px;width:30px;vertical-align:middle;margin:0 6px 5px 0}
+.fb_connect_bar div a,
+.fb_connect_bar span,
+.fb_connect_bar span a{color:#bac6da;font-size:11px;text-decoration:none}
+.fb_connect_bar .fb_buttons{float:right;margin-top:7px}
+.fb_edge_widget_with_comment{position:relative;*z-index:1000}
+.fb_edge_widget_with_comment span.fb_edge_comment_widget{position:absolute}
+.fb_edge_widget_with_comment span.fb_send_button_form_widget{z-index:1}
+.fb_edge_widget_with_comment span.fb_send_button_form_widget .FB_Loader{left:0;top:1px;margin-top:6px;margin-left:0;background-position:50% 50%;background-color:#fff;height:150px;width:394px;border:1px #666 solid;border-bottom:2px solid #283e6c;z-index:1}
+.fb_edge_widget_with_comment span.fb_send_button_form_widget.dark .FB_Loader{background-color:#000;border-bottom:2px solid #ccc}
+.fb_edge_widget_with_comment span.fb_send_button_form_widget.siderender
+.FB_Loader{margin-top:0}
+.fbpluginrecommendationsbarleft,
+.fbpluginrecommendationsbarright{position:fixed !important;bottom:0;z-index:999}
+/* @noflip */
+.fbpluginrecommendationsbarleft{left:10px}
+/* @noflip */
+.fbpluginrecommendationsbarright{right:10px}</style></head>
+<body class="book" data-twttr-rendered="true"><div id="MathJax_Message" style="display: none;"></div> 
+
+  <div id="container">
+    <div id="header" class="clearfix"><div id="title">
+  <div id="logo"><a href="http://ruby.railstutorial.org/"><img alt="Logo" src="./Learn Web Development with the Ruby on Rails Tutorial   A Demo App_files/logo.png"></a></div>
+  <h1 id="name">
+    <a href="http://ruby.railstutorial.org/">Ruby on Rails Tutorial</a>
+  </h1>
+  <br>
+  <h2 id="authors">
+    <a href="http://ruby.railstutorial.org/#author">by Michael Hartl</a>
+  </h2>
+</div>
+</div>
+    <div id="menu"><div class="links">
+  <div class="box">
+    <span>
+      <a href="http://ruby.railstutorial.org/">Home</a>
+    </span>
+    <span class="division">
+      |
+    </span>
+    <span>
+      <a href="http://ruby.railstutorial.org/ruby-on-rails-tutorial-book">Book</a>
+    </span>
+    <span class="division">
+      |
+    </span>
+    <span>
+      <a href="http://ruby.railstutorial.org/help">Help</a>
+    </span>
+    <span class="division">
+      |
+    </span>
+    <span>
+      <a href="http://ruby.railstutorial.org/contact">Contact</a>
+    </span>
+    <span class="division">
+      |
+    </span>
+    <span>
+      <a href="http://news.railstutorial.org/">News</a>
+    </span>
+    <span class="img">
+      <a href="http://feeds.feedburner.com/railstutorial"><img alt="Feed-icon16x16" class="feed" src="./Learn Web Development with the Ruby on Rails Tutorial   A Demo App_files/feed-icon16x16.png"></a>
+    </span>
+    <!-- %span.division -->
+    <!-- 
+    -->
+    <!-- %span -->
+    <!-- = link_to "By Email", email_url -->
+    <!-- %span.img -->
+    <!-- = link_to email_icon, email_url -->
+    <span class="division">
+      |
+    </span>
+    <span>
+      <a href="http://twitter.com/railstutorial">Follow</a>
+    </span>
+    <span>
+      <a href="http://twitter.com/railstutorial"><img alt="Twitter-small" src="./Learn Web Development with the Ruby on Rails Tutorial   A Demo App_files/twitter-small.png"></a>
+    </span>
+  </div>
+</div>
+</div>     
+      <div id="content">         
+        <div id="sidebar">
+  <div class="content">
+      <!-- = link_to image_tag("icons/feed-icon32x32.png"), feed_url -->
+    <!-- = link_to image_tag("icons/twitter.png"), twitter_url -->
+    <!-- = link_to image_tag("icons/mail-icons/mail-icon-32x32.png"), email_url -->
+    <div id="navtool">
+      <table class="layout">
+        <tbody><tr>
+          <td colspan="2"><a href="http://ruby.railstutorial.org/chapters/a-demo-app#book_menu"><img alt="Up A Level" src="./Learn Web Development with the Ruby on Rails Tutorial   A Demo App_files/sb_button_up.png"></a></td>
+        </tr>
+        <tr>
+          <td><a href="http://ruby.railstutorial.org/chapters/beginning#top"><img alt="Previous Chapter" src="./Learn Web Development with the Ruby on Rails Tutorial   A Demo App_files/sb_button_prev.png"></a></td>
+          <td><a href="http://ruby.railstutorial.org/chapters/static-pages#top"><img alt="Next Chapter" src="./Learn Web Development with the Ruby on Rails Tutorial   A Demo App_files/sb_button_next.png"></a></td>
+        </tr>
+      </tbody></table>
+      <a href="http://www.amazon.com/gp/product/0321832051/ref=as_li_qf_sp_asin_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=0321832051&linkCode=as2&tag=therubonraitu-20"><img alt="Ruby on Rails Tutorial: Learn Web Development with Rails" src="./Learn Web Development with the Ruby on Rails Tutorial   A Demo App_files/sb_button_buy_print_edition_red.png"></a><img src="./Learn Web Development with the Ruby on Rails Tutorial   A Demo App_files/ir" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;">
+      <br>
+      <a href="http://ruby.railstutorial.org/#buy"><img alt="Buy Screencasts" src="./Learn Web Development with the Ruby on Rails Tutorial   A Demo App_files/sb_button_pdf_screencasts_red.png"></a>
+      <center><a href="http://youtu.be/bOdn9EdUquo" target="_blank"><img alt="Screencasts_thumbnail_play" src="./Learn Web Development with the Ruby on Rails Tutorial   A Demo App_files/screencasts_thumbnail_play.png"></a></center>
+      <div class="connect">
+        <table class="center">
+          <tbody><tr>
+            <td><a href="http://feeds.feedburner.com/railstutorial"><img alt="Feed-icon24x24" src="./Learn Web Development with the Ruby on Rails Tutorial   A Demo App_files/feed-icon24x24.png" title="Get news updates via RSS"></a></td>
+            <td><a href="http://feedburner.google.com/fb/a/mailverify?uri=railstutorial&loc=en_US"><img alt="Mail-icon-24x24" src="./Learn Web Development with the Ruby on Rails Tutorial   A Demo App_files/mail-icon-24x24.png" title="Get news updates by email"></a></td>
+            <td><a href="http://www.facebook.com/pages/Ruby-on-Rails-Tutorial/197151265072"><img alt="Facebook-icon24x24" src="./Learn Web Development with the Ruby on Rails Tutorial   A Demo App_files/facebook-icon24x24.png" title="Become a fan on Facebook"></a></td>
+            <td><a href="http://twitter.com/railstutorial"><img alt="Twitter-icon24x24" src="./Learn Web Development with the Ruby on Rails Tutorial   A Demo App_files/twitter-icon24x24.png" title="Follow on Twitter"></a></td>
+          </tr>
+        </tbody></table>
+      </div>
+      <div class="section">
+        <div class="switcher">
+          <span class="title round">Rails 3.2</span>
+          •
+          <span class="switcher_link"><a href="http://ruby.railstutorial.org/book?version=4.0">Rails 4.0</a></span>
+        </div>
+        <div class="share"><fb:like href="http://railstutorial.org/" show_faces="false" layout="button_count" colorscheme="light" fb-xfbml-state="rendered" class="fb_edge_widget_with_comment fb_iframe_widget"><span style="height: 21px; width: 79px;"><iframe id="f1f943edf8" name="f2779cb4f4" scrolling="no" style="border: none; overflow: hidden; height: 21px; width: 79px;" title="Like this content on Facebook." class="fb_ltr" src="./Learn Web Development with the Ruby on Rails Tutorial   A Demo App_files/like.html"></iframe></span></fb:like></div>
+      </div>
+      <div class="section">
+        <a href="http://ruby.railstutorial.org/book?version=4.0#top">
+          Read the Rails 4.0 edition
+        </a>
+      </div>
+    </div>
+    <!-- .section -->
+    <!-- Sidebar areas labeled with class "section", like this one, will be styled suitably for text. -->
+    <!-- .section -->
+    <!-- %a{ :href => '/affiliates' } -->
+    <!-- Rails Tutorial Affiliate Program&mdash;50% commissions -->
+  </div>
+</div>
+<!-- %h3 Get Involved -->
+<!-- 
+-->
+<!-- .links -->
+<!-- %p.subscribe -->
+<!-- %span= link_to(image_tag('feed-icon32x32.png'), feed_url) -->
+<!-- = link_to("Subscribe", feed_url) -->
+<!-- %p.follow -->
+<!-- = link_to(image_tag('twitter.png'), twitter_url) -->
+<!-- = link_to("Follow", twitter_url) -->
+<!-- 
+-->
+
+                      
+        <div id="main" class="withsidebar">
+          
+
+
+<div id="book_menu">
+  <a href="http://ruby.railstutorial.org/chapters/a-demo-app#main_content">skip to content</a>
+  |
+  <a href="http://ruby.railstutorial.org/book/ruby-on-rails-tutorial">view as single page</a>
+</div>
+
+
+<div id="book_wrap">
+  <div id="book_top">
+  </div>
+    <div id="book">
+
+
+<h1 class="title">Ruby on Rails Tutorial </h1>
+
+
+<h1 class="subtitle">  Learn Web Development with Rails</h1>
+
+
+<h2 class="author">Michael Hartl</h2>
+
+
+
+
+<h2 class="contents">Contents</h2>
+
+
+<div id="table_of_contents"><ol><li class="chapter"><a href="http://ruby.railstutorial.org/chapters/beginning#top"><span class="number">Chapter 1</span> From zero to deploy</a></li><li><ol><li class="section"><a href="http://ruby.railstutorial.org/chapters/beginning#sec-introduction"><span class="number">1.1</span> Introduction</a></li><li><ol><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/beginning#sec-comments_for_various_readers"><span class="number">1.1.1</span> Comments for various readers</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/beginning#sec-1_1_2"><span class="number">1.1.2</span> “Scaling” Rails</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/beginning#sec-conventions"><span class="number">1.1.3</span> Conventions in this book</a></li></ol></li><li class="section"><a href="http://ruby.railstutorial.org/chapters/beginning#sec-up_and_running"><span class="number">1.2</span> Up and running</a></li><li><ol><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/beginning#sec-development_tools"><span class="number">1.2.1</span> Development environments</a></li><li><ol><li class="subsubsection"><a href="http://ruby.railstutorial.org/chapters/beginning#sec-1_2_1_1">IDEs</a></li><li class="subsubsection"><a href="http://ruby.railstutorial.org/chapters/beginning#sec-1_2_1_2">Text editors and command lines</a></li><li class="subsubsection"><a href="http://ruby.railstutorial.org/chapters/beginning#sec-1_2_1_3">Browsers</a></li><li class="subsubsection"><a href="http://ruby.railstutorial.org/chapters/beginning#sec-1_2_1_4">A note about tools</a></li></ol></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/beginning#sec-rubygems"><span class="number">1.2.2</span> Ruby, RubyGems, Rails, and Git</a></li><li><ol><li class="subsubsection"><a href="http://ruby.railstutorial.org/chapters/beginning#sec-rails_installer_windows">Rails Installer (Windows)</a></li><li class="subsubsection"><a href="http://ruby.railstutorial.org/chapters/beginning#sec-install_git">Install Git</a></li><li class="subsubsection"><a href="http://ruby.railstutorial.org/chapters/beginning#sec-install_ruby">Install Ruby</a></li><li class="subsubsection"><a href="http://ruby.railstutorial.org/chapters/beginning#sec-install_rubygems">Install RubyGems</a></li><li class="subsubsection"><a href="http://ruby.railstutorial.org/chapters/beginning#sec-install_rails">Install Rails</a></li></ol></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/beginning#sec-the_first_application"><span class="number">1.2.3</span> The first application</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/beginning#sec-bundler"><span class="number">1.2.4</span> Bundler</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/beginning#sec-rails_server"><span class="number">1.2.5</span> <tt>rails server</tt></a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/beginning#sec-mvc"><span class="number">1.2.6</span> Model-view-controller (MVC)</a></li></ol></li><li class="section"><a href="http://ruby.railstutorial.org/chapters/beginning#sec-version_control"><span class="number">1.3</span> Version control with Git</a></li><li><ol><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/beginning#sec-git_setup"><span class="number">1.3.1</span> Installation and setup</a></li><li><ol><li class="subsubsection"><a href="http://ruby.railstutorial.org/chapters/beginning#sec-1_3_1_1">First-time system setup</a></li><li class="subsubsection"><a href="http://ruby.railstutorial.org/chapters/beginning#sec-1_3_1_2">First-time repository setup</a></li></ol></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/beginning#sec-adding_and_committing"><span class="number">1.3.2</span> Adding and committing</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/beginning#sec-1_3_3"><span class="number">1.3.3</span> What good does Git do you?</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/beginning#sec-github"><span class="number">1.3.4</span> GitHub</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/beginning#sec-git_commands"><span class="number">1.3.5</span> Branch, edit, commit, merge</a></li><li><ol><li class="subsubsection"><a href="http://ruby.railstutorial.org/chapters/beginning#sec-git_branch">Branch</a></li><li class="subsubsection"><a href="http://ruby.railstutorial.org/chapters/beginning#sec-git_edit">Edit</a></li><li class="subsubsection"><a href="http://ruby.railstutorial.org/chapters/beginning#sec-git_commit">Commit</a></li><li class="subsubsection"><a href="http://ruby.railstutorial.org/chapters/beginning#sec-git_merge">Merge</a></li><li class="subsubsection"><a href="http://ruby.railstutorial.org/chapters/beginning#sec-git_push">Push</a></li></ol></li></ol></li><li class="section"><a href="http://ruby.railstutorial.org/chapters/beginning#sec-deploying"><span class="number">1.4</span> Deploying</a></li><li><ol><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/beginning#sec-heroku_setup"><span class="number">1.4.1</span> Heroku setup</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/beginning#sec-heroku_step_one"><span class="number">1.4.2</span> Heroku deployment, step one</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/beginning#sec-1_4_3"><span class="number">1.4.3</span> Heroku deployment, step two</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/beginning#sec-heroku_commands"><span class="number">1.4.4</span> Heroku commands</a></li></ol></li><li class="section"><a href="http://ruby.railstutorial.org/chapters/beginning#sec-beginning_conclusion"><span class="number">1.5</span> Conclusion</a></li></ol></li><li class="chapter"><a href="./Learn Web Development with the Ruby on Rails Tutorial   A Demo App_files/Learn Web Development with the Ruby on Rails Tutorial   A Demo App.html"><span class="number">Chapter 2</span> A demo app</a></li><li><ol><li class="section"><a href="http://ruby.railstutorial.org/chapters/a-demo-app#sec-planning_the_application"><span class="number">2.1</span> Planning the application</a></li><li><ol><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/a-demo-app#sec-modeling_demo_users"><span class="number">2.1.1</span> Modeling demo users</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/a-demo-app#sec-modeling_demo_microposts"><span class="number">2.1.2</span> Modeling demo microposts</a></li></ol></li><li class="section"><a href="http://ruby.railstutorial.org/chapters/a-demo-app#sec-demo_users_resource"><span class="number">2.2</span> The Users resource</a></li><li><ol><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/a-demo-app#sec-a_user_tour"><span class="number">2.2.1</span> A user tour</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/a-demo-app#sec-mvc_in_action"><span class="number">2.2.2</span> MVC in action</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/a-demo-app#sec-weaknesses_of_this_users_resource"><span class="number">2.2.3</span> Weaknesses of this Users resource</a></li></ol></li><li class="section"><a href="http://ruby.railstutorial.org/chapters/a-demo-app#sec-microposts_resource"><span class="number">2.3</span> The Microposts resource</a></li><li><ol><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/a-demo-app#sec-a_micropost_microtour"><span class="number">2.3.1</span> A micropost microtour</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/a-demo-app#sec-putting_the_micro_in_microposts"><span class="number">2.3.2</span> Putting the <em>micro</em> in microposts</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/a-demo-app#sec-demo_user_has_many_microposts"><span class="number">2.3.3</span> A user <tt>has_many</tt> microposts</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/a-demo-app#sec-inheritance_hierarchies"><span class="number">2.3.4</span> Inheritance hierarchies</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/a-demo-app#sec-deploying_the_demo_app"><span class="number">2.3.5</span> Deploying the demo app</a></li></ol></li><li class="section"><a href="http://ruby.railstutorial.org/chapters/a-demo-app#sec-2_4"><span class="number">2.4</span> Conclusion</a></li></ol></li><li class="chapter"><a href="http://ruby.railstutorial.org/chapters/static-pages#top"><span class="number">Chapter 3</span> Mostly static pages</a></li><li><ol><li class="section"><a href="http://ruby.railstutorial.org/chapters/static-pages#sec-static_pages"><span class="number">3.1</span> Static pages</a></li><li><ol><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/static-pages#sec-truly_static_pages"><span class="number">3.1.1</span> Truly static pages</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/static-pages#sec-static_pages_with_rails"><span class="number">3.1.2</span> Static pages with Rails</a></li></ol></li><li class="section"><a href="http://ruby.railstutorial.org/chapters/static-pages#sec-first_tests"><span class="number">3.2</span> Our first tests</a></li><li><ol><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/static-pages#sec-TDD"><span class="number">3.2.1</span> Test-driven development</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/static-pages#sec-adding_a_page"><span class="number">3.2.2</span> Adding a page</a></li><li><ol><li class="subsubsection"><a href="http://ruby.railstutorial.org/chapters/static-pages#sec-red">Red</a></li><li class="subsubsection"><a href="http://ruby.railstutorial.org/chapters/static-pages#sec-green">Green</a></li><li class="subsubsection"><a href="http://ruby.railstutorial.org/chapters/static-pages#sec-refactor">Refactor</a></li></ol></li></ol></li><li class="section"><a href="http://ruby.railstutorial.org/chapters/static-pages#sec-slightly_dynamic_pages"><span class="number">3.3</span> Slightly dynamic pages</a></li><li><ol><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/static-pages#sec-testing_a_title_change"><span class="number">3.3.1</span> Testing a title change</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/static-pages#sec-passing_title_tests"><span class="number">3.3.2</span> Passing title tests</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/static-pages#sec-embedded_ruby"><span class="number">3.3.3</span> Embedded Ruby</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/static-pages#sec-layouts"><span class="number">3.3.4</span> Eliminating duplication with layouts</a></li></ol></li><li class="section"><a href="http://ruby.railstutorial.org/chapters/static-pages#sec-static_pages_conclusion"><span class="number">3.4</span> Conclusion</a></li><li class="section"><a href="http://ruby.railstutorial.org/chapters/static-pages#sec-static_pages_exercises"><span class="number">3.5</span> Exercises</a></li><li class="section"><a href="http://ruby.railstutorial.org/chapters/static-pages#sec-advanced_setup"><span class="number">3.6</span> Advanced setup</a></li><li><ol><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/static-pages#sec-eliminating_bundle_exec"><span class="number">3.6.1</span> Eliminating <tt>bundle exec</tt></a></li><li><ol><li class="subsubsection"><a href="http://ruby.railstutorial.org/chapters/static-pages#sec-rvm_bundler_integration">RVM Bundler integration</a></li><li class="subsubsection"><a href="http://ruby.railstutorial.org/chapters/static-pages#sec-binstubs">binstubs</a></li></ol></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/static-pages#sec-guard"><span class="number">3.6.2</span> Automated tests with Guard</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/static-pages#sec-spork"><span class="number">3.6.3</span> Speeding up tests with Spork</a></li><li><ol><li class="subsubsection"><a href="http://ruby.railstutorial.org/chapters/static-pages#sec-spork_and_guard">Guard with Spork</a></li></ol></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/static-pages#sec-tests_inside_sublime_text"><span class="number">3.6.4</span> Tests inside Sublime Text</a></li></ol></li></ol></li><li class="chapter"><a href="http://ruby.railstutorial.org/chapters/rails-flavored-ruby#top"><span class="number">Chapter 4</span> Rails-flavored Ruby</a></li><li><ol><li class="section"><a href="http://ruby.railstutorial.org/chapters/rails-flavored-ruby#sec-motivation"><span class="number">4.1</span> Motivation</a></li><li class="section"><a href="http://ruby.railstutorial.org/chapters/rails-flavored-ruby#sec-strings_and_methods"><span class="number">4.2</span> Strings and methods</a></li><li><ol><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/rails-flavored-ruby#sec-comments"><span class="number">4.2.1</span> Comments</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/rails-flavored-ruby#sec-strings"><span class="number">4.2.2</span> Strings</a></li><li><ol><li class="subsubsection"><a href="http://ruby.railstutorial.org/chapters/rails-flavored-ruby#sec-printing">Printing</a></li><li class="subsubsection"><a href="http://ruby.railstutorial.org/chapters/rails-flavored-ruby#sec-single_quoted_strings">Single-quoted strings</a></li></ol></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/rails-flavored-ruby#sec-objects_and_message_passing"><span class="number">4.2.3</span> Objects and message passing</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/rails-flavored-ruby#sec-method_definitions"><span class="number">4.2.4</span> Method definitions</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/rails-flavored-ruby#sec-back_to_the_title_helper"><span class="number">4.2.5</span> Back to the title helper</a></li></ol></li><li class="section"><a href="http://ruby.railstutorial.org/chapters/rails-flavored-ruby#sec-other_data_structures"><span class="number">4.3</span> Other data structures</a></li><li><ol><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/rails-flavored-ruby#sec-arrays_and_ranges"><span class="number">4.3.1</span> Arrays and ranges</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/rails-flavored-ruby#sec-blocks"><span class="number">4.3.2</span> Blocks</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/rails-flavored-ruby#sec-hashes_and_symbols"><span class="number">4.3.3</span> Hashes and symbols</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/rails-flavored-ruby#sec-css_revisited"><span class="number">4.3.4</span> CSS revisited</a></li></ol></li><li class="section"><a href="http://ruby.railstutorial.org/chapters/rails-flavored-ruby#sec-ruby_classes"><span class="number">4.4</span> Ruby classes</a></li><li><ol><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/rails-flavored-ruby#sec-constructors"><span class="number">4.4.1</span> Constructors</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/rails-flavored-ruby#sec-a_class_of_our_own"><span class="number">4.4.2</span> Class inheritance</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/rails-flavored-ruby#sec-modifying_built_in_classes"><span class="number">4.4.3</span> Modifying built-in classes</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/rails-flavored-ruby#sec-a_controller_class"><span class="number">4.4.4</span> A controller class</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/rails-flavored-ruby#sec-a_user_class"><span class="number">4.4.5</span> A user class</a></li></ol></li><li class="section"><a href="http://ruby.railstutorial.org/chapters/rails-flavored-ruby#sec-conclusion"><span class="number">4.5</span> Conclusion</a></li><li class="section"><a href="http://ruby.railstutorial.org/chapters/rails-flavored-ruby#sec-exercises"><span class="number">4.6</span> Exercises</a></li></ol></li><li class="chapter"><a href="http://ruby.railstutorial.org/chapters/filling-in-the-layout#top"><span class="number">Chapter 5</span> Filling in the layout</a></li><li><ol><li class="section"><a href="http://ruby.railstutorial.org/chapters/filling-in-the-layout#sec-structure"><span class="number">5.1</span> Adding some structure</a></li><li><ol><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/filling-in-the-layout#sec-adding_to_the_layout"><span class="number">5.1.1</span> Site navigation</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/filling-in-the-layout#sec-custom_css"><span class="number">5.1.2</span> Bootstrap and custom CSS</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/filling-in-the-layout#sec-partials"><span class="number">5.1.3</span> Partials</a></li></ol></li><li class="section"><a href="http://ruby.railstutorial.org/chapters/filling-in-the-layout#sec-sass_and_the_asset_pipeline"><span class="number">5.2</span> Sass and the asset pipeline</a></li><li><ol><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/filling-in-the-layout#sec-the_asset_pipeline"><span class="number">5.2.1</span> The asset pipeline</a></li><li><ol><li class="subsubsection"><a href="http://ruby.railstutorial.org/chapters/filling-in-the-layout#sec-5_2_1_1">Asset directories</a></li><li class="subsubsection"><a href="http://ruby.railstutorial.org/chapters/filling-in-the-layout#sec-5_2_1_2">Manifest files</a></li><li class="subsubsection"><a href="http://ruby.railstutorial.org/chapters/filling-in-the-layout#sec-5_2_1_3">Preprocessor engines</a></li><li class="subsubsection"><a href="http://ruby.railstutorial.org/chapters/filling-in-the-layout#sec-5_2_1_4">Efficiency in production</a></li></ol></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/filling-in-the-layout#sec-sass"><span class="number">5.2.2</span> Syntactically awesome stylesheets</a></li><li><ol><li class="subsubsection"><a href="http://ruby.railstutorial.org/chapters/filling-in-the-layout#sec-5_2_2_1">Nesting</a></li><li class="subsubsection"><a href="http://ruby.railstutorial.org/chapters/filling-in-the-layout#sec-5_2_2_2">Variables</a></li></ol></li></ol></li><li class="section"><a href="http://ruby.railstutorial.org/chapters/filling-in-the-layout#sec-layout_links"><span class="number">5.3</span> Layout links</a></li><li><ol><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/filling-in-the-layout#sec-route_tests"><span class="number">5.3.1</span> Route tests</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/filling-in-the-layout#sec-rails_routes"><span class="number">5.3.2</span> Rails routes</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/filling-in-the-layout#sec-named_routes"><span class="number">5.3.3</span> Named routes</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/filling-in-the-layout#sec-pretty_rspec"><span class="number">5.3.4</span> Pretty RSpec</a></li></ol></li><li class="section"><a href="http://ruby.railstutorial.org/chapters/filling-in-the-layout#sec-user_signup"><span class="number">5.4</span> User signup: A first step</a></li><li><ol><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/filling-in-the-layout#sec-users_controller"><span class="number">5.4.1</span> Users controller</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/filling-in-the-layout#sec-signup_url"><span class="number">5.4.2</span> Signup URI</a></li></ol></li><li class="section"><a href="http://ruby.railstutorial.org/chapters/filling-in-the-layout#sec-layout_conclusion"><span class="number">5.5</span> Conclusion</a></li><li class="section"><a href="http://ruby.railstutorial.org/chapters/filling-in-the-layout#sec-layout_exercises"><span class="number">5.6</span> Exercises</a></li></ol></li><li class="chapter"><a href="http://ruby.railstutorial.org/chapters/modeling-users#top"><span class="number">Chapter 6</span> Modeling users</a></li><li><ol><li class="section"><a href="http://ruby.railstutorial.org/chapters/modeling-users#sec-user_model"><span class="number">6.1</span> User model</a></li><li><ol><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/modeling-users#sec-database_migrations"><span class="number">6.1.1</span> Database migrations</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/modeling-users#sec-the_model_file"><span class="number">6.1.2</span> The model file</a></li><li><ol><li class="subsubsection"><a href="http://ruby.railstutorial.org/chapters/modeling-users#sec-model_annotation">Model annotation</a></li><li class="subsubsection"><a href="http://ruby.railstutorial.org/chapters/modeling-users#sec-accessible_attributes">Accessible attributes</a></li></ol></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/modeling-users#sec-creating_user_objects"><span class="number">6.1.3</span> Creating user objects</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/modeling-users#sec-finding_user_objects"><span class="number">6.1.4</span> Finding user objects</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/modeling-users#sec-updating_user_objects"><span class="number">6.1.5</span> Updating user objects</a></li></ol></li><li class="section"><a href="http://ruby.railstutorial.org/chapters/modeling-users#sec-user_validations"><span class="number">6.2</span> User validations</a></li><li><ol><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/modeling-users#sec-initial_user_tests"><span class="number">6.2.1</span> Initial user tests</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/modeling-users#sec-presence_validation"><span class="number">6.2.2</span> Validating presence</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/modeling-users#sec-length_validation"><span class="number">6.2.3</span> Length validation</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/modeling-users#sec-format_validation"><span class="number">6.2.4</span> Format validation</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/modeling-users#sec-uniqueness_validation"><span class="number">6.2.5</span> Uniqueness validation</a></li><li><ol><li class="subsubsection"><a href="http://ruby.railstutorial.org/chapters/modeling-users#sec-the_caveat">The uniqueness caveat</a></li></ol></li></ol></li><li class="section"><a href="http://ruby.railstutorial.org/chapters/modeling-users#sec-adding_a_secure_password"><span class="number">6.3</span> Adding a secure password</a></li><li><ol><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/modeling-users#sec-an_encrypted_password"><span class="number">6.3.1</span> An encrypted password</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/modeling-users#sec-password_and_confirmation"><span class="number">6.3.2</span> Password and confirmation</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/modeling-users#sec-user_authentication"><span class="number">6.3.3</span> User authentication</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/modeling-users#sec-has_secure_password"><span class="number">6.3.4</span> User has secure password</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/modeling-users#sec-creating_a_user"><span class="number">6.3.5</span> Creating a user</a></li></ol></li><li class="section"><a href="http://ruby.railstutorial.org/chapters/modeling-users#sec-6_4"><span class="number">6.4</span> Conclusion</a></li><li class="section"><a href="http://ruby.railstutorial.org/chapters/modeling-users#sec-6_5"><span class="number">6.5</span> Exercises</a></li></ol></li><li class="chapter"><a href="http://ruby.railstutorial.org/chapters/sign-up#top"><span class="number">Chapter 7</span> Sign up</a></li><li><ol><li class="section"><a href="http://ruby.railstutorial.org/chapters/sign-up#sec-showing_users"><span class="number">7.1</span> Showing users</a></li><li><ol><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/sign-up#sec-rails_environments"><span class="number">7.1.1</span> Debug and Rails environments</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/sign-up#sec-a_users_resource"><span class="number">7.1.2</span> A Users resource</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/sign-up#sec-tests_with_factories"><span class="number">7.1.3</span> Testing the user show page (with factories)</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/sign-up#sec-a_gravatar_image"><span class="number">7.1.4</span> A Gravatar image and a sidebar</a></li></ol></li><li class="section"><a href="http://ruby.railstutorial.org/chapters/sign-up#sec-signup_form"><span class="number">7.2</span> Signup form</a></li><li><ol><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/sign-up#sec-tests_for_user_signup"><span class="number">7.2.1</span> Tests for user signup</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/sign-up#sec-using_form_for"><span class="number">7.2.2</span> Using <tt>form_for</tt></a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/sign-up#sec-the_form_html"><span class="number">7.2.3</span> The form HTML</a></li></ol></li><li class="section"><a href="http://ruby.railstutorial.org/chapters/sign-up#sec-signup_failure"><span class="number">7.3</span> Signup failure</a></li><li><ol><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/sign-up#sec-a_working_form"><span class="number">7.3.1</span> A working form</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/sign-up#sec-signup_error_messages"><span class="number">7.3.2</span> Signup error messages</a></li></ol></li><li class="section"><a href="http://ruby.railstutorial.org/chapters/sign-up#sec-signup_success"><span class="number">7.4</span> Signup success</a></li><li><ol><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/sign-up#sec-the_finished_signup_form"><span class="number">7.4.1</span> The finished signup form</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/sign-up#sec-the_flash"><span class="number">7.4.2</span> The flash</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/sign-up#sec-the_first_signup"><span class="number">7.4.3</span> The first signup</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/sign-up#sec-deploying_to_production_with_ssl"><span class="number">7.4.4</span> Deploying to production with SSL</a></li></ol></li><li class="section"><a href="http://ruby.railstutorial.org/chapters/sign-up#sec-7_5"><span class="number">7.5</span> Conclusion</a></li><li class="section"><a href="http://ruby.railstutorial.org/chapters/sign-up#sec-signup_exercises"><span class="number">7.6</span> Exercises</a></li></ol></li><li class="chapter"><a href="http://ruby.railstutorial.org/chapters/sign-in-sign-out#top"><span class="number">Chapter 8</span> Sign in, sign out</a></li><li><ol><li class="section"><a href="http://ruby.railstutorial.org/chapters/sign-in-sign-out#sec-signin_failure"><span class="number">8.1</span> Sessions and signin failure</a></li><li><ol><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/sign-in-sign-out#sec-sessions_controller"><span class="number">8.1.1</span> Sessions controller</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/sign-in-sign-out#sec-signin_tests"><span class="number">8.1.2</span> Signin tests</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/sign-in-sign-out#sec-signin_form"><span class="number">8.1.3</span> Signin form</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/sign-in-sign-out#sec-reviewing_form_submission"><span class="number">8.1.4</span> Reviewing form submission</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/sign-in-sign-out#sec-rendering_with_a_flash_message"><span class="number">8.1.5</span> Rendering with a flash message</a></li></ol></li><li class="section"><a href="http://ruby.railstutorial.org/chapters/sign-in-sign-out#sec-signin_success"><span class="number">8.2</span> Signin success</a></li><li><ol><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/sign-in-sign-out#sec-remember_me"><span class="number">8.2.1</span> Remember me</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/sign-in-sign-out#sec-a_working_sign_in_method"><span class="number">8.2.2</span> A working <tt>sign_in</tt> method</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/sign-in-sign-out#sec-current_user"><span class="number">8.2.3</span> Current user</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/sign-in-sign-out#sec-changing_the_layout_links"><span class="number">8.2.4</span> Changing the layout links</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/sign-in-sign-out#sec-signin_upon_signup"><span class="number">8.2.5</span> Signin upon signup</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/sign-in-sign-out#sec-signing_out"><span class="number">8.2.6</span> Signing out</a></li></ol></li><li class="section"><a href="http://ruby.railstutorial.org/chapters/sign-in-sign-out#sec-cucumber"><span class="number">8.3</span> Introduction to Cucumber (optional)</a></li><li><ol><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/sign-in-sign-out#sec-installation_and_setup"><span class="number">8.3.1</span> Installation and setup</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/sign-in-sign-out#sec-features_and_steps"><span class="number">8.3.2</span> Features and steps</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/sign-in-sign-out#sec-rspec_custom_matchers"><span class="number">8.3.3</span> Counterpoint: RSpec custom matchers</a></li></ol></li><li class="section"><a href="http://ruby.railstutorial.org/chapters/sign-in-sign-out#sec-8_4"><span class="number">8.4</span> Conclusion</a></li><li class="section"><a href="http://ruby.railstutorial.org/chapters/sign-in-sign-out#sec-sign_in_out_exercises"><span class="number">8.5</span> Exercises</a></li></ol></li><li class="chapter"><a href="http://ruby.railstutorial.org/chapters/updating-showing-and-deleting-users#top"><span class="number">Chapter 9</span> Updating, showing, and deleting users</a></li><li><ol><li class="section"><a href="http://ruby.railstutorial.org/chapters/updating-showing-and-deleting-users#sec-updating_users"><span class="number">9.1</span> Updating users</a></li><li><ol><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/updating-showing-and-deleting-users#sec-edit_form"><span class="number">9.1.1</span> Edit form</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/updating-showing-and-deleting-users#sec-unsuccessful_edits"><span class="number">9.1.2</span> Unsuccessful edits</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/updating-showing-and-deleting-users#sec-successful_edits"><span class="number">9.1.3</span> Successful edits</a></li></ol></li><li class="section"><a href="http://ruby.railstutorial.org/chapters/updating-showing-and-deleting-users#sec-authorization"><span class="number">9.2</span> Authorization</a></li><li><ol><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/updating-showing-and-deleting-users#sec-requiring_signed_in_users"><span class="number">9.2.1</span> Requiring signed-in users</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/updating-showing-and-deleting-users#sec-requiring_the_right_user"><span class="number">9.2.2</span> Requiring the right user</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/updating-showing-and-deleting-users#sec-friendly_forwarding"><span class="number">9.2.3</span> Friendly forwarding</a></li></ol></li><li class="section"><a href="http://ruby.railstutorial.org/chapters/updating-showing-and-deleting-users#sec-showing_all_users"><span class="number">9.3</span> Showing all users</a></li><li><ol><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/updating-showing-and-deleting-users#sec-user_index"><span class="number">9.3.1</span> User index</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/updating-showing-and-deleting-users#sec-sample_users"><span class="number">9.3.2</span> Sample users</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/updating-showing-and-deleting-users#sec-pagination"><span class="number">9.3.3</span> Pagination</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/updating-showing-and-deleting-users#sec-partial_refactoring"><span class="number">9.3.4</span> Partial refactoring</a></li></ol></li><li class="section"><a href="http://ruby.railstutorial.org/chapters/updating-showing-and-deleting-users#sec-destroying_users"><span class="number">9.4</span> Deleting users</a></li><li><ol><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/updating-showing-and-deleting-users#sec-administrative_users"><span class="number">9.4.1</span> Administrative users</a></li><li><ol><li class="subsubsection"><a href="http://ruby.railstutorial.org/chapters/updating-showing-and-deleting-users#sec-revisiting_attr_accessible">Revisiting <tt>attr_accessible</tt></a></li></ol></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/updating-showing-and-deleting-users#sec-the_destroy_action"><span class="number">9.4.2</span> The <tt>destroy</tt> action</a></li></ol></li><li class="section"><a href="http://ruby.railstutorial.org/chapters/updating-showing-and-deleting-users#sec-updating_and_deleting_users_conclusion"><span class="number">9.5</span> Conclusion</a></li><li class="section"><a href="http://ruby.railstutorial.org/chapters/updating-showing-and-deleting-users#sec-updating_deleting_exercises"><span class="number">9.6</span> Exercises</a></li></ol></li><li class="chapter"><a href="http://ruby.railstutorial.org/chapters/user-microposts#top"><span class="number">Chapter 10</span> User microposts</a></li><li><ol><li class="section"><a href="http://ruby.railstutorial.org/chapters/user-microposts#sec-a_micropost_model"><span class="number">10.1</span> A Micropost model</a></li><li><ol><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/user-microposts#sec-the_basic_model"><span class="number">10.1.1</span> The basic model</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/user-microposts#sec-accessible_attribute"><span class="number">10.1.2</span> Accessible attributes and the first validation</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/user-microposts#sec-user_micropost_associations"><span class="number">10.1.3</span> User/Micropost associations</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/user-microposts#sec-ordering_and_dependency"><span class="number">10.1.4</span> Micropost refinements</a></li><li><ol><li class="subsubsection"><a href="http://ruby.railstutorial.org/chapters/user-microposts#sec-default_scope">Default scope</a></li><li class="subsubsection"><a href="http://ruby.railstutorial.org/chapters/user-microposts#sec-dependent_destroy">Dependent: destroy</a></li></ol></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/user-microposts#sec-micropost_validations"><span class="number">10.1.5</span> Content validations</a></li></ol></li><li class="section"><a href="http://ruby.railstutorial.org/chapters/user-microposts#sec-showing_microposts"><span class="number">10.2</span> Showing microposts</a></li><li><ol><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/user-microposts#sec-augmenting_the_user_show_page"><span class="number">10.2.1</span> Augmenting the user show page</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/user-microposts#sec-sample_microposts"><span class="number">10.2.2</span> Sample microposts</a></li></ol></li><li class="section"><a href="http://ruby.railstutorial.org/chapters/user-microposts#sec-manipulating_microposts"><span class="number">10.3</span> Manipulating microposts</a></li><li><ol><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/user-microposts#sec-access_control"><span class="number">10.3.1</span> Access control</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/user-microposts#sec-creating_microposts"><span class="number">10.3.2</span> Creating microposts</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/user-microposts#sec-a_proto_feed"><span class="number">10.3.3</span> A proto-feed</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/user-microposts#sec-destroying_microposts"><span class="number">10.3.4</span> Destroying microposts</a></li></ol></li><li class="section"><a href="http://ruby.railstutorial.org/chapters/user-microposts#sec-10_4"><span class="number">10.4</span> Conclusion</a></li><li class="section"><a href="http://ruby.railstutorial.org/chapters/user-microposts#sec-micropost_exercises"><span class="number">10.5</span> Exercises</a></li></ol></li><li class="chapter"><a href="http://ruby.railstutorial.org/chapters/following-users#top"><span class="number">Chapter 11</span> Following users</a></li><li><ol><li class="section"><a href="http://ruby.railstutorial.org/chapters/following-users#sec-the_relationship_model"><span class="number">11.1</span> The Relationship model</a></li><li><ol><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/following-users#sec-a_problem_with_the_data_model"><span class="number">11.1.1</span> A problem with the data model (and a solution)</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/following-users#sec-relationship_user_associations"><span class="number">11.1.2</span> User/relationship associations</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/following-users#sec-relationship_validations"><span class="number">11.1.3</span> Validations</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/following-users#sec-following"><span class="number">11.1.4</span> Followed users</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/following-users#sec-followers"><span class="number">11.1.5</span> Followers</a></li></ol></li><li class="section"><a href="http://ruby.railstutorial.org/chapters/following-users#sec-a_web_interface_for_following_and_followers"><span class="number">11.2</span> A web interface for following users</a></li><li><ol><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/following-users#sec-sample_following_data"><span class="number">11.2.1</span> Sample following data</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/following-users#sec-stats_and_a_follow_form"><span class="number">11.2.2</span> Stats and a follow form</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/following-users#sec-following_and_followers_pages"><span class="number">11.2.3</span> Following and followers pages</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/following-users#sec-a_working_follow_button_the_standard_way"><span class="number">11.2.4</span> A working follow button the standard way</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/following-users#sec-a_working_follow_button_with_ajax"><span class="number">11.2.5</span> A working follow button with Ajax</a></li></ol></li><li class="section"><a href="http://ruby.railstutorial.org/chapters/following-users#sec-the_status_feed"><span class="number">11.3</span> The status feed</a></li><li><ol><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/following-users#sec-motivation_and_strategy"><span class="number">11.3.1</span> Motivation and strategy</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/following-users#sec-a_first_feed_implementation"><span class="number">11.3.2</span> A first feed implementation</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/following-users#sec-scopes_subselects_and_a_lambda"><span class="number">11.3.3</span> Subselects</a></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/following-users#sec-the_new_status_feed"><span class="number">11.3.4</span> The new status feed</a></li></ol></li><li class="section"><a href="http://ruby.railstutorial.org/chapters/following-users#sec-following_conclusion"><span class="number">11.4</span> Conclusion</a></li><li><ol><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/following-users#sec-extensions_to_the_sample_application"><span class="number">11.4.1</span> Extensions to the sample application</a></li><li><ol><li class="subsubsection"><a href="http://ruby.railstutorial.org/chapters/following-users#sec-replies">Replies</a></li><li class="subsubsection"><a href="http://ruby.railstutorial.org/chapters/following-users#sec-messaging">Messaging</a></li><li class="subsubsection"><a href="http://ruby.railstutorial.org/chapters/following-users#sec-follower_notifications">Follower notifications</a></li><li class="subsubsection"><a href="http://ruby.railstutorial.org/chapters/following-users#sec-password_reminders">Password reminders</a></li><li class="subsubsection"><a href="http://ruby.railstutorial.org/chapters/following-users#sec-signup_confirmation">Signup confirmation</a></li><li class="subsubsection"><a href="http://ruby.railstutorial.org/chapters/following-users#sec-rss_feed">RSS feed</a></li><li class="subsubsection"><a href="http://ruby.railstutorial.org/chapters/following-users#sec-rest_api">REST API</a></li><li class="subsubsection"><a href="http://ruby.railstutorial.org/chapters/following-users#sec-search">Search</a></li></ol></li><li class="subsection"><a href="http://ruby.railstutorial.org/chapters/following-users#sec-guide_to_further_resources"><span class="number">11.4.2</span> Guide to further resources</a></li></ol></li><li class="section"><a href="http://ruby.railstutorial.org/chapters/following-users#sec-following_exercises"><span class="number">11.5</span> Exercises</a></li></ol></li></ol></div>
+
+
+<div id="main_content"></div>
+
+
+<p> <span class="preamble">
+ <span id="foreword">
+<strong> Foreword</strong> <br>
+ </span>
+ </span></p>
+
+<p>My former company (CD Baby) was one of the first to loudly switch to Ruby on Rails, and then even more loudly switch back to PHP (Google me to read about the drama). This book by Michael Hartl came so highly recommended that I had to try it, and the <em>Ruby on Rails Tutorial</em> is what I used to switch back to Rails again.</p>
+
+<p>Though I’ve worked my way through many Rails books, this is the one that finally made me “get” it. Everything is done very much “the Rails way”—a way that felt very unnatural to me before, but now after doing this book finally feels natural. This is also the only Rails book that does test-driven development the entire time, an approach highly recommended by the experts but which has never been so clearly demonstrated before. Finally, by including Git, GitHub, and Heroku in the demo examples, the author really gives you a feel for what it’s like to do a real-world project. The tutorial’s code examples are not in isolation.</p>
+
+<p>The linear narrative is such a great format. Personally, I powered through the <em>Rails Tutorial</em> in three long days, doing all the examples and challenges at the end of each chapter. Do it from start to finish, without jumping around, and you’ll get the ultimate benefit.</p>
+
+<p>Enjoy!</p>
+
+<p><a href="http://sivers.org/">Derek Sivers</a> (<a href="http://sivers.org/">sivers.org</a>) <br>
+<em>Formerly: Founder,</em> <a href="http://www.cdbaby.com/"><em>CD Baby</em></a> <br>
+<em>Currently: Founder,</em> <a href="http://thoughts.pro/"><em>Thoughts Ltd.</em></a> <br></p>
+
+<p> <span class="preamble">
+<strong> Acknowledgments</strong> <br>
+ </span></p>
+
+<p>The <em>Ruby on Rails Tutorial</em> owes a lot to my previous Rails book, <em>RailsSpace</em>, and hence to my coauthor <a href="http://aure.com/">Aurelius Prochazka</a>. I’d like to thank Aure both for the work he did on that book and for his support of this one. I’d also like to thank Debra Williams Cauley, my editor on both <em>RailsSpace</em> and the <em>Ruby on Rails Tutorial</em>; as long as she keeps taking me to baseball games, I’ll keep writing books for her.</p>
+
+<p>I’d like to acknowledge a long list of Rubyists who have taught and inspired me over the years: David Heinemeier Hansson, Yehuda Katz, Carl Lerche, Jeremy Kemper, Xavier Noria, Ryan Bates, Geoffrey Grosenbach, Peter Cooper, Matt Aimonetti, Gregg Pollack, Wayne&nbsp;E. Seguin, Amy Hoy, Dave Chelimsky, Pat Maddox, Tom Preston-Werner, Chris Wanstrath, Chad Fowler, Josh Susser, Obie Fernandez, Ian McFarland, Steven Bristol, Pratik Naik, Sarah Mei, Sarah Allen, Wolfram Arnold, Alex Chaffee, Giles Bowkett, Evan Dorn, Long Nguyen, James Lindenbaum, Adam Wiggins, Tikhon Bernstam, Ron Evans, Wyatt Greene, Miles Forrest, the good people at Pivotal Labs, the Heroku gang, the thoughtbot guys, and the GitHub crew. Finally, many, many readers—far too many to list—have contributed a huge number of bug reports and suggestions during the writing of this book, and I gratefully acknowledge their help in making it as good as it can&nbsp;be. <br></p>
+
+<p> <span class="preamble">
+ <span id="author">
+<strong> About the author</strong> <br>
+ </span>
+ </span></p>
+
+<p><a href="http://michaelhartl.com/">Michael Hartl</a> is the author of the <a href="http://ruby.railstutorial.org/"><em>Ruby on Rails Tutorial</em></a>, the leading introduction to web development with <a href="http://rubyonrails.org/">Ruby on Rails</a>. His prior experience includes writing and developing <em>RailsSpace</em>, an extremely obsolete Rails tutorial book, and developing Insoshi, a once-popular and now-obsolete social networking platform in Ruby on Rails. In 2011, Michael received a <a href="http://rubyheroes.com/heroes">Ruby Hero Award</a> for his contributions to the Ruby community. He is a graduate of <a href="http://college.harvard.edu/">Harvard College</a>, has a <a href="http://resolver.caltech.edu/CaltechETD:etd-05222003-161626">Ph.D. in Physics</a> from <a href="http://www.caltech.edu/">Caltech</a>, and is an alumnus of the <a href="http://ycombinator.com/">Y&nbsp;Combinator</a> entrepreneur program. <br></p>
+
+<p> <span id="license" class="preamble">
+<strong> Copyright and license</strong> <br>
+ </span></p>
+
+<p><em>Ruby on Rails Tutorial: Learn Web Development with Rails</em>. Copyright © 2012 by Michael Hartl. All source code in the <em>Ruby on Rails Tutorial</em> is available jointly under the <a href="http://www.opensource.org/licenses/mit-license.php">MIT License</a> and the <a href="http://people.freebsd.org/~phk/">Beerware License</a>.</p>
+
+<div class="code"><div class="highlight"><pre>The MIT License
+
+Copyright (c) 2012 Michael Hartl
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+</pre></div>
+</div>
+
+
+<div class="code"><div class="highlight"><pre>/*
+ * ----------------------------------------------------------------------------
+ * "THE BEER-WARE LICENSE" (Revision 42):
+ * Michael Hartl wrote this code. As long as you retain this notice you
+ * can do whatever you want with this stuff. If we meet some day, and you think
+ * this stuff is worth it, you can buy me a beer in return.
+ * ----------------------------------------------------------------------------
+ */
+</pre></div>
+</div>
+
+
+<div id="top"></div>
+
+
+<h1 class="chapter"><a id="sec-2" href="./Learn Web Development with the Ruby on Rails Tutorial   A Demo App_files/Learn Web Development with the Ruby on Rails Tutorial   A Demo App.html" class="heading"><span class="number">Chapter 2</span> A demo app</a></h1>
+
+
+<p>In this chapter, we’ll develop a simple demonstration application to show off some of the power of Rails. The purpose is to get a high-level overview of Ruby on Rails programming (and web development in general) by rapidly generating an application using <em>scaffold generators</em>. As discussed in <a class="ref" href="http://ruby.railstutorial.org/chapters/beginning#sidebar-scaffolding">Box&nbsp;1.1</a>, the rest of the book will take the opposite approach, developing a full application incrementally and explaining each new concept as it arises, but for a quick overview (and some instant gratification) there is no substitute for scaffolding. The resulting demo app will allow us to interact with it through its URIs, giving us insight into the structure of a Rails application, including a first example of the <em>REST architecture</em> favored by Rails.</p>
+
+<p>As with the forthcoming sample application, the demo app will consist of <em>users</em> and their associated <em>microposts</em> (thus constituting a minimalist Twitter-style app). The functionality will be utterly under-developed, and many of the steps will seem like magic, but worry not: the full sample app will develop a similar application from the ground up starting in <a class="ref" href="http://ruby.railstutorial.org/chapters/static-pages#top">Chapter&nbsp;3</a>, and I will provide plentiful forward-references to later material. In the mean time, have patience and a little faith—the whole point of this tutorial is to take you <em>beyond</em> this superficial, scaffold-driven approach to achieve a deeper understanding of Rails.</p>
+
+<div class="label" id="sec-planning_the_application"></div>
+
+
+<h2><a id="sec-2_1" href="http://ruby.railstutorial.org/chapters/a-demo-app#sec-planning_the_application" class="heading"><span class="number">2.1</span> Planning the application</a></h2>
+
+
+<p>In this section, we’ll outline our plans for the demo application. As in <a class="ref" href="http://ruby.railstutorial.org/chapters/beginning#sec-the_first_application">Section&nbsp;1.2.3</a>, we’ll start by generating the application skeleton using the <code>rails</code> command:</p>
+
+<div class="code"><div class="highlight"><pre><span class="gp">$</span> <span class="nb">cd</span> ~/rails_projects
+<span class="gp">$</span> rails new demo_app
+<span class="gp">$</span> <span class="nb">cd </span>demo_app
+</pre></div>
+</div>
+
+
+<p>Next, we’ll use a text editor to update the <code>Gemfile</code> needed by Bundler with the contents of <a class="ref" href="http://ruby.railstutorial.org/chapters/a-demo-app#code-demo_gemfile_sqlite_version_redux">Listing&nbsp;2.1</a>.</p>
+
+<div class="label" id="code-demo_gemfile_sqlite_version_redux"></div>
+
+
+<div class="codelisting">
+<div class="listing"><span class="header">Listing 2.1.</span> <span class="description">A <code>Gemfile</code> for the demo app.</span> </div>
+<div class="code"><div class="highlight"><pre><span class="n">source</span> <span class="s1">'https://rubygems.org'</span>
+
+<span class="n">gem</span> <span class="s1">'rails'</span><span class="p">,</span> <span class="s1">'3.2.13'</span>
+
+<span class="n">group</span> <span class="ss">:development</span> <span class="k">do</span>
+  <span class="n">gem</span> <span class="s1">'sqlite3'</span><span class="p">,</span> <span class="s1">'1.3.5'</span>
+<span class="k">end</span>
+
+
+<span class="c1"># Gems used only for assets and not required</span>
+<span class="c1"># in production environments by default.</span>
+<span class="n">group</span> <span class="ss">:assets</span> <span class="k">do</span>
+  <span class="n">gem</span> <span class="s1">'sass-rails'</span><span class="p">,</span>   <span class="s1">'3.2.5'</span>
+  <span class="n">gem</span> <span class="s1">'coffee-rails'</span><span class="p">,</span> <span class="s1">'3.2.2'</span>
+
+  <span class="n">gem</span> <span class="s1">'uglifier'</span><span class="p">,</span> <span class="s1">'1.2.3'</span>
+<span class="k">end</span>
+
+<span class="n">gem</span> <span class="s1">'jquery-rails'</span><span class="p">,</span> <span class="s1">'2.0.2'</span>
+
+<span class="n">group</span> <span class="ss">:production</span> <span class="k">do</span>
+  <span class="n">gem</span> <span class="s1">'pg'</span><span class="p">,</span> <span class="s1">'0.12.2'</span>
+<span class="k">end</span>
+</pre></div>
+</div></div>
+
+
+<p>Note that <a class="ref" href="http://ruby.railstutorial.org/chapters/a-demo-app#code-demo_gemfile_sqlite_version_redux">Listing&nbsp;2.1</a> is identical to <a class="ref" href="http://ruby.railstutorial.org/chapters/beginning#code-gemfile_pg_gem">Listing&nbsp;1.9</a>.</p>
+
+<p>As in <a class="ref" href="http://ruby.railstutorial.org/chapters/beginning#sec-heroku_setup">Section&nbsp;1.4.1</a>, we’ll install the local gems while suppressing the installation of production gems using the <tt class="verb">--without production</tt> option:</p>
+
+<div class="code"><div class="highlight"><pre><span class="gp">$</span> bundle update
+<span class="gp">$</span> bundle install --without production
+</pre></div>
+</div>
+
+
+<p>Finally, we’ll put the demo app under version control. Recall that the <code>rails</code> command generates a default <code>.gitignore</code> file, but depending on your system you may find the augmented file from <a class="ref" href="http://ruby.railstutorial.org/chapters/beginning#code-gitignore">Listing&nbsp;1.7</a> to be more convenient. Then initialize a Git repository and make the first commit:</p>
+
+<div class="code"><div class="highlight"><pre><span class="gp">$</span> git init
+<span class="gp">$</span> git add .
+<span class="gp">$</span> git commit -m <span class="s2">"Initial commit"</span>
+</pre></div>
+</div>
+
+
+<div class="label" id="fig-create_demo_repo"></div>
+
+
+<div class="figure"><div class="center"><span class="graphic"><img src="./Learn Web Development with the Ruby on Rails Tutorial   A Demo App_files/create_demo_repo_new.png" alt="create_demo_repo_new"></span></div><div class="caption"><span class="header">Figure 2.1: </span><span class="description">Creating a demo app repository at GitHub.&nbsp;<a href="http://railstutorial.org/images/figures/create_demo_repo_new-full.png">(full size)</a></span></div></div>
+
+
+<p>You can also optionally create a new repository (<a class="ref" href="http://ruby.railstutorial.org/chapters/a-demo-app#fig-create_demo_repo">Figure&nbsp;2.1</a>) and push it up to GitHub:</p>
+
+<div class="code"><div class="highlight"><pre><span class="gp">$</span> git remote add origin git@github.com:&lt;username&gt;/demo_app.git
+<span class="gp">$</span> git push -u origin master
+</pre></div>
+</div>
+
+
+<p>(As with the first app, take care <em>not</em> to initialize the GitHub repository with a <code>README</code> file.)</p>
+
+<p>Now we’re ready to start making the app itself. The typical first step when making a web application is to create a <em>data model</em>, which is a representation of the structures needed by our application. In our case, the demo app will be a microblog, with only users and short (micro)posts. Thus, we’ll begin with a model for <em>users</em> of the app (<a class="ref" href="http://ruby.railstutorial.org/chapters/a-demo-app#sec-modeling_demo_users">Section&nbsp;2.1.1</a>), and then we’ll add a model for  <em>microposts</em> (<a class="ref" href="http://ruby.railstutorial.org/chapters/a-demo-app#sec-modeling_demo_microposts">Section&nbsp;2.1.2</a>).</p>
+
+<div class="label" id="sec-modeling_demo_users"></div>
+
+
+<h3><a id="sec-2_1_1" href="http://ruby.railstutorial.org/chapters/a-demo-app#sec-modeling_demo_users" class="heading"><span class="number">2.1.1</span> Modeling demo users</a></h3>
+
+
+<p>There are as many choices for a user data model as there are different registration forms on the web; we’ll go with a distinctly minimalist approach. Users of our demo app will have a unique <code>integer</code> identifier called <code>id</code>, a publicly viewable <code>name</code> (of type <code>string</code>), and an <code>email</code> address (also a <code>string</code>) that will double as a username. A summary of the data model for users appears in <a class="ref" href="http://ruby.railstutorial.org/chapters/a-demo-app#fig-demo_user_model">Figure&nbsp;2.2</a>.</p>
+
+<div class="label" id="fig-demo_user_model"></div>
+
+
+<div class="figure"><div class="center"><span class="graphic"><img src="./Learn Web Development with the Ruby on Rails Tutorial   A Demo App_files/demo_user_model.png" alt="demo_user_model"></span></div><div class="caption"><span class="header">Figure 2.2: </span><span class="description">The data model for users.</span></div></div>
+
+
+<p>As we’ll see starting in <a class="ref" href="http://ruby.railstutorial.org/chapters/modeling-users#sec-database_migrations">Section&nbsp;6.1.1</a>, the label <code>users</code> in <a class="ref" href="http://ruby.railstutorial.org/chapters/a-demo-app#fig-demo_user_model">Figure&nbsp;2.2</a> corresponds to a <em>table</em> in a database, and the <code>id</code>, <code>name</code>, and <code>email</code> attributes are <em>columns</em> in that table.</p>
+
+<div class="label" id="sec-modeling_demo_microposts"></div>
+
+
+<h3><a id="sec-2_1_2" href="http://ruby.railstutorial.org/chapters/a-demo-app#sec-modeling_demo_microposts" class="heading"><span class="number">2.1.2</span> Modeling demo microposts</a></h3>
+
+
+<p>The core of the micropost data model is even simpler than the one for users: a micropost has only an <code>id</code> and a <code>content</code> field for the micropost’s text (of type <code>string</code>).<sup class="footnote" id="fnref-2_1"><a href="http://ruby.railstutorial.org/chapters/a-demo-app#fn-2_1">1</a></sup> There’s an additional complication, though: we want to <em>associate</em> each micropost with a particular user; we’ll accomplish this by recording the <code>user_id</code> of the owner of the post. The results are shown in <a class="ref" href="http://ruby.railstutorial.org/chapters/a-demo-app#fig-demo_micropost_model">Figure&nbsp;2.3</a>.</p>
+
+<div class="label" id="fig-demo_micropost_model"></div>
+
+
+<div class="figure"><div class="center"><span class="graphic"><img src="./Learn Web Development with the Ruby on Rails Tutorial   A Demo App_files/demo_micropost_model.png" alt="demo_micropost_model"></span></div><div class="caption"><span class="header">Figure 2.3: </span><span class="description">The data model for microposts.</span></div></div>
+
+
+<p>We’ll see in <a class="ref" href="http://ruby.railstutorial.org/chapters/a-demo-app#sec-demo_user_has_many_microposts">Section&nbsp;2.3.3</a> (and more fully in <a class="ref" href="http://ruby.railstutorial.org/chapters/user-microposts#top">Chapter&nbsp;10</a>) how this <code>user_id</code> attribute allows us to succinctly express the notion that a user potentially has many associated microposts.</p>
+
+<div class="label" id="sec-demo_users_resource"></div>
+
+
+<h2><a id="sec-2_2" href="http://ruby.railstutorial.org/chapters/a-demo-app#sec-demo_users_resource" class="heading"><span class="number">2.2</span> The Users resource</a></h2>
+
+
+<p>In this section, we’ll implement the users data model in <a class="ref" href="http://ruby.railstutorial.org/chapters/a-demo-app#sec-modeling_demo_users">Section&nbsp;2.1.1</a>, along with a web interface to that model.
+The combination will constitute a <em>Users resource</em>, which will allow us to think of users as objects that can be created, read, updated, and deleted through the web via the <a href="http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol">HTTP protocol</a>. As promised in the introduction, our Users resource will be created by a scaffold generator program, which comes standard with each Rails project. I urge you not to look too closely at the generated code; at this stage, it will only serve to confuse you.</p>
+
+<p>Rails scaffolding is generated by passing the <code>scaffold</code> command to the <code>rails generate</code> script. The argument of the <code>scaffold</code> command is the singular version of the resource name (in this case, <code>User</code>), together with optional parameters for the data model’s attributes:<sup class="footnote" id="fnref-2_2"><a href="http://ruby.railstutorial.org/chapters/a-demo-app#fn-2_2">2</a></sup></p>
+
+<div class="code"><div class="highlight"><pre>$ rails generate scaffold User name:string email:string
+      invoke  active_record
+      create    db/migrate/20111123225336_create_users.rb
+      create    app/models/user.rb
+      invoke    test_unit
+      create      test/unit/user_test.rb
+      create      test/fixtures/users.yml
+       route  resources :users
+      invoke  scaffold_controller
+      create    app/controllers/users_controller.rb
+      invoke    erb
+      create      app/views/users
+      create      app/views/users/index.html.erb
+      create      app/views/users/edit.html.erb
+      create      app/views/users/show.html.erb
+      create      app/views/users/new.html.erb
+      create      app/views/users/_form.html.erb
+      invoke    test_unit
+      create      test/functional/users_controller_test.rb
+      invoke    helper
+      create      app/helpers/users_helper.rb
+      invoke      test_unit
+      create        test/unit/helpers/users_helper_test.rb
+      invoke  assets
+      invoke    coffee
+      create      app/assets/javascripts/users.js.coffee
+      invoke    scss
+      create      app/assets/stylesheets/users.css.scss
+      invoke  scss
+      create    app/assets/stylesheets/scaffolds.css.scss
+</pre></div>
+</div>
+
+
+<p>By including <code>name:string</code> and <code>email:string</code>, we have arranged for the User model to have the form shown in <a class="ref" href="http://ruby.railstutorial.org/chapters/a-demo-app#fig-demo_user_model">Figure&nbsp;2.2</a>. (Note that there is no need to include a parameter for&nbsp;<code>id</code>; it is created automatically by Rails for use as the <em>primary key</em> in the database.)</p>
+
+<p>To proceed with the demo application, we first need to <em>migrate</em> the database using <em>Rake</em> (<a class="ref" href="http://ruby.railstutorial.org/chapters/a-demo-app#sidebar-rake">Box&nbsp;2.1</a>):</p>
+
+<div class="code"><div class="highlight"><pre><span class="gp">$</span> bundle <span class="nb">exec </span>rake db:migrate
+<span class="go">==  CreateUsers: migrating ====================================================</span>
+<span class="go">-- create_table(:users)</span>
+<span class="go">   -&gt; 0.0017s</span>
+<span class="go">==  CreateUsers: migrated (0.0018s) ===========================================</span>
+</pre></div>
+</div>
+
+
+<p>This simply updates the database with our new <code>users</code> data model. (We’ll learn more about database migrations starting in <a class="ref" href="http://ruby.railstutorial.org/chapters/modeling-users#sec-database_migrations">Section&nbsp;6.1.1</a>.) Note that, in order to ensure that the command uses the version of Rake corresponding to our <code>Gemfile</code>, we need to run <code>rake</code> using <code>bundle exec</code>.</p>
+
+<p>With that, we can run the local web server using <code>rails s</code>, which is a shortcut for <code>rails server</code>:</p>
+
+<div class="code"><div class="highlight"><pre><span class="gp">$</span> rails s
+</pre></div>
+</div>
+
+
+<p>Now the demo application should be ready to go at <a href="http://localhost:3000/">http://localhost:3000/</a>.</p>
+
+<div class="label" id="sidebar-rake"></div>
+
+
+<div class="sidebar"><span class="title"><span class="header">Box 2.1.</span><span class="description">Rake</span></span>
+<p>In the Unix tradition, the <a href="http://en.wikipedia.org/wiki/Make_(software)"><em>make</em></a> utility has played an important role in building executable programs from source code; many a computer hacker has committed to muscle memory the line</p>
+
+<pre class="verbatim">  $ ./configure &amp;&amp; make &amp;&amp; sudo make install</pre>
+
+
+<p>commonly used to compile code on Unix systems (including Linux and Mac OS&nbsp;X).</p>
+
+<p>Rake is <em>Ruby make</em>, a make-like language written in Ruby. Rails uses Rake extensively, especially for the innumerable little administrative tasks necessary when developing database-backed web applications. The <code>rake db:migrate</code> command is probably the most common, but there are many others; you can see a list of database tasks using <code>-T db</code>:</p>
+
+<pre class="verbatim">  $ bundle exec rake -T db</pre>
+
+
+<p>To see all the Rake tasks available, run</p>
+
+<pre class="verbatim">  $ bundle exec rake -T</pre>
+
+
+<p>The list is likely to be overwhelming, but don’t worry, you don’t have to know all (or even most) of these commands. By the end of the <em>Rails Tutorial</em>, you’ll know all the most important ones.</p>
+</div>
+
+
+
+
+<div class="label" id="sec-a_user_tour"></div>
+
+
+<h3><a id="sec-2_2_1" href="http://ruby.railstutorial.org/chapters/a-demo-app#sec-a_user_tour" class="heading"><span class="number">2.2.1</span> A user tour</a></h3>
+
+
+<p>Visiting the root url&nbsp;<a href="http://localhost:3000/">http://localhost:3000/</a> shows the same default Rails page shown in <a class="ref" href="http://ruby.railstutorial.org/chapters/beginning#fig-riding_rails_31">Figure&nbsp;1.3</a>, but in generating the Users resource scaffolding we have also created a large number of pages for manipulating users. For example, the page for listing all users is at <a href="http://localhost:3000/users">/users</a>, and the
+page for making a new user is at <a href="http://localhost:3000/users/new">/users/new</a>.  The rest of this section is dedicated to taking a whirlwind tour through these user pages. As we proceed, it may help to refer to <a class="ref" href="http://ruby.railstutorial.org/chapters/a-demo-app#table-user_urls">Table&nbsp;2.1</a>, which shows the correspondence between pages and URIs.</p>
+
+<div class="label" id="table-user_urls"></div>
+
+
+<div class="table"><div class="center">
+<table class="tabular"><tbody><tr><th class="align_left"><strong>URI</strong></th><th class="align_left"><strong>Action</strong></th><th class="align_left"><strong>Purpose</strong></th></tr><tr class="top_bar"><td class="align_left"><a href="http://localhost:3000/users">/users</a></td><td class="align_left"><code>index</code></td><td class="align_left">page to list all users</td></tr><tr><td class="align_left"><a href="http://localhost:3000/users/1">/users/1</a></td><td class="align_left"><code>show</code></td><td class="align_left">page to show user with id <code>1</code></td></tr><tr><td class="align_left"><a href="http://localhost:3000/users/new">/users/new</a></td><td class="align_left"><code>new</code></td><td class="align_left">page to make a new user</td></tr><tr><td class="align_left"><a href="http://localhost:3000/users/1/edit">/users/1/edit</a></td><td class="align_left"><code>edit</code></td><td class="align_left">page to edit user with id <code>1</code></td></tr></tbody></table></div><div class="caption"><span class="header">Table 2.1: </span><span class="description">The correspondence between pages and URIs for the Users resource.</span></div></div>
+
+
+<p>We start with the page to show all the users in our application, called <a href="http://localhost:3000/users"><tt>index</tt></a>; as you might expect, initially there are no users at all (<a class="ref" href="http://ruby.railstutorial.org/chapters/a-demo-app#fig-demo_blank_user_index_rails_3">Figure&nbsp;2.4</a>).</p>
+
+<div class="label" id="fig-demo_blank_user_index_rails_3"></div>
+
+
+<div class="figure"><div class="center"><span class="graphic"><img src="./Learn Web Development with the Ruby on Rails Tutorial   A Demo App_files/demo_blank_user_index_rails_3.png" alt="demo_blank_user_index_rails_3"></span></div><div class="caption"><span class="header">Figure 2.4: </span><span class="description">The initial index page for the Users resource (<a href="http://localhost:3000/users">/users</a>).&nbsp;<a href="http://railstutorial.org/images/figures/demo_blank_user_index_rails_3-full.png">(full size)</a></span></div></div>
+
+
+<p>To make a new user, we visit the <a href="http://localhost:3000/users/new"><tt>new</tt></a> page, as shown in <a class="ref" href="http://ruby.railstutorial.org/chapters/a-demo-app#fig-demo_new_user_rails_3">Figure&nbsp;2.5</a>. (Since the http://localhost:3000 part of the address is implicit whenever we are developing locally, I’ll usually omit it from now on.) In <a class="ref" href="http://ruby.railstutorial.org/chapters/sign-up#top">Chapter&nbsp;7</a>, this will become the user signup page.</p>
+
+<div class="label" id="fig-demo_new_user_rails_3"></div>
+
+
+<div class="figure"><div class="center"><span class="graphic"><img src="./Learn Web Development with the Ruby on Rails Tutorial   A Demo App_files/demo_new_user_rails_3.png" alt="demo_new_user_rails_3"></span></div><div class="caption"><span class="header">Figure 2.5: </span><span class="description">The new user page (<a href="http://localhost:3000/users/new">/users/new</a>).&nbsp;<a href="http://railstutorial.org/images/figures/demo_new_user_rails_3-full.png">(full size)</a></span></div></div>
+
+
+<p>We can create a user by entering name and email values in the text fields and then clicking the Create User button. The result is the user <a href="http://localhost:3000/users/1"><tt>show</tt></a> page, as seen in <a class="ref" href="http://ruby.railstutorial.org/chapters/a-demo-app#fig-demo_show_user_rails_3">Figure&nbsp;2.6</a>. (The green welcome message is accomplished using the <em>flash</em>, which we’ll learn about in <a class="ref" href="http://ruby.railstutorial.org/chapters/sign-up#sec-the_flash">Section&nbsp;7.4.2</a>.) Note that the URI is <a href="http://localhost:3000/users/1">/users/1</a>; as you might suspect, the number&nbsp;<code>1</code> is simply the user’s&nbsp;<code>id</code> attribute from <a class="ref" href="http://ruby.railstutorial.org/chapters/a-demo-app#fig-demo_user_model">Figure&nbsp;2.2</a>. In <a class="ref" href="http://ruby.railstutorial.org/chapters/sign-up#sec-showing_users">Section&nbsp;7.1</a>, this page will become the user’s profile.</p>
+
+<div class="label" id="fig-demo_show_user_rails_3"></div>
+
+
+<div class="figure"><div class="center"><span class="graphic"><img src="./Learn Web Development with the Ruby on Rails Tutorial   A Demo App_files/demo_show_user_rails_3.png" alt="demo_show_user_rails_3"></span></div><div class="caption"><span class="header">Figure 2.6: </span><span class="description">The page to show a user (<a href="http://localhost:3000/users/1">/users/1</a>).&nbsp;<a href="http://railstutorial.org/images/figures/demo_show_user_rails_3-full.png">(full size)</a></span></div></div>
+
+
+<p>To change a user’s information, we visit the <a href="http://localhost:3000/users/1/edit"><tt>edit</tt></a> page (<a class="ref" href="http://ruby.railstutorial.org/chapters/a-demo-app#fig-demo_edit_user_rails_3">Figure&nbsp;2.7</a>). By modifying the user information and clicking the Update User button, we arrange to change the information for the user in the demo application (<a class="ref" href="http://ruby.railstutorial.org/chapters/a-demo-app#fig-demo_update_user_rails_3">Figure&nbsp;2.8</a>). (As we’ll see in detail starting in <a class="ref" href="http://ruby.railstutorial.org/chapters/modeling-users#top">Chapter&nbsp;6</a>, this user data is stored in a database back-end.) We’ll add user edit/update functionality to the sample application in <a class="ref" href="http://ruby.railstutorial.org/chapters/updating-showing-and-deleting-users#sec-updating_users">Section&nbsp;9.1</a>.</p>
+
+<div class="label" id="fig-demo_edit_user_rails_3"></div>
+
+
+<div class="figure"><div class="center"><span class="graphic"><img src="./Learn Web Development with the Ruby on Rails Tutorial   A Demo App_files/demo_edit_user_rails_3.png" alt="demo_edit_user_rails_3"></span></div><div class="caption"><span class="header">Figure 2.7: </span><span class="description">The user edit page (<a href="http://localhost:3000/users/1/edit">/users/1/edit</a>).&nbsp;<a href="http://railstutorial.org/images/figures/demo_edit_user_rails_3-full.png">(full size)</a></span></div></div>
+
+
+
+
+<div class="label" id="fig-demo_update_user_rails_3"></div>
+
+
+<div class="figure"><div class="center"><span class="graphic"><img src="./Learn Web Development with the Ruby on Rails Tutorial   A Demo App_files/demo_update_user_rails_3.png" alt="demo_update_user_rails_3"></span></div><div class="caption"><span class="header">Figure 2.8: </span><span class="description">A user with updated information.&nbsp;<a href="http://railstutorial.org/images/figures/demo_update_user_rails_3-full.png">(full size)</a></span></div></div>
+
+
+<p>Now we’ll create a second user by revisiting the <a href="http://localhost:3000/users/new"><tt>new</tt></a> page and submitting a second set of user information; the resulting user <a href="http://localhost:3000/users"><tt>index</tt></a> is shown in <a class="ref" href="http://ruby.railstutorial.org/chapters/a-demo-app#fig-demo_user_index_two_rails_3">Figure&nbsp;2.9</a>. <a class="ref" href="http://ruby.railstutorial.org/chapters/sign-up#sec-showing_users">Section&nbsp;7.1</a> will develop the user index into a more polished page for showing all users.</p>
+
+<div class="label" id="fig-demo_user_index_two_rails_3"></div>
+
+
+<div class="figure"><div class="center"><span class="graphic"><img src="./Learn Web Development with the Ruby on Rails Tutorial   A Demo App_files/demo_user_index_two_rails_3.png" alt="demo_user_index_two_rails_3"></span></div><div class="caption"><span class="header">Figure 2.9: </span><span class="description">The user index page (<a href="http://localhost:3000/users">/users</a>) with a second user.&nbsp;<a href="http://railstutorial.org/images/figures/demo_user_index_two_rails_3-full.png">(full size)</a></span></div></div>
+
+
+<p>Having shown how to create, show, and edit users, we come finally to destroying them (<a class="ref" href="http://ruby.railstutorial.org/chapters/a-demo-app#fig-demo_destroy_user_rails_3">Figure&nbsp;2.10</a>). You should verify that clicking on the link in <a class="ref" href="http://ruby.railstutorial.org/chapters/a-demo-app#fig-demo_destroy_user_rails_3">Figure&nbsp;2.10</a> destroys the second user, yielding an index page with only one user. (If it doesn’t work, be sure that JavaScript is enabled in your browser; Rails uses JavaScript to issue the request needed to destroy a user.) <a class="ref" href="http://ruby.railstutorial.org/chapters/updating-showing-and-deleting-users#sec-destroying_users">Section&nbsp;9.4</a> adds user deletion to the sample app, taking care to restrict its use to a special class of administrative users.</p>
+
+<div class="label" id="fig-demo_destroy_user_rails_3"></div>
+
+
+<div class="figure"><div class="center"><span class="graphic"><img src="./Learn Web Development with the Ruby on Rails Tutorial   A Demo App_files/demo_destroy_user_rails_3.png" alt="demo_destroy_user_rails_3"></span></div><div class="caption"><span class="header">Figure 2.10: </span><span class="description">Destroying a user.&nbsp;<a href="http://railstutorial.org/images/figures/demo_destroy_user_rails_3-full.png">(full size)</a></span></div></div>
+
+
+
+
+<div class="label" id="sec-mvc_in_action"></div>
+
+
+<h3><a id="sec-2_2_2" href="http://ruby.railstutorial.org/chapters/a-demo-app#sec-mvc_in_action" class="heading"><span class="number">2.2.2</span> MVC in action</a></h3>
+
+
+<p>Now that we’ve completed a quick overview of the Users resource, let’s examine one particular part of it in the context of the Model-View-Controller (MVC) pattern introduced in <a class="ref" href="http://ruby.railstutorial.org/chapters/beginning#sec-mvc">Section&nbsp;1.2.6</a>. Our strategy will be to describe the results of a typical browser hit—a visit to the user index page at <a href="http://localhost:3000/users">/users</a>—in terms of MVC (<a class="ref" href="http://ruby.railstutorial.org/chapters/a-demo-app#fig-mvc_detailed">Figure&nbsp;2.11</a>).</p>
+
+<div class="label" id="fig-mvc_detailed"></div>
+
+
+<div class="figure"><div class="center"><span class="graphic"><img src="./Learn Web Development with the Ruby on Rails Tutorial   A Demo App_files/mvc_detailed.png" alt="mvc_detailed"></span></div><div class="caption"><span class="header">Figure 2.11: </span><span class="description">A detailed diagram of MVC in Rails.&nbsp;<a href="http://railstutorial.org/images/figures/mvc_detailed-full.png">(full size)</a></span></div></div>
+
+
+
+
+<ol>
+<li>The browser issues a request for the /users URI.</li>
+<li>Rails routes /users to the <code>index</code> action in the Users controller.</li>
+<li>The <code>index</code> action asks the User model to retrieve all users (<code>User.all</code>).</li>
+<li>The User model pulls all the users from the database.</li>
+<li>The User model returns the list of users to the controller.</li>
+<li>The controller captures the users in the <code>@users</code> variable, which is passed to the <code>index</code> view.</li>
+<li>The view uses embedded Ruby to render the page as HTML.</li>
+<li>The controller passes the HTML back to the browser.<sup class="footnote" id="fnref-2_3"><a href="http://ruby.railstutorial.org/chapters/a-demo-app#fn-2_3">3</a></sup></li>
+</ol>
+
+
+<p>We start with a request issued from the browser—i.e., the result of typing a URI in the address bar or clicking on a link (Step&nbsp;1 in <a class="ref" href="http://ruby.railstutorial.org/chapters/a-demo-app#fig-mvc_detailed">Figure&nbsp;2.11</a>). This request hits the <em>Rails router</em> (Step&nbsp;2), which dispatches to the proper <em>controller action</em> based on the URI (and, as we’ll see in <a class="ref" href="http://ruby.railstutorial.org/chapters/static-pages#sidebar-get_etc">Box&nbsp;3.2</a>, the type of request). The code to create the mapping of user URIs to controller actions for the Users resource appears in <a class="ref" href="http://ruby.railstutorial.org/chapters/a-demo-app#code-rails_routes">Listing&nbsp;2.2</a>; this code effectively sets up the table of URI/action pairs seen in <a class="ref" href="http://ruby.railstutorial.org/chapters/a-demo-app#table-user_urls">Table&nbsp;2.1</a>. (The strange notation <code>:users</code> is a <em>symbol</em>, which we’ll learn about in <a class="ref" href="http://ruby.railstutorial.org/chapters/rails-flavored-ruby#sec-hashes_and_symbols">Section&nbsp;4.3.3</a>.)</p>
+
+<div class="label" id="code-rails_routes"></div>
+
+
+<div class="codelisting">
+<div class="listing"><span class="header">Listing 2.2.</span> <span class="description">The Rails routes, with a rule for the Users resource. <br> <code>config/routes.rb</code></span> </div>
+<div class="code"><div class="highlight"><pre><span class="ss">DemoApp::Application</span><span class="o">.</span><span class="n">routes</span><span class="o">.</span><span class="n">draw</span> <span class="k">do</span>
+  <span class="n">resources</span> <span class="ss">:users</span>
+  <span class="o">.</span>
+  <span class="o">.</span>
+  <span class="o">.</span>
+<span class="k">end</span>
+</pre></div>
+</div></div>
+
+
+<p>The pages from the tour in <a class="ref" href="http://ruby.railstutorial.org/chapters/a-demo-app#sec-a_user_tour">Section&nbsp;2.2.1</a> correspond to <em>actions</em> in the Users <em>controller</em>, which is a collection of related actions; the controller generated by the scaffolding is shown schematically in <a class="ref" href="http://ruby.railstutorial.org/chapters/a-demo-app#code-demo_users_controller">Listing&nbsp;2.3</a>. Note the notation <code>class UsersController &lt; ApplicationController</code>; this is an example of a Ruby <em>class</em> with <em>inheritance</em>. (We’ll discuss inheritance briefly in <a class="ref" href="http://ruby.railstutorial.org/chapters/a-demo-app#sec-inheritance_hierarchies">Section&nbsp;2.3.4</a> and cover both subjects in more detail in <a class="ref" href="http://ruby.railstutorial.org/chapters/rails-flavored-ruby#sec-ruby_classes">Section&nbsp;4.4</a>.)</p>
+
+<div class="label" id="code-demo_users_controller"></div>
+
+
+<div class="codelisting">
+<div class="listing"><span class="header">Listing 2.3.</span> <span class="description">The Users controller in schematic form. <br> <code>app/controllers/users_controller.rb</code></span> </div>
+<div class="code"><div class="highlight"><pre><span class="k">class</span> <span class="nc">UsersController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
+
+  <span class="k">def</span> <span class="nf">index</span>
+    <span class="o">.</span>
+    <span class="o">.</span>
+    <span class="o">.</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">show</span>
+    <span class="o">.</span>
+    <span class="o">.</span>
+    <span class="o">.</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">new</span>
+    <span class="o">.</span>
+    <span class="o">.</span>
+    <span class="o">.</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">create</span>
+    <span class="o">.</span>
+    <span class="o">.</span>
+    <span class="o">.</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">edit</span>
+    <span class="o">.</span>
+    <span class="o">.</span>
+    <span class="o">.</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">update</span>
+    <span class="o">.</span>
+    <span class="o">.</span>
+    <span class="o">.</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">destroy</span>
+    <span class="o">.</span>
+    <span class="o">.</span>
+    <span class="o">.</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</pre></div>
+</div></div>
+
+
+<p>You may notice that there are more actions than there are pages; the <code>index</code>, <code>show</code>, <code>new</code>, and <code>edit</code> actions all correspond to pages from <a class="ref" href="http://ruby.railstutorial.org/chapters/a-demo-app#sec-a_user_tour">Section&nbsp;2.2.1</a>, but there are additional <code>create</code>, <code>update</code>, and <code>destroy</code> actions as well. These actions don’t typically render pages (although they sometimes do); instead, their main purpose is to modify information about users in the database. This full suite of controller actions, summarized in <a class="ref" href="http://ruby.railstutorial.org/chapters/a-demo-app#table-demo_RESTful_users">Table&nbsp;2.2</a>, represents the implementation of the REST architecture in Rails (<a class="ref" href="http://ruby.railstutorial.org/chapters/a-demo-app#sidebar-REST">Box&nbsp;2.2</a>), which is based on the ideas of <em>representational state transfer</em> identified and named by computer scientist <a href="http://en.wikipedia.org/wiki/Roy_Fielding">Roy Fielding</a>.<sup class="footnote" id="fnref-2_4"><a href="http://ruby.railstutorial.org/chapters/a-demo-app#fn-2_4">4</a></sup> Note from <a class="ref" href="http://ruby.railstutorial.org/chapters/a-demo-app#table-demo_RESTful_users">Table&nbsp;2.2</a> that there is some overlap in the URIs; for example, both the user <code>show</code> action and the <code>update</code> action correspond to the URI /users/1. The difference between them is the <a href="http://en.wikipedia.org/wiki/HTTP_request#Request_methods">HTTP request method</a> they respond to. We’ll learn more about HTTP request methods starting in <a class="ref" href="http://ruby.railstutorial.org/chapters/static-pages#sec-TDD">Section&nbsp;3.2.1</a>.</p>
+
+<div class="label" id="table-demo_RESTful_users"></div>
+
+
+<div class="table"><div class="center">
+<table class="tabular"><tbody><tr><th class="align_left"><strong>HTTP request</strong></th><th class="align_left"><strong>URI</strong></th><th class="align_left"><strong>Action</strong></th><th class="align_left"><strong>Purpose</strong></th></tr><tr class="top_bar"><td class="align_left"><tt>GET</tt></td><td class="align_left">/users</td><td class="align_left"><code>index</code></td><td class="align_left">page to list all users</td></tr><tr><td class="align_left"><tt>GET</tt></td><td class="align_left">/users/1</td><td class="align_left"><code>show</code></td><td class="align_left">page to show user with id <code>1</code></td></tr><tr><td class="align_left"><tt>GET</tt></td><td class="align_left">/users/new</td><td class="align_left"><code>new</code></td><td class="align_left">page to make a new user</td></tr><tr><td class="align_left"><tt>POST</tt></td><td class="align_left">/users</td><td class="align_left"><code>create</code></td><td class="align_left">create a new user</td></tr><tr><td class="align_left"><tt>GET</tt></td><td class="align_left">/users/1/edit</td><td class="align_left"><code>edit</code></td><td class="align_left">page to edit user with id <code>1</code></td></tr><tr><td class="align_left"><tt>PUT</tt></td><td class="align_left">/users/1</td><td class="align_left"><code>update</code></td><td class="align_left">update user with id <code>1</code></td></tr><tr><td class="align_left"><tt>DELETE</tt></td><td class="align_left">/users/1</td><td class="align_left"><code>destroy</code></td><td class="align_left">delete user with id <code>1</code></td></tr></tbody></table></div><div class="caption"><span class="header">Table 2.2: </span><span class="description">RESTful routes provided by the Users resource in <a class="ref" href="http://ruby.railstutorial.org/chapters/a-demo-app#code-rails_routes">Listing&nbsp;2.2</a>.</span></div></div>
+
+
+
+
+<div class="label" id="sidebar-REST"></div>
+
+
+<div class="sidebar"><span class="title"><span class="header">Box 2.2.</span><span class="description">REpresentational State Transfer (REST)</span></span>
+<p>If you read much about Ruby on Rails web development, you’ll see a lot of references to “REST”, which is an acronym for REpresentational State Transfer. REST is an architectural style for developing distributed, networked systems and software applications such as the World Wide Web and web applications. Although REST theory is rather abstract, in the context of Rails applications REST means that most application components (such as users and microposts) are modeled as <em>resources</em> that can be created, read, updated, and deleted—operations that correspond both to the <a href="http://en.wikipedia.org/wiki/Create,_read,_update_and_delete">CRUD operations of relational databases</a> and the four fundamental <a href="http://en.wikipedia.org/wiki/HTTP_request#Request_methods">HTTP request methods</a>: <tt>POST</tt>, <tt>GET</tt>, <tt>PUT</tt>, and <tt>DELETE</tt>. (We’ll learn more about HTTP requests in <a class="ref" href="http://ruby.railstutorial.org/chapters/static-pages#sec-TDD">Section&nbsp;3.2.1</a> and especially <a class="ref" href="http://ruby.railstutorial.org/chapters/static-pages#sidebar-get_etc">Box&nbsp;3.2</a>.)</p>
+
+<p>As a Rails application developer, the RESTful style of development helps you make choices about which controllers and actions to write: you simply structure the application using resources that get created, read, updated, and deleted. In the case of users and microposts, this process is straightforward, since they are naturally resources in their own right. In <a class="ref" href="http://ruby.railstutorial.org/chapters/following-users#top">Chapter&nbsp;11</a>, we’ll see an example where REST principles allow us to model a subtler problem, “following users”, in a natural and convenient way.</p>
+</div>
+
+
+<p>To examine the relationship between the Users controller and the User model, let’s focus on a simplified version of the <code>index</code> action, shown in <a class="ref" href="http://ruby.railstutorial.org/chapters/a-demo-app#code-demo_index_action">Listing&nbsp;2.4</a>. (The scaffold code is ugly and confusing, so I’ve suppressed it.)</p>
+
+<div class="label" id="code-demo_index_action"></div>
+
+
+<div class="codelisting">
+<div class="listing"><span class="header">Listing 2.4.</span> <span class="description">The simplified user <code>index</code> action for the demo application. <br> <code>app/controllers/users_controller.rb</code></span> </div>
+<div class="code"><div class="highlight"><pre><span class="k">class</span> <span class="nc">UsersController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
+
+  <span class="k">def</span> <span class="nf">index</span>
+    <span class="vi">@users</span> <span class="o">=</span> <span class="no">User</span><span class="o">.</span><span class="n">all</span>
+  <span class="k">end</span>
+  <span class="o">.</span>
+  <span class="o">.</span>
+  <span class="o">.</span>
+<span class="k">end</span>
+</pre></div>
+</div></div>
+
+
+<p>This <code>index</code> action has the line <code>@users = User.all</code> (Step&nbsp;3), which asks the User model to retrieve a list of all the users from the database (Step&nbsp;4), and then places them in the  variable <code>@users</code> (pronounced “at-users”) (Step&nbsp;5). The User model itself appears in <a class="ref" href="http://ruby.railstutorial.org/chapters/a-demo-app#code-demo_user_model">Listing&nbsp;2.5</a>; although it is rather plain, it comes equipped with a large amount of functionality because of inheritance (<a class="ref" href="http://ruby.railstutorial.org/chapters/a-demo-app#sec-inheritance_hierarchies">Section&nbsp;2.3.4</a> and <a class="ref" href="http://ruby.railstutorial.org/chapters/rails-flavored-ruby#sec-ruby_classes">Section&nbsp;4.4</a>). In particular, by using the Rails library called <em>Active Record</em>, the code in <a class="ref" href="http://ruby.railstutorial.org/chapters/a-demo-app#code-demo_user_model">Listing&nbsp;2.5</a> arranges for <code>User.all</code> to return all the users. (We’ll learn about the <code>attr_accessible</code> line in <a class="ref" href="http://ruby.railstutorial.org/chapters/modeling-users#sec-accessible_attributes">Section&nbsp;6.1.2.2</a>. <em>Note</em>: This line will not appear if you are using Rails&nbsp;3.2.2 or earlier.)</p>
+
+<div class="label" id="code-demo_user_model"></div>
+
+
+<div class="codelisting">
+<div class="listing"><span class="header">Listing 2.5.</span> <span class="description">The User model for the demo application. <br> <code>app/models/user.rb</code></span> </div>
+<div class="code"><div class="highlight"><pre><span class="k">class</span> <span class="nc">User</span> <span class="o">&lt;</span> <span class="ss">ActiveRecord::Base</span>
+  <span class="n">attr_accessible</span> <span class="ss">:email</span><span class="p">,</span> <span class="ss">:name</span>
+<span class="k">end</span>
+</pre></div>
+</div></div>
+
+
+<p>Once the <code>@users</code> variable is defined, the controller calls the <em>view</em> (Step&nbsp;6), shown in <a class="ref" href="http://ruby.railstutorial.org/chapters/a-demo-app#code-demo_index_view">Listing&nbsp;2.6</a>. Variables that start with the <code>@</code>&nbsp;sign, called <em>instance variables</em>, are automatically available in the view; in this case, the <code>index.html.erb</code> view in <a class="ref" href="http://ruby.railstutorial.org/chapters/a-demo-app#code-demo_index_view">Listing&nbsp;2.6</a> iterates through the <code>@users</code> list and outputs a line of HTML for each one. (Remember, you aren’t supposed to understand this code right now. It is shown only for purposes of illustration.)</p>
+
+<div class="label" id="code-demo_index_view"></div>
+
+
+<div class="codelisting">
+<div class="listing"><span class="header">Listing 2.6.</span> <span class="description">The view for the user index. <br> <code>app/views/users/index.html.erb</code></span> </div>
+<div class="code"><div class="highlight"><pre><span class="nt">&lt;h1&gt;</span>Listing users<span class="nt">&lt;/h1&gt;</span>
+
+<span class="nt">&lt;table&gt;</span>
+  <span class="nt">&lt;tr&gt;</span>
+    <span class="nt">&lt;th&gt;</span>Name<span class="nt">&lt;/th&gt;</span>
+    <span class="nt">&lt;th&gt;</span>Email<span class="nt">&lt;/th&gt;</span>
+    <span class="nt">&lt;th&gt;&lt;/th&gt;</span>
+    <span class="nt">&lt;th&gt;&lt;/th&gt;</span>
+    <span class="nt">&lt;th&gt;&lt;/th&gt;</span>
+  <span class="nt">&lt;/tr&gt;</span>
+
+<span class="cp">&lt;%</span> <span class="vi">@users</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">user</span><span class="o">|</span> <span class="cp">%&gt;</span>
+  <span class="nt">&lt;tr&gt;</span>
+    <span class="nt">&lt;td&gt;</span><span class="cp">&lt;%=</span> <span class="n">user</span><span class="o">.</span><span class="n">name</span> <span class="cp">%&gt;</span><span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span><span class="cp">&lt;%=</span> <span class="n">user</span><span class="o">.</span><span class="n">email</span> <span class="cp">%&gt;</span><span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span><span class="cp">&lt;%=</span> <span class="n">link_to</span> <span class="s1">'Show'</span><span class="p">,</span> <span class="n">user</span> <span class="cp">%&gt;</span><span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span><span class="cp">&lt;%=</span> <span class="n">link_to</span> <span class="s1">'Edit'</span><span class="p">,</span> <span class="n">edit_user_path</span><span class="p">(</span><span class="n">user</span><span class="p">)</span> <span class="cp">%&gt;</span><span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span><span class="cp">&lt;%=</span> <span class="n">link_to</span> <span class="s1">'Destroy'</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="nb">method</span><span class="p">:</span> <span class="ss">:delete</span><span class="p">,</span>
+                                     <span class="ss">data:</span> <span class="p">{</span> <span class="ss">confirm:</span> <span class="s1">'Are you sure?'</span> <span class="p">}</span> <span class="cp">%&gt;</span><span class="nt">&lt;/td&gt;</span>
+  <span class="nt">&lt;/tr&gt;</span>
+<span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
+<span class="nt">&lt;/table&gt;</span>
+
+<span class="nt">&lt;br</span> <span class="nt">/&gt;</span>
+
+<span class="cp">&lt;%=</span> <span class="n">link_to</span> <span class="s1">'New User'</span><span class="p">,</span> <span class="n">new_user_path</span> <span class="cp">%&gt;</span>
+</pre></div>
+</div></div>
+
+
+<p>The view converts its contents to HTML (Step&nbsp;7), which is then returned by the controller to the browser for display (Step&nbsp;8).</p>
+
+<div class="label" id="sec-weaknesses_of_this_users_resource"></div>
+
+
+<h3><a id="sec-2_2_3" href="http://ruby.railstutorial.org/chapters/a-demo-app#sec-weaknesses_of_this_users_resource" class="heading"><span class="number">2.2.3</span> Weaknesses of this Users resource</a></h3>
+
+
+<p>Though good for getting a general overview of Rails, the scaffold Users resource suffers from a number of severe weaknesses.</p>
+
+<ul>
+<li><strong>No data validations.</strong> Our User model accepts data such as blank names and invalid email addresses without complaint.</li>
+<li><strong>No authentication.</strong> We have no notion signing in or out, and no way to prevent any user from performing any operation.</li>
+<li><strong>No tests.</strong> This isn’t technically true—the scaffolding includes rudimentary tests—but the generated tests are ugly and inflexible, and they don’t test for data validation, authentication, or any other custom requirements.</li>
+<li><strong>No layout.</strong> There is no consistent site styling or navigation.</li>
+<li><strong>No real understanding.</strong> If you understand the scaffold code, you probably shouldn’t be reading this book.</li>
+</ul>
+
+
+
+
+<div class="label" id="sec-microposts_resource"></div>
+
+
+<h2><a id="sec-2_3" href="http://ruby.railstutorial.org/chapters/a-demo-app#sec-microposts_resource" class="heading"><span class="number">2.3</span> The Microposts resource</a></h2>
+
+
+<p>Having generated and explored the Users resource, we turn now to the associated Microposts resource. Throughout this section, I recommend comparing the elements of the Microposts resource with the analogous user elements from <a class="ref" href="http://ruby.railstutorial.org/chapters/a-demo-app#sec-demo_users_resource">Section&nbsp;2.2</a>; you should see that the two resources parallel each other in many ways. The RESTful structure of Rails applications is best absorbed by this sort of repetition of form; indeed, seeing the parallel structure of Users and Microposts even at this early stage is one of the prime motivations for this chapter. (As we’ll see, writing applications more robust than the toy example in this chapter takes considerable effort—we won’t see the Microposts resource again until <a class="ref" href="http://ruby.railstutorial.org/chapters/user-microposts#top">Chapter&nbsp;10</a>—and I didn’t want to defer its first appearance quite that far.)</p>
+
+<div class="label" id="sec-a_micropost_microtour"></div>
+
+
+<h3><a id="sec-2_3_1" href="http://ruby.railstutorial.org/chapters/a-demo-app#sec-a_micropost_microtour" class="heading"><span class="number">2.3.1</span> A micropost microtour</a></h3>
+
+
+<p>As with the Users resource, we’ll generate scaffold code for the Microposts resource using <code>rails generate scaffold</code>, in this case implementing the data model from <a class="ref" href="http://ruby.railstutorial.org/chapters/a-demo-app#fig-demo_micropost_model">Figure&nbsp;2.3</a>:<sup class="footnote" id="fnref-2_5"><a href="http://ruby.railstutorial.org/chapters/a-demo-app#fn-2_5">5</a></sup></p>
+
+<div class="code"><div class="highlight"><pre>$ rails generate scaffold Micropost content:string user_id:integer
+      invoke  active_record
+      create    db/migrate/20111123225811_create_microposts.rb
+      create    app/models/micropost.rb
+      invoke    test_unit
+      create      test/unit/micropost_test.rb
+      create      test/fixtures/microposts.yml
+       route  resources :microposts
+      invoke  scaffold_controller
+      create    app/controllers/microposts_controller.rb
+      invoke    erb
+      create      app/views/microposts
+      create      app/views/microposts/index.html.erb
+      create      app/views/microposts/edit.html.erb
+      create      app/views/microposts/show.html.erb
+      create      app/views/microposts/new.html.erb
+      create      app/views/microposts/_form.html.erb
+      invoke    test_unit
+      create      test/functional/microposts_controller_test.rb
+      invoke    helper
+      create      app/helpers/microposts_helper.rb
+      invoke      test_unit
+      create        test/unit/helpers/microposts_helper_test.rb
+      invoke  assets
+      invoke    coffee
+      create      app/assets/javascripts/microposts.js.coffee
+      invoke    scss
+      create      app/assets/stylesheets/microposts.css.scss
+      invoke  scss
+   identical    app/assets/stylesheets/scaffolds.css.scss
+</pre></div>
+</div>
+
+
+<p>To update our database with the new data model, we need to run a migration as in <a class="ref" href="http://ruby.railstutorial.org/chapters/a-demo-app#sec-demo_users_resource">Section&nbsp;2.2</a>:</p>
+
+<div class="code"><div class="highlight"><pre><span class="gp">$</span> bundle <span class="nb">exec </span>rake db:migrate
+<span class="go">==  CreateMicroposts: migrating ===============================================</span>
+<span class="go">-- create_table(:microposts)</span>
+<span class="go">   -&gt; 0.0023s</span>
+<span class="go">==  CreateMicroposts: migrated (0.0026s) ======================================</span>
+</pre></div>
+</div>
+
+
+<p>Now we are in a position to create microposts in the same way we created users in <a class="ref" href="http://ruby.railstutorial.org/chapters/a-demo-app#sec-a_user_tour">Section&nbsp;2.2.1</a>. As you might guess, the scaffold generator has updated the Rails routes file with a rule for Microposts resource, as seen in <a class="ref" href="http://ruby.railstutorial.org/chapters/a-demo-app#code-demo_microposts_resource">Listing&nbsp;2.7</a>.<sup class="footnote" id="fnref-2_6"><a href="http://ruby.railstutorial.org/chapters/a-demo-app#fn-2_6">6</a></sup> As with users, the <code>resources :microposts</code> routing rule maps micropost URIs to actions in the Microposts controller, as seen in <a class="ref" href="http://ruby.railstutorial.org/chapters/a-demo-app#table-demo_RESTful_microposts">Table&nbsp;2.3</a>.</p>
+
+<div class="label" id="code-demo_microposts_resource"></div>
+
+
+<div class="codelisting">
+<div class="listing"><span class="header">Listing 2.7.</span> <span class="description">The Rails routes, with a new rule for Microposts resources. <br> <code>config/routes.rb</code></span> </div>
+<div class="code"><div class="highlight"><pre><span class="ss">DemoApp::Application</span><span class="o">.</span><span class="n">routes</span><span class="o">.</span><span class="n">draw</span> <span class="k">do</span>
+  <span class="n">resources</span> <span class="ss">:microposts</span>
+  <span class="n">resources</span> <span class="ss">:users</span>
+  <span class="o">.</span>
+  <span class="o">.</span>
+  <span class="o">.</span>
+<span class="k">end</span>
+</pre></div>
+</div></div>
+
+
+
+
+<div class="label" id="table-demo_RESTful_microposts"></div>
+
+
+<div class="table"><div class="center">
+<table class="tabular"><tbody><tr><th class="align_left"><strong>HTTP request</strong></th><th class="align_left"><strong>URI</strong></th><th class="align_left"><strong>Action</strong></th><th class="align_left"><strong>Purpose</strong></th></tr><tr class="top_bar"><td class="align_left"><tt>GET</tt></td><td class="align_left">/microposts</td><td class="align_left"><code>index</code></td><td class="align_left">page to list all microposts</td></tr><tr><td class="align_left"><tt>GET</tt></td><td class="align_left">/microposts/1</td><td class="align_left"><code>show</code></td><td class="align_left">page to show micropost with id <code>1</code></td></tr><tr><td class="align_left"><tt>GET</tt></td><td class="align_left">/microposts/new</td><td class="align_left"><code>new</code></td><td class="align_left">page to make a new micropost</td></tr><tr><td class="align_left"><tt>POST</tt></td><td class="align_left">/microposts</td><td class="align_left"><code>create</code></td><td class="align_left">create a new micropost</td></tr><tr><td class="align_left"><tt>GET</tt></td><td class="align_left">/microposts/1/edit</td><td class="align_left"><code>edit</code></td><td class="align_left">page to edit micropost with id <code>1</code></td></tr><tr><td class="align_left"><tt>PUT</tt></td><td class="align_left">/microposts/1</td><td class="align_left"><code>update</code></td><td class="align_left">update micropost with id <code>1</code></td></tr><tr><td class="align_left"><tt>DELETE</tt></td><td class="align_left">/microposts/1</td><td class="align_left"><code>destroy</code></td><td class="align_left">delete micropost with id <code>1</code></td></tr></tbody></table></div><div class="caption"><span class="header">Table 2.3: </span><span class="description">RESTful routes provided by the Microposts resource in <a class="ref" href="http://ruby.railstutorial.org/chapters/a-demo-app#code-demo_microposts_resource">Listing&nbsp;2.7</a>.</span></div></div>
+
+
+<p>The Microposts controller itself appears in schematic form <a class="ref" href="http://ruby.railstutorial.org/chapters/a-demo-app#code-demo_microposts_controller">Listing&nbsp;2.8</a>. Note that, apart from having <code>MicropostsController</code> in place of <code>UsersController</code>, <a class="ref" href="http://ruby.railstutorial.org/chapters/a-demo-app#code-demo_microposts_controller">Listing&nbsp;2.8</a> is <em>identical</em> to the code in <a class="ref" href="http://ruby.railstutorial.org/chapters/a-demo-app#code-demo_users_controller">Listing&nbsp;2.3</a>. This is a reflection of the REST architecture common to both resources.</p>
+
+<div class="label" id="code-demo_microposts_controller"></div>
+
+
+<div class="codelisting">
+<div class="listing"><span class="header">Listing 2.8.</span> <span class="description">The Microposts controller in schematic form. <br> <code>app/controllers/microposts_controller.rb</code></span> </div>
+<div class="code"><div class="highlight"><pre><span class="k">class</span> <span class="nc">MicropostsController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
+
+  <span class="k">def</span> <span class="nf">index</span>
+    <span class="o">.</span>
+    <span class="o">.</span>
+    <span class="o">.</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">show</span>
+    <span class="o">.</span>
+    <span class="o">.</span>
+    <span class="o">.</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">new</span>
+    <span class="o">.</span>
+    <span class="o">.</span>
+    <span class="o">.</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">create</span>
+    <span class="o">.</span>
+    <span class="o">.</span>
+    <span class="o">.</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">edit</span>
+    <span class="o">.</span>
+    <span class="o">.</span>
+    <span class="o">.</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">update</span>
+    <span class="o">.</span>
+    <span class="o">.</span>
+    <span class="o">.</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">destroy</span>
+    <span class="o">.</span>
+    <span class="o">.</span>
+    <span class="o">.</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</pre></div>
+</div></div>
+
+
+<p>To make some actual microposts, we enter information at the new microposts page, <a href="http://localhost:3000/microposts/new">/microposts/new</a>, as seen in <a class="ref" href="http://ruby.railstutorial.org/chapters/a-demo-app#fig-demo_new_micropost_rails_3">Figure&nbsp;2.12</a>.</p>
+
+<div class="label" id="fig-demo_new_micropost_rails_3"></div>
+
+
+<div class="figure"><div class="center"><span class="graphic"><img src="./Learn Web Development with the Ruby on Rails Tutorial   A Demo App_files/demo_new_micropost_rails_3.png" alt="demo_new_micropost_rails_3"></span></div><div class="caption"><span class="header">Figure 2.12: </span><span class="description">The new micropost page (<a href="http://localhost:3000/microposts/new">/microposts/new</a>).&nbsp;<a href="http://railstutorial.org/images/figures/demo_new_micropost-full.png">(full size)</a></span></div></div>
+
+
+<p>At this point, go ahead and create a micropost or two, taking care to make sure that at least one has a <code>user_id</code> of&nbsp;<code>1</code> to match the id of the first user created in <a class="ref" href="http://ruby.railstutorial.org/chapters/a-demo-app#sec-a_user_tour">Section&nbsp;2.2.1</a>. The result should look something like <a class="ref" href="http://ruby.railstutorial.org/chapters/a-demo-app#fig-demo_micropost_index_rails_3">Figure&nbsp;2.13</a>.</p>
+
+<div class="label" id="fig-demo_micropost_index_rails_3"></div>
+
+
+<div class="figure"><div class="center"><span class="graphic"><img src="./Learn Web Development with the Ruby on Rails Tutorial   A Demo App_files/demo_micropost_index_rails_3.png" alt="demo_micropost_index_rails_3"></span></div><div class="caption"><span class="header">Figure 2.13: </span><span class="description">The micropost index page (<a href="http://localhost:3000/microposts">/microposts</a>).&nbsp;<a href="http://railstutorial.org/images/figures/demo_micropost_index_rails_3-full.png">(full size)</a></span></div></div>
+
+
+
+
+<div class="label" id="sec-putting_the_micro_in_microposts"></div>
+
+
+<h3><a id="sec-2_3_2" href="http://ruby.railstutorial.org/chapters/a-demo-app#sec-putting_the_micro_in_microposts" class="heading"><span class="number">2.3.2</span> Putting the <em>micro</em> in microposts</a></h3>
+
+
+<p>Any <em>micro</em>post worthy of the name should have some means of enforcing the length of the post. Implementing this constraint in Rails is easy with <em>validations</em>; to accept microposts with at most 140 characters (à la Twitter), we use a <em>length</em> validation. At this point, you should open the file <code>app/models/micropost.rb</code> in your text editor or IDE and fill it with the contents of <a class="ref" href="http://ruby.railstutorial.org/chapters/a-demo-app#code-demo_length_validation">Listing&nbsp;2.9</a>. (The use of <code>validates</code> in <a class="ref" href="http://ruby.railstutorial.org/chapters/a-demo-app#code-demo_length_validation">Listing&nbsp;2.9</a> is characteristic of Rails&nbsp;3; if you’ve previously worked with Rails&nbsp;2.3, you should compare this to the use of <code>validates_length_of</code>.)</p>
+
+<div class="label" id="code-demo_length_validation"></div>
+
+
+<div class="codelisting">
+<div class="listing"><span class="header">Listing 2.9.</span> <span class="description">Constraining microposts to be at most 140 characters. <br> <code>app/models/micropost.rb</code></span> </div>
+<div class="code"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Micropost</span> <span class="o">&lt;</span> <span class="ss">ActiveRecord::Base</span>
+  <span class="n">attr_accessible</span> <span class="ss">:content</span><span class="p">,</span> <span class="ss">:user_id</span>
+  <span class="n">validates</span> <span class="ss">:content</span><span class="p">,</span> <span class="ss">:length</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="ss">:maximum</span> <span class="o">=&gt;</span> <span class="mi">140</span> <span class="p">}</span>
+<span class="k">end</span>
+</pre></div>
+</div></div>
+
+
+<p>The code in <a class="ref" href="http://ruby.railstutorial.org/chapters/a-demo-app#code-demo_length_validation">Listing&nbsp;2.9</a> may look rather mysterious—we’ll cover validations more thoroughly starting in <a class="ref" href="http://ruby.railstutorial.org/chapters/modeling-users#sec-user_validations">Section&nbsp;6.2</a>—but its effects are readily apparent if we go to the new micropost page and enter more than 140 characters for the content of the post. As seen in <a class="ref" href="http://ruby.railstutorial.org/chapters/a-demo-app#fig-micropost_length_error_rails_3">Figure&nbsp;2.14</a>, Rails renders <em>error messages</em> indicating that the micropost’s content is too long. (We’ll learn more about error messages in <a class="ref" href="http://ruby.railstutorial.org/chapters/sign-up#sec-signup_error_messages">Section&nbsp;7.3.2</a>.)</p>
+
+<div class="label" id="fig-micropost_length_error_rails_3"></div>
+
+
+<div class="figure"><div class="center"><span class="graphic"><img src="./Learn Web Development with the Ruby on Rails Tutorial   A Demo App_files/micropost_length_error_rails_3.png" alt="micropost_length_error_rails_3"></span></div><div class="caption"><span class="header">Figure 2.14: </span><span class="description">Error messages for a failed micropost creation.&nbsp;<a href="http://railstutorial.org/images/figures/micropost_length_error_rails_3-full.png">(full size)</a></span></div></div>
+
+
+
+
+<div class="label" id="sec-demo_user_has_many_microposts"></div>
+
+
+<h3><a id="sec-2_3_3" href="http://ruby.railstutorial.org/chapters/a-demo-app#sec-demo_user_has_many_microposts" class="heading"><span class="number">2.3.3</span> A user <tt>has_many</tt> microposts</a></h3>
+
+
+<p>One of the most powerful features of Rails is the ability to form <em>associations</em> between different data models. In the case of our User model, each user potentially has many microposts. We can express this in code by updating the User and Micropost models as in <a class="ref" href="http://ruby.railstutorial.org/chapters/a-demo-app#code-demo_user_has_many_microposts">Listing&nbsp;2.10</a> and <a class="ref" href="http://ruby.railstutorial.org/chapters/a-demo-app#code-demo_micropost_belongs_to_user">Listing&nbsp;2.11</a>.</p>
+
+<div class="label" id="code-demo_user_has_many_microposts"></div>
+
+
+<div class="codelisting">
+<div class="listing"><span class="header">Listing 2.10.</span> <span class="description">A user has many microposts. <br> <code>app/models/user.rb</code></span> </div>
+<div class="code"><div class="highlight"><pre><span class="k">class</span> <span class="nc">User</span> <span class="o">&lt;</span> <span class="ss">ActiveRecord::Base</span>
+  <span class="n">attr_accessible</span> <span class="ss">:email</span><span class="p">,</span> <span class="ss">:name</span>
+  <span class="n">has_many</span> <span class="ss">:microposts</span>
+<span class="k">end</span>
+</pre></div>
+</div></div>
+
+
+
+
+<div class="label" id="code-demo_micropost_belongs_to_user"></div>
+
+
+<div class="codelisting">
+<div class="listing"><span class="header">Listing 2.11.</span> <span class="description">A micropost belongs to a user. <br> <code>app/models/micropost.rb</code></span> </div>
+<div class="code"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Micropost</span> <span class="o">&lt;</span> <span class="ss">ActiveRecord::Base</span>
+  <span class="n">attr_accessible</span> <span class="ss">:content</span><span class="p">,</span> <span class="ss">:user_id</span>
+
+  <span class="n">belongs_to</span> <span class="ss">:user</span>
+
+  <span class="n">validates</span> <span class="ss">:content</span><span class="p">,</span> <span class="ss">:length</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="ss">:maximum</span> <span class="o">=&gt;</span> <span class="mi">140</span> <span class="p">}</span>
+<span class="k">end</span>
+</pre></div>
+</div></div>
+
+
+<p>We can visualize the result of this association in <a class="ref" href="http://ruby.railstutorial.org/chapters/a-demo-app#fig-micropost_user_association">Figure&nbsp;2.15</a>. Because of the <code>user_id</code> column in the <code>microposts</code> table, Rails (using Active Record) can infer the microposts associated with each user.</p>
+
+<div class="label" id="fig-micropost_user_association"></div>
+
+
+<div class="figure"><div class="center"><span class="graphic"><img src="./Learn Web Development with the Ruby on Rails Tutorial   A Demo App_files/micropost_user_association.png" alt="micropost_user_association"></span></div><div class="caption"><span class="header">Figure 2.15: </span><span class="description">The association between microposts and users.</span></div></div>
+
+
+<p>In <a class="ref" href="http://ruby.railstutorial.org/chapters/user-microposts#top">Chapter&nbsp;10</a> and <a class="ref" href="http://ruby.railstutorial.org/chapters/following-users#top">Chapter&nbsp;11</a>, we will use the association of users and microposts both to display all a user’s microposts and to construct a Twitter-like micropost feed. For now, we can examine the implications of the user-micropost association by using the <em>console</em>, which is a useful tool for interacting with Rails applications. We first invoke the console with <code>rails console</code> at the command line, and then retrieve the first user from the database using <code>User.first</code> (putting the results in the variable <code>first_user</code>):<sup class="footnote" id="fnref-2_7"><a href="http://ruby.railstutorial.org/chapters/a-demo-app#fn-2_7">7</a></sup></p>
+
+<div class="code"><div class="highlight"><pre><span class="go">$ rails console</span>
+<span class="gp">&gt;&gt; </span><span class="n">first_user</span> <span class="o">=</span> <span class="no">User</span><span class="o">.</span><span class="n">first</span>
+<span class="go">=&gt; #&lt;User id: 1, name: "Michael Hartl", email: "michael@example.org",</span>
+<span class="go">created_at: "2011-11-03 02:01:31", updated_at: "2011-11-03 02:01:31"&gt;</span>
+<span class="gp">&gt;&gt; </span><span class="n">first_user</span><span class="o">.</span><span class="n">microposts</span>
+<span class="go">=&gt; [#&lt;Micropost id: 1, content: "First micropost!", user_id: 1, created_at:</span>
+<span class="go">"2011-11-03 02:37:37", updated_at: "2011-11-03 02:37:37"&gt;, #&lt;Micropost id: 2,</span>
+<span class="go">content: "Second micropost", user_id: 1, created_at: "2011-11-03 02:38:54",</span>
+<span class="go">updated_at: "2011-11-03 02:38:54"&gt;]</span>
+<span class="gp">&gt;&gt; </span><span class="nb">exit</span>
+</pre></div>
+</div>
+
+
+<p>(I include the last line just to demonstrate how to exit the console, and on most systems you can Ctrl-d for the same purpose.) Here we have accessed the user’s microposts using the code <code>first_user.microposts</code>: with this code, Active Record automatically returns all the microposts with <code>user_id</code> equal to the id of <code>first_user</code> (in this case,&nbsp;<code>1</code>). We’ll learn much more about the association facilities in Active Record in <a class="ref" href="http://ruby.railstutorial.org/chapters/user-microposts#top">Chapter&nbsp;10</a> and <a class="ref" href="http://ruby.railstutorial.org/chapters/following-users#top">Chapter&nbsp;11</a>.</p>
+
+<div class="label" id="sec-inheritance_hierarchies"></div>
+
+
+<h3><a id="sec-2_3_4" href="http://ruby.railstutorial.org/chapters/a-demo-app#sec-inheritance_hierarchies" class="heading"><span class="number">2.3.4</span> Inheritance hierarchies</a></h3>
+
+
+<p>We end our discussion of the demo application with a brief description of the controller and model class hierarchies in Rails. This discussion will only make much sense if you have some experience with object-oriented programming (OOP); if you haven’t studied OOP, feel free to skip this section. In particular, if you are unfamiliar with <em>classes</em> (discussed in <a class="ref" href="http://ruby.railstutorial.org/chapters/rails-flavored-ruby#sec-ruby_classes">Section&nbsp;4.4</a>), I suggest looping back to this section at a later time.</p>
+
+<p>We start with the inheritance structure for models. Comparing  <a class="ref" href="http://ruby.railstutorial.org/chapters/a-demo-app#code-demo_user_class">Listing&nbsp;2.12</a> and <a class="ref" href="http://ruby.railstutorial.org/chapters/a-demo-app#code-demo_micropost_class">Listing&nbsp;2.13</a>, we see that both the User model and the Micropost model inherit (via the left angle bracket&nbsp;<code>&lt;</code>) from <code>ActiveRecord::Base</code>, which is the base class for models provided by ActiveRecord; a diagram summarizing this relationship appears in <a class="ref" href="http://ruby.railstutorial.org/chapters/a-demo-app#fig-demo_model_inheritance">Figure&nbsp;2.16</a>. It is by inheriting from <code>ActiveRecord::Base</code> that our model objects gain the ability to communicate with the database, treat the database columns as Ruby attributes, and so&nbsp;on.</p>
+
+<div class="label" id="code-demo_user_class"></div>
+
+
+<div class="codelisting">
+<div class="listing"><span class="header">Listing 2.12.</span> <span class="description">The <code>User</code> class, with inheritance. <br> <code>app/models/user.rb</code></span> </div>
+<div class="code"><div class="highlight"><pre><span class="k">class</span> <span class="nc">User</span> <span class="o">&lt;</span> <span class="ss">ActiveRecord::Base</span>
+  <span class="o">.</span>
+  <span class="o">.</span>
+  <span class="o">.</span>
+<span class="k">end</span>
+</pre></div>
+</div></div>
+
+
+
+
+<div class="label" id="code-demo_micropost_class"></div>
+
+
+<div class="codelisting">
+<div class="listing"><span class="header">Listing 2.13.</span> <span class="description">The <code>Micropost</code> class, with inheritance. <br> <code>app/models/micropost.rb</code></span> </div>
+<div class="code"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Micropost</span> <span class="o">&lt;</span> <span class="ss">ActiveRecord::Base</span>
+  <span class="o">.</span>
+  <span class="o">.</span>
+  <span class="o">.</span>
+<span class="k">end</span>
+</pre></div>
+</div></div>
+
+
+
+
+<div class="label" id="fig-demo_model_inheritance"></div>
+
+
+<div class="figure"><div class="center"><span class="graphic"><img src="./Learn Web Development with the Ruby on Rails Tutorial   A Demo App_files/demo_model_inheritance.png" alt="demo_model_inheritance"></span></div><div class="caption"><span class="header">Figure 2.16: </span><span class="description">The inheritance hierarchy for the User and Micropost models.</span></div></div>
+
+
+<p>The inheritance structure for controllers is only slightly more complicated. Comparing <a class="ref" href="http://ruby.railstutorial.org/chapters/a-demo-app#code-demo_users_controller_class">Listing&nbsp;2.14</a> and <a class="ref" href="http://ruby.railstutorial.org/chapters/a-demo-app#code-demo_microposts_controller_class">Listing&nbsp;2.15</a>, we see that both the Users controller and the Microposts controller inherit from the Application controller. Examining <a class="ref" href="http://ruby.railstutorial.org/chapters/a-demo-app#code-demo_application_controller_class">Listing&nbsp;2.16</a>, we see that <code>ApplicationController</code> itself inherits from <code>ActionController::Base</code>; this is the base class for controllers provided by the Rails library Action Pack. The relationships between these classes is illustrated in <a class="ref" href="http://ruby.railstutorial.org/chapters/a-demo-app#fig-demo_controller_inheritance">Figure&nbsp;2.17</a>.</p>
+
+<div class="label" id="code-demo_users_controller_class"></div>
+
+
+<div class="codelisting">
+<div class="listing"><span class="header">Listing 2.14.</span> <span class="description">The <code>UsersController</code> class, with inheritance. <br> <code>app/controllers/users_controller.rb</code></span> </div>
+<div class="code"><div class="highlight"><pre><span class="k">class</span> <span class="nc">UsersController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
+  <span class="o">.</span>
+  <span class="o">.</span>
+  <span class="o">.</span>
+<span class="k">end</span>
+</pre></div>
+</div></div>
+
+
+
+
+<div class="label" id="code-demo_microposts_controller_class"></div>
+
+
+<div class="codelisting">
+<div class="listing"><span class="header">Listing 2.15.</span> <span class="description">The <code>MicropostsController</code> class, with inheritance. <br> <code>app/controllers/microposts_controller.rb</code></span> </div>
+<div class="code"><div class="highlight"><pre><span class="k">class</span> <span class="nc">MicropostsController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
+  <span class="o">.</span>
+  <span class="o">.</span>
+  <span class="o">.</span>
+<span class="k">end</span>
+</pre></div>
+</div></div>
+
+
+
+
+<div class="label" id="code-demo_application_controller_class"></div>
+
+
+<div class="codelisting">
+<div class="listing"><span class="header">Listing 2.16.</span> <span class="description">The <code>ApplicationController</code> class, with inheritance. <br> <code>app/controllers/application_controller.rb</code></span> </div>
+<div class="code"><div class="highlight"><pre><span class="k">class</span> <span class="nc">ApplicationController</span> <span class="o">&lt;</span> <span class="ss">ActionController::Base</span>
+  <span class="o">.</span>
+  <span class="o">.</span>
+  <span class="o">.</span>
+<span class="k">end</span>
+</pre></div>
+</div></div>
+
+
+
+
+<div class="label" id="fig-demo_controller_inheritance"></div>
+
+
+<div class="figure"><div class="center"><span class="graphic"><img src="./Learn Web Development with the Ruby on Rails Tutorial   A Demo App_files/demo_controller_inheritance.png" alt="demo_controller_inheritance"></span></div><div class="caption"><span class="header">Figure 2.17: </span><span class="description">The inheritance hierarchy for the Users and Microposts controllers.</span></div></div>
+
+
+<p>As with model inheritance, by inheriting ultimately from <code>ActionController::Base</code> both the Users and Microposts controllers gain a large amount of functionality, such as the ability to manipulate model objects, filter inbound HTTP requests, and render views as HTML. Since all Rails controllers inherit from <code>ApplicationController</code>, rules defined in the Application controller automatically apply to every action in the application. For example, in <a class="ref" href="http://ruby.railstutorial.org/chapters/sign-in-sign-out#sec-remember_me">Section&nbsp;8.2.1</a> we’ll see how to include helpers for signing in and signing out of all of the sample application’s controllers.</p>
+
+<div class="label" id="sec-deploying_the_demo_app"></div>
+
+
+<h3><a id="sec-2_3_5" href="http://ruby.railstutorial.org/chapters/a-demo-app#sec-deploying_the_demo_app" class="heading"><span class="number">2.3.5</span> Deploying the demo app</a></h3>
+
+
+<p>With the completion of the Microposts resource, now is a good time to push the repository up to GitHub:</p>
+
+<div class="code"><div class="highlight"><pre><span class="gp">$</span> git add .
+<span class="gp">$</span> git commit -m <span class="s2">"Finish demo app"</span>
+<span class="gp">$</span> git push
+</pre></div>
+</div>
+
+
+<p>Ordinarily, you should make smaller, more frequent commits, but for the purposes of this chapter a single big commit at the end is fine.</p>
+
+<p>At this point, you can also deploy the demo app to Heroku as in <a class="ref" href="http://ruby.railstutorial.org/chapters/beginning#sec-deploying">Section&nbsp;1.4</a>:</p>
+
+<div class="code"><div class="highlight"><pre><span class="gp">$</span> heroku create --stack cedar
+<span class="gp">$</span> git push heroku master
+</pre></div>
+</div>
+
+
+<p>Finally, migrate the production database (see below if you get a deprecation warning):</p>
+
+<div class="code"><div class="highlight"><pre><span class="gp">$</span> heroku run rake db:migrate
+</pre></div>
+</div>
+
+
+<p>This updates the database at Heroku with the necessary user/micropost data model. You may get a deprecation warning regarding assets in <code>vendor/plugins</code>, which you should ignore since there aren’t any plugins in that directory.</p>
+
+<h2><a id="sec-2_4" href="http://ruby.railstutorial.org/chapters/a-demo-app#sec-2_4" class="heading"><span class="number">2.4</span> Conclusion</a></h2>
+
+
+<p>We’ve come now to the end of the 30,000-foot view of a Rails application. The demo app developed in this chapter has several strengths and a host of weaknesses. <br></p>
+
+<p><strong>Strengths</strong></p>
+
+<ul>
+<li>High-level overview of Rails</li>
+<li>Introduction to MVC</li>
+<li>First taste of the REST architecture</li>
+<li>Beginning data modeling</li>
+<li>A live, database-backed web application in production</li>
+</ul>
+
+
+<p><strong>Weaknesses</strong></p>
+
+<ul>
+<li>No custom layout or styling</li>
+<li>No static pages (like “Home” or “About”)</li>
+<li>No user passwords</li>
+<li>No user images</li>
+<li>No signing in</li>
+<li>No security</li>
+<li>No automatic user/micropost association</li>
+<li>No notion of “following” or “followed”</li>
+<li>No micropost feed</li>
+<li>No test-driven development</li>
+<li><strong>No real understanding</strong></li>
+</ul>
+
+
+<p>The rest of this tutorial is dedicated to building on the strengths and eliminating the weaknesses.</p>
+
+<div class="navigation">  <a class="prev_page" href="http://ruby.railstutorial.org/chapters/beginning#top">
+    «&nbsp;<span class="number">Chapter 1</span> From zero to deploy
+  </a>
+  <a class="next_page" href="http://ruby.railstutorial.org/chapters/static-pages#top">
+    <span class="number">Chapter 3</span> Mostly static pages&nbsp;»
+  </a>
+</div><div class="footnotes">
+<ol>
+<li id="fn-2_1">When modeling longer posts, such as those for a normal (non-micro) blog, you should use the <code>text</code> type in place of <code>string</code>.&nbsp;<a class="arrow" href="http://ruby.railstutorial.org/chapters/a-demo-app#fnref-2_1">↑</a></li>
+<li id="fn-2_2">The name of the scaffold follows the convention of <em>models</em>, which are singular, rather than resources and controllers, which are plural. Thus, we have <code>User</code> instead <code>Users</code>.&nbsp;<a class="arrow" href="http://ruby.railstutorial.org/chapters/a-demo-app#fnref-2_2">↑</a></li>
+<li id="fn-2_3">Some references indicate that the view returns the HTML directly to the browser (via a web server such as Apache or Nginx). Regardless of the implementation details, I prefer to think of the controller as a central hub through which all the application’s information flows.&nbsp;<a class="arrow" href="http://ruby.railstutorial.org/chapters/a-demo-app#fnref-2_3">↑</a></li>
+<li id="fn-2_4">Fielding, Roy Thomas. <em>Architectural Styles and the Design of Network-based Software Architectures</em>. Doctoral dissertation, University of California, Irvine, 2000.&nbsp;<a class="arrow" href="http://ruby.railstutorial.org/chapters/a-demo-app#fnref-2_4">↑</a></li>
+<li id="fn-2_5">As with the User scaffold, the scaffold generator for microposts follows the singular convention of Rails models; thus, we have <code>generate Micropost</code>.&nbsp;<a class="arrow" href="http://ruby.railstutorial.org/chapters/a-demo-app#fnref-2_5">↑</a></li>
+<li id="fn-2_6">The scaffold code may have extra newlines compared to <a class="ref" href="http://ruby.railstutorial.org/chapters/a-demo-app#code-demo_microposts_resource">Listing&nbsp;2.7</a>. This is not a cause for concern, as Ruby ignores extra newlines.&nbsp;<a class="arrow" href="http://ruby.railstutorial.org/chapters/a-demo-app#fnref-2_6">↑</a></li>
+<li id="fn-2_7">Your console prompt might be something like <code>ruby-1.9.3-head &gt;</code>, but the examples use&nbsp;<tt class="verb">&gt;&gt;</tt> since Ruby versions will vary.&nbsp;<a class="arrow" href="http://ruby.railstutorial.org/chapters/a-demo-app#fnref-2_7">↑</a></li>
+</ol>
+</div>
+
+
+
+
+
+    </div>
+  <div id="book_bottom">
+  </div>
+</div>
+        
+        </div>
+
+    <div>Michael Hartl is a participant in the Amazon Services LLC Associates Program, an affiliate advertising program designed to provide a means for sites to earn advertising fees by advertising and linking to Amazon.com.</div>
+ 
+    <div id="container-bottom"></div>
+    
+<div id="fb-root" class=" fb_reset"><script type="text/javascript" src="./Learn Web Development with the Ruby on Rails Tutorial   A Demo App_files/all.js" async=""></script><div style="position: absolute; top: -10000px; height: 0px; width: 0px;"><div><iframe name="f37b177758" frameborder="0" allowtransparency="true" scrolling="no" style="display: none;" src="./Learn Web Development with the Ruby on Rails Tutorial   A Demo App_files/oauth.html"></iframe></div></div><div style="position: absolute; top: -10000px; height: 0px; width: 0px;"><div><iframe name="fb_xdm_frame_http" frameborder="0" allowtransparency="true" scrolling="no" id="fb_xdm_frame_http" aria-hidden="true" title="Facebook Cross Domain Communication Frame" tab-index="-1" style="border: none;" src="./Learn Web Development with the Ruby on Rails Tutorial   A Demo App_files/xd_arbiter.html"></iframe><iframe name="fb_xdm_frame_https" frameborder="0" allowtransparency="true" scrolling="no" id="fb_xdm_frame_https" aria-hidden="true" title="Facebook Cross Domain Communication Frame" tab-index="-1" style="border: none;" src="./Learn Web Development with the Ruby on Rails Tutorial   A Demo App_files/xd_arbiter(1).html"></iframe></div></div></div>
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({appId: '145973438749643', status: true, cookie: true,
+             xfbml: true});
+  };
+  (function() {
+    var e = document.createElement('script');
+    e.type = 'text/javascript';
+    e.src = document.location.protocol +
+      '//connect.facebook.net/en_US/all.js';
+    e.async = true;
+    document.getElementById('fb-root').appendChild(e);
+  }());
+</script>
+
+  
+      <script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+  </script><script src="./Learn Web Development with the Ruby on Rails Tutorial   A Demo App_files/ga.js" type="text/javascript"></script>
+  <script type="text/javascript">
+  try {
+  var pageTracker = _gat._getTracker("UA-8667566-1");
+  pageTracker._trackPageview();
+  } catch(err) {}</script>
+
+  
+  
+  </div>
+
+</div></body></html>

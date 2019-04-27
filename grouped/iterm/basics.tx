@@ -1,0 +1,18 @@
+cmd i : move to iterm
+cmd Arrow  : next tab and previous tab
+cmd Enter   : toggle full screen
+
+cmd f   : search in current tab … then tab to extend search word from selection
+cmd t   : new tab
+cmd w   : close current tab
+cmd k   : clear buffer
+cmd o   : open quick profile
+
+cmd ctrl s : staging
+cmd ctrl b : beta
+cmd ctrl p : production mysql
+cmd ctrl 0 : staging mysql
+
+ctrl a      : move to start of line
+ctrl e       : move to end of line
+ctrl l      : clear window
