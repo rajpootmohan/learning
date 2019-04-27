@@ -1,0 +1,41 @@
+-----------------HOW TO APPROACH DESIGN PROBLEMS ? -------------------------------------
+Step 1: Outline use cases, constraints, and assumptions(Gather requirements and scope the problem.)
+	1. Who is going to use it?
+	2. How are they going to use it?
+	3. How many users are there?
+	4. What does the system do?
+	5. What are the inputs and outputs of the system?
+	6. How much data do we expect to handle?
+	7. How many requests per second do we expect?
+	8. What is the expected read to write ratio?
+
+Step 2: Create a high level design:(Outline a high level design with all important components.)
+	1. Sketch the main components and connections
+	2. Justify your ideas
+
+Step 3: Design core components:(Dive into details for each core component.)
+	1. API and object-oriented design
+
+Step 4: Scale the design
+
+
+-----------------NUMBERS YOU KNOW -----------------------------------------------------
+
+Latency Comparison Numbers
+--------------------------
+L1 cache reference                           0.5 ns
+Branch mispredict                            5   ns
+L2 cache reference                           7   ns                      14x L1 cache
+Mutex lock/unlock                           25   ns
+Main memory reference                      100   ns                      20x L2 cache, 200x L1 cache
+Compress 1K bytes with Zippy            10,000   ns       10 us
+Send 1 KB bytes over 1 Gbps network     10,000   ns       10 us
+Read 4 KB randomly from SSD*           150,000   ns      150 us          ~1GB/sec SSD
+Read 1 MB sequentially from memory     250,000   ns      250 us
+Round trip within same datacenter      500,000   ns      500 us
+Read 1 MB sequentially from SSD*     1,000,000   ns    1,000 us    1 ms  ~1GB/sec SSD, 4X memory
+Disk seek                           10,000,000   ns   10,000 us   10 ms  20x datacenter roundtrip
+Read 1 MB sequentially from 1 Gbps  10,000,000   ns   10,000 us   10 ms  40x memory, 10X SSD
+Read 1 MB sequentially from disk    30,000,000   ns   30,000 us   30 ms 120x memory, 30X SSD
+Send packet CA->Netherlands->CA    150,000,000   ns  150,000 us  150 ms
+
