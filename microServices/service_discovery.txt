@@ -1,0 +1,151 @@
+----------------------- Pattern: Client-side service discovery ------------------------
+
+Problem:
+How does the client of a service - the API gateway or another service - discover the location of a service instance?
+
+Forces:
+	1. Each instance of a service exposes a remote API such as HTTP/REST, or Thrift etc. at a particular location (host and port)
+	2. The number of services instances and their locations changes dynamically.
+	3. Virtual machines and containers are usually assigned dynamic IP addresses.
+	4. The number of services instances might vary dynamically. For example, an EC2 Autoscaling Group adjusts the number of instances based on load.
+
+Solution:
+When making a request to a service, the client obtains the location of a service instance by querying a Service Registry, which knows the locations of all service instances.
+
+Benefits:
+	1. Fewer moving parts and network hops compared to Server-side Discovery
+
+Drawbacks:
+	1. This pattern couples the client to the Service Registry
+	2. You need to implement client-side service discovery logic for each programming language/framework used by your application, e.g Java/Scala, JavaScript/NodeJS.
+
+----------------------- Pattern: Server-side service discovery ------------------------
+
+Problem:
+How does the client of a service - the API gateway or another service - discover the location of a service instance?
+
+Forces:
+	1. Each instance of a service exposes a remote API such as HTTP/REST, or Thrift etc. at a particular location (host and port)
+	2. The number of services instances and their locations changes dynamically.
+	3. Virtual machines and containers are usually assigned dynamic IP addresses.
+	4. The number of services instances might vary dynamically. For example, an EC2 Autoscaling Group adjusts the number of instances based on load.
+
+Solution:
+When making a request to a service, the client makes a request via a router (a.k.a load balancer) that runs at a well known location. The router queries a service registry, which might be built into the router, and forwards the request to an available service instance.
+
+Examples:
+	1. An AWS Elastic Load Balancer (ELB) is an example of a server-side discovery router.
+	2. A client makes HTTP(s) requests (or opens TCP connections) to the ELB, which load balances the traffic amongst a set of EC2 instances. 
+
+Benefits:
+	1. Compared to client-side discovery, the client code is simpler since it does not have to deal with discovery. Instead, a client simply makes a request to the router
+	2. Some cloud environments provide this functionality, e.g. AWS Elastic Load Balancer
+
+Drawbacks:
+	1. Unless it’s part of the cloud environment, the router must is another system component that must be installed and configured. It will also need to be replicated for availability and capacity.
+	2. The router must support the necessary communication protocols (e.g HTTP, gRPC, Thrift, etc) unless it is TCP-based router
+	3. More network hops are required than when using Client Side Discovery
+
+----------------------- Pattern: Service registry ------------------------
+
+Problem:
+How do clients of a service (in the case of Client-side discovery) and/or routers (in the case of Server-side discovery) know about the available instances of a service?
+
+Forces:
+	1. Each instance of a service exposes a remote API such as HTTP/REST, or Thrift etc. at a particular location (host and port)
+	2. The number of services instances and their locations changes dynamically.
+	3. Virtual machines and containers are usually assigned dynamic IP addresses.
+	4. An EC2 Autoscaling Group, for example, adjusts the number of instances based on load.
+
+Solution:
+	1. Implement a service registry, which is a database of services, their instances and their locations.
+	2. Service instances are registered with the service registry on startup and deregistered on shutdown.
+	3. Client of the service and/or routers query the service registry to find the available instances of a service.
+	4. A service registry might invoke a service instance’s health check API to verify that it is able to handle requests
+
+Examples:
+	1. Apache Zookeeper
+	2. Consul
+	3. Etcd
+
+Benefits:
+	1. Client of the service and/or routers can discover the location of service instances.
+
+Drawbacks:
+	1. Unless the service registry is built in to the infrastructure, it is yet another infrastructure component that must be setup, configured and managed.
+	2. the service registry must be highly available.
+
+----------------------- Pattern: Self Registration ------------------------
+
+Problem:
+How are service instances registered with and unregistered from the service registry?
+
+Forces:
+	1. Service instances must be registered with the service registry on startup and unregistered on shutdown
+	2. Service instances that crash must be unregistered from the service registry
+	3. Service instances that are running but incapable of handling requests must be unregistered from the service registry
+
+Solution:
+	1. A service instance is responsible for registering itself with the service registry.
+	2. On startup the service instance registers itself (host and IP address) with the service registry and makes itself available for discovery.
+	3. The client must typically periodically renew its registration so that the registry knows it is still alive.
+	4. On shutdown, the service instance unregisters itself from the service registry.
+
+Benefits:
+	1. A service instance knows its own state so can implement a state model that’s more complex than UP/DOWN, e.g. STARTING, AVAILABLE, …
+
+Drawbacks:
+	1. Couples the service to the Service Registry
+	2. You must implement service registration logic in each programming language/framework that you use to write your services, e.g. NodeJS/JavaScript, Java/Scala, etc.
+	3. A service instance that is running yet unable to handle requests will often lack the self-awareness to unregister itself from the service registry
+
+----------------------- Pattern: 3rd Party Registration ------------------------
+
+Problem:
+How are service instances registered with and unregistered from the service registry?
+
+Forces:
+	1. Service instances must be registered with the service registry on startup and unregistered on shutdown
+	2. Service instances that crash must be unregistered from the service registry
+	3. Service instances that are running but incapable of handling requests must be unregistered from the service registry
+
+Solution:
+	1. A 3rd party registrar is responsible for registering and unregistering a service instance with the service registry.
+	2. When the service instance starts up, the registrar registers the service instance with the service registry.
+	3. When the service instance shuts downs, the registrar unregisters the service instance from the service registry.
+
+Examples:
+	1. Netflix Prana - a “side car” application that runs along side a non-JVM application and registers the application with Eureka.
+	2. AWS Autoscaling Groups automatically (un)registers EC2 instances with Elastic Load Balancer
+	3. Joyent’s Container buddy runs in a Docker container as the parent process for the service and registers it with the registry
+	4. Registrator - registers and unregisters Docker containers with various service registries
+	5. Clustering frameworks such as Kubernetes and Marathon (un)register service instances with the built-in/implicit registry
+
+Benefits:
+	1. The service code is less complex than when using the Self Registration pattern since its not responsible for registering itself
+	2. The registrar can perform health checks on a service instance and register/unregister the instance based the health check
+
+Drawbacks:
+	1. The 3rd party registrar might only have superficial knowledge of the state of the service instance, e.g. RUNNING or NOT RUNNING and so might not know whether it can handle requests. 
+	2. Unless the registrar is part of the infrastructure it’s another component that must be installed, configured and maintained. Also, since it’s a critical system component it needs to be highly available
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
