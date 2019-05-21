@@ -1,0 +1,55 @@
+WHAT IS DISTRIBUTED TRANSACTIONS?
+When a microservice architecture decomposes a monolithic system into self-encapsulated services, it can break transactions. This means a local transaction in the monolithic system is now distributed into multiple services that will be called in a sequence.
+
+WHAT IS THE PROBLEM?
+In a monolithic system, we have a database system to ensure ACIDity. We now need to clarify the following key problems.
+1. How do we keep the transaction atomic?
+	In a database system, atomicity means that in a transaction either all steps complete or no steps complete. The microservice-based system does not have a global transaction coordinator by default.
+2. Do we isolate user actions for concurrent requests?
+	If an object is written by a transaction and at the same time (before the transaction ends), it is read by another request, should the object return old data or updated data?
+
+POSSIBLE SOLUTIONS:
+	A. 2pc (two-phase commit)
+	B. Saga
+
+---------------------------2PC PATTERN: -----------------------------------------------
+
+ABOUT:	
+	1. 2pc is widely used in database systems. For some situations, you can use 2pc for microservices. Just be careful; not all situations suit 2pc and, in fact, 2pc is considered impractical within a microservice architecture
+	2. 2pc has two phases: A prepare phase and a commit phase.
+	3. In the prepare phase, all microservices will be asked to prepare for some data change that could be done atomically.
+	4. Once all microservices are prepared, the commit phase will ask all the microservices to make the actual changes.
+	5. Normally, there needs to be a global coordinator to maintain the lifecycle of the transaction, and the coordinator will need to call the microservices in the prepare and commit phases.
+
+BENEFITS:
+	1. 2pc is a very strong consistency protocol.
+	2. First, the prepare and commit phases guarantee that the transaction is atomic. The transaction will end with either all microservices returning successfully or all microservices have nothing changed. 
+	3. Secondly, 2pc allows read-write isolation. This means the changes on a field are not visible until the coordinator commits the changes.
+
+DISADVANTAGES:
+	1. it is not really recommended for many microservice-based systems because 2pc is synchronous (blocking).
+	2. In a database system, transactions tend to be fast—normally within 50 ms. However, microservices have long delays with RPC calls, especially when integrating with external services such as a payment service. The lock could become a system performance bottleneck.
+	3. it is possible to have two transactions mutually lock each other (deadlock) when each transaction requests a lock on a resource the other requires.
+
+----------------------------- SAGA PATTERN ------------------------------------------------ 
+
+ABOUT:
+	1. The Saga pattern is another widely used pattern for distributed transactions. 
+	2. The Saga pattern is asynchronous and reactive.
+	3.  the distributed transaction is fulfilled by asynchronous local transactions on all related microservices.
+	4. The microservices communicate with each other through an event bus.
+
+BENEFITS:
+	1. One big advantage of the Saga pattern is its support for long-lived transactions.
+	2. Because each microservice focuses only on its own local atomic transaction, other microservices are not blocked if a microservice is running for a long time.
+	3. This also allows transactions to continue waiting for user input. 
+	4. Also, because all local transactions are happening in parallel, there is no lock on any object.
+
+DISADVANTAGES:
+	1. The Saga pattern is difficult to debug, especially when many microservices are involved
+	2. the event messages could become difficult to maintain if the system gets complex.
+	3. it does not have read isolation. For example, the customer could see the order being created, but in the next second, the order is removed due to a compensation transaction.
+
+Adding a process manager:
+	To address the complexity issue of the Saga pattern, it is quite normal to add a process manager as an orchestrator. The process manager is responsible for listening to events and triggering endpoints.
+

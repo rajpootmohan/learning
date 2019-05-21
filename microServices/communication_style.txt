@@ -1,0 +1,56 @@
+Context:
+	You have applied the Microservice architecture pattern. Services must handle requests from the application’s clients. Furthermore, services must sometimes collaborate to handle those requests. They must use an inter-process communication protocol.
+
+----------------------- Pattern 1: Remote Procedure Invocation (RPI) ------------------------
+
+Solution
+	Use RPI for inter-service communication. The client uses a request/reply-based protocol to make requests to a service.
+
+Examples : There are numerous examples of RPI technologies
+	1. REST
+	2. gRPC
+	3. Apache Thrift
+
+BENEFIT:
+	1. Simple and familiar
+	2. Request/reply is easy
+	3. Simpler system since there in no intermediate broker
+
+DRAWBACK:
+	1. Usually only supports request/reply and not other interaction patterns such as notifications, request/async response, publish/subscribe, publish/async response
+	2. Reduced availability since the client and the service must be available for the duration of the interaction
+
+ISSUES:
+	1. Client needs to discover locations of service instances.
+
+----------------------- Pattern 2: Messaging ---------------------------------------
+
+Solution
+	Use asynchronous messaging for inter-service communication. Services communicating by exchanging messages over messaging channels.
+
+Examples : There are numerous examples of asynchronous messaging technologies
+	1. Apache Kafka
+	2. RabbitMQ
+
+BENEFIT:
+	1. Loose coupling since it decouples client from services
+	2. Improved availability since the message broker buffers messages until the consumer is able to process them
+	3. Supports a variety of communication patterns including request/reply, notifications, request/async response, publish/subscribe, publish/async response etc
+
+DRAWBACK:
+	1. Additional complexity of message broker, which must be highly available
+
+ISSUES:
+	1. Request/reply-style communication is more complex.
+	2. Client needs to discover location of message broker.
+
+----------------------- Pattern 3: Domain-specific protocol --------------------------------
+
+Solution
+	Use a domain-specific protocol for inter-service communication.
+
+Examples : There are numerous domain-specific protocols including:
+	1. Email protocols such as SMTP and IMAP
+	2. Media streaming protocols such as RTMP, HLS, and HDS
+
+

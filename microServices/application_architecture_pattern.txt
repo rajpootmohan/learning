@@ -1,0 +1,54 @@
+Requirement:
+	1. New team members must quickly become productive
+	2. The application must be easy to understand and modify
+	3. You want to practice continuous deployment of the application
+	4. You must run multiple instances of the application on multiple machines in order to satisfy scalability and availability requirements
+	5. You want to take advantage of emerging technologies (frameworks, programming languages, etc)
+
+----------------- Pattern: Monolithic Architecture -------------------------------------
+
+Solution: Build an application with a monolithic architecture. For example:
+	1. a single Java WAR file.
+	2. a single directory hierarchy of Rails or NodeJS code
+
+BENEFITS:
+	1. Simple to develop - the goal of current development tools and IDEs is to support the development of monolithic applications
+	2. Simple to deploy - you simply need to deploy the WAR file (or directory hierarchy) on the appropriate runtime
+	3. Simple to scale - you can scale the application by running multiple copies of the application behind a load balancer
+DRAWBACKS: 
+	1. The large monolithic code base intimidates developers. The application can be difficult to understand and modify.
+	2. Overloaded web container - the larger the application the longer it takes to start up.
+	3. Continuous deployment is difficult - a large monolithic application is also an obstacle to frequent deployments. In order to update one component you have to redeploy the entire application.
+	4. Scaling the application can be difficult - a monolithic architecture is that it can only scale in one dimension.
+	5. Obstacle to scaling development - A monolithic application is also an obstacle to scaling development. 
+	6. Requires a long-term commitment to a technology stack - a monolithic architecture forces you to be married to the technology stack, you chose at the start of development.
+
+
+----------------- Pattern: MicroService Architecture -------------------------------------
+
+Solution:
+	Define an architecture that structures the application as a set of loosely coupled, collaborating services. This approach corresponds to the Y-axis of the Scale Cube.
+	1. Highly maintainable and testable - enables rapid and frequent development and deployment.
+	2. Loosely coupled with other services - enables a team to work independently the majority of time on their service(s) without being impacted by changes to other services and without affecting other services.
+	3. Independently deployable - enables a team to deploy their service without having to coordinate with other teams.
+	4. Capable of being developed by a small team - essential for high productivity by avoiding the high communication head of large teams.
+
+BENEFITS:
+	1. Enables the continuous delivery and deployment of large, complex applications.
+		A. Improved maintainability - each service is relatively small and so is easier to understand and change
+		B. Better testability - services are smaller and faster to test
+		C. Better deployability - services can be deployed independently
+		D. It enables you to organize the development effort around multiple, autonomous teams. 
+	2. Each microservice is relatively small:
+		A. Easier for a developer to understand
+		B. The application starts faster, which makes developers more productive, and speeds up deployments
+	3. Improved fault isolation
+	4. Eliminates any long-term commitment to a technology stack.
+
+DRAWBACKS:
+	1. Developers must deal with the additional complexity of creating a distributed system:
+		A. Developers must implement the inter-service communication mechanism and deal with partial failure
+		B. Implementing requests that span multiple services is more difficult
+		C. Implementing requests that span multiple services requires careful coordination between the teams
+	2. Deployment complexity. In production, there is also the operational complexity of deploying and managing a system comprised of many different services.
+	3. Increased memory consumption.

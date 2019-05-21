@@ -1,0 +1,29 @@
+------------------------- Pattern: Microservice chassis ----------------------------
+
+Context: When you start the development of an application you often spend a significant amount of time putting in place the mechanisms to handle cross-cutting concerns. Examples of cross-cutting concern include:
+	1. Externalized configuration - includes credentials, and network locations of external services such as databases and message brokers
+	2. Logging - configuring of a logging framework such as log4j or logback
+	3. Health checks - a url that a monitoring service can “ping” to determine the health of the application
+	4. Metrics - measurements that provide insight into what the application is doing and how it is performing
+	5. Distributed tracing - instrument services with code that assigns each external request an unique identifier that is passed between services.
+
+Requirement:
+	1. Creating a new microservice should be fast and easy
+	2. When creating a microservice you must handle cross-cutting concerns such as externalized configuration, logging, health checks, metrics, service registration and discovery, circuit breakers. There are also cross-cutting concerns that are specific to the technologies that the microservices uses.
+
+Solution:
+	Build your microservices using a microservice chassis framework, which handles cross-cutting concerns.
+
+Example:
+	Examples of microservice chassis frameworks:
+	1. Java
+		A. Spring Boot and Spring Cloud
+		B. Dropwizard
+	2. Go
+		A. Gizmo
+		B. Micro
+		C. Go kit
+
+Resulting context:
+	1. The major benefit of a microservice chassis is that you can quickly and easy get started with developing a microservice.
+	2. You need a microservice chassis for each programming language/framework that you want to use. This can be an obstacle to adopting a new programming language or framework.

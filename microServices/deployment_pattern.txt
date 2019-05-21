@@ -1,0 +1,85 @@
+Requirement:
+	1. Services are written using a variety of languages, frameworks, and framework versions
+	2. Each service consists of multiple service instances for throughput and availability
+	3. Service must be independently deployable and scalable
+	4. Service instances need to be isolated from one another
+	5. You need to be able to quickly build and deploy a service
+	6. You need to be able to constrain the resources (CPU and memory) consumed by a service
+	7. You need to monitor the behavior of each service instance
+	8. You want deployment to reliable
+	9. You must deploy the application as cost-effectively as possible
+
+
+----------------- Pattern 1: Multiple service instances per host -------------------------
+
+Solution:Run multiple instances of different services on a host (Physical or Virtual machine).
+
+BENEFITS:
+	1. More efficient resource utilization than the Service Instance per host pattern
+
+DRAWBARCKS: 
+	1. Risk of conflicting resource requirements
+	2. Risk of conflicting dependency versions
+	3. Difficult to limit the resources consumed by a service instance
+	4. If multiple services instances are deployed in the same process then its difficult to monitor the resource consumption of each service instance. Its also impossible to isolate each instance
+
+----------------- Pattern 2 : Single Service Instance per Host -------------------------
+
+Solution: Deploy each single service instance on its own host
+
+BENEFITS:
+	1. Services instances are isolated from one another
+	2. There is no possibility of conflicting resource requirements or dependency versions
+	3. A service instance can only consume at most the resources of a single host
+	4. Its straightforward to monitor, manage, and redeploy each service instance
+
+DRAWBARCKS: 
+	1. Potentially less efficient resource utilization compared to Multiple Services per Host because there are more hosts
+
+----------------- Pattern 3 : Service Instance per VM -------------------------
+
+Solution: Package the service as a virtual machine image and deploy each service instance as a separate VM
+
+BENEFITS:
+	1. Its straightforward to scale the service by increasing the number of instances. Amazon Autoscaling Groups can even do this automatically based on load.
+	2. The VM encapsulates the details of the technology used to build the service. All services are, for example, started and stopped in exactly the same way.
+	3. Each service instance is isolated
+	4. A VM imposes limits on the CPU and memory consumed by a service instance
+	5. IaaS solutions such as AWS provide a mature and feature rich infrastructure for deploying and managing virtual machines. For example, Elastic Load Balancer
+
+DRAWBARCKS: 
+	1. Building a VM image is slow and time consuming
+
+----------------- Pattern 4 : Service Instance per VM -------------------------
+
+Solution: Package the service as a (Docker) container image and deploy each service instance as a container
+
+BENEFITS:
+	1. It is straightforward to scale up and down a service by changing the number of container instances.
+	2. The container encapsulates the details of the technology used to build the service. All services are, for example, started and stopped in exactly the same way.
+	3. Each service instance is isolated
+	4. A container imposes limits on the CPU and memory consumed by a service instance
+	5. Containers are extremely fast to build and start. For example, it’s 100x faster to package an application as a Docker container than it is to package it as an AMI. Docker containers also start much faster than a VM since only the application process starts rather than an entire OS.
+
+DRAWBARCKS: 
+	1. The infrastructure for deploying containers is not as rich as the infrastructure for deploying virtual machines.
+
+----------------- Pattern 5 : Serverless deployment -------------------------
+
+Solution: Use a deployment infrastructure that hides any concept of servers (i.e. reserved or preallocated resources)- physical or virtual hosts, or containers. The infrastructure takes your service’s code and runs it. You are charged for each request based on the resources consumed.The deployment infrastructure is a utility operated by a public cloud provider. It typically uses either containers or virtual machines to isolate the services. However, these details are hidden from you. Neither you nor anyone else in your organization is responsible for managing any low-level infrastructure such as operating systems, virtual machines, etc.
+
+BENEFITS:
+	1. It eliminates the need to spend time on the undifferentiated heavy lifting of managing low-level infrastructure. Instead, you can focus on your code.
+	2. The serverless deployment infrastructure is extremely elastic. It automatically scales your services to handle the load.
+	3. You pay for each request rather than provisioning what might be under utilized virtual machines or containers.
+
+DRAWBARCKS: 
+	1. Significant limitation and constraints - A serverless deployment environment typically has far more constraints that a VM-based or Container-based infrastructure.
+	2. Limited “input sources” - lambdas can only respond to requests from a limited set of input sources. AWS Lambda is not intended to run services that, for example, subscribe to a message broker such as RabbitMQ.
+	3. Applications must startup quickly - serverless deployment is not a good fit your service takes a long time to start
+	4. Risk of high latency - the time it takes for the infrastructure to provision an instance of your function and for the function to initialize might result in significant latency. Moreover, a serverless deployment infrastructure can only react to increases in load. You cannot proactively pre-provision capacity. As a result, your application might initially exhibit high latency when there are sudden, massive spikes in load.
+
+
+	
+
+

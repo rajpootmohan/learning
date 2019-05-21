@@ -1,5 +1,5 @@
 rolling upgrade: (staged rollout)
-	With server-side applications you may want to perform a rolling upgrade (also known as staged rollout) — deploying the new version to a few nodes at a time, checking whether the new version is running smoothly, and gradually working your way through all the nodes. This allows new versions to be deployed without service downtime, and thus encourages more frequent releases and better evolva‐ bility.
+	With server-side applications you may want to perform a rolling upgrade (also known as staged rollout) — deploying the new version to a few nodes at a time, checking whether the new version is running smoothly, and gradually working your way through all the nodes. This allows new versions to be deployed without service downtime, and thus encourages more frequent releases and better evolva‐bility.
 
 Backward compatibility:
 	Newer code can read data that was written by older code.
