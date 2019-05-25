@@ -36,7 +36,7 @@ DISADVANTAGES:
 ABOUT:
 	1. The Saga pattern is another widely used pattern for distributed transactions. 
 	2. The Saga pattern is asynchronous and reactive.
-	3.  the distributed transaction is fulfilled by asynchronous local transactions on all related microservices.
+	3. The distributed transaction is fulfilled by asynchronous local transactions on all related microservices.
 	4. The microservices communicate with each other through an event bus.
 
 BENEFITS:

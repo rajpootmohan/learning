@@ -1,0 +1,93 @@
+----------------------- Pattern 1: Log aggregation ----------------------------------------
+
+Context:
+	1. You have applied the Microservice architecture pattern. The application consists of multiple services and service instances that are running on multiple machines. Requests often span multiple service instances.
+	2. Each service instance generates writes information about what it is doing to a log file in a standardized format. The log file contains errors, warnings, information and debug messages.
+
+Problem:
+	1. How to understand the behavior of an application and troubleshoot problems?
+	2. Any solution should have minimal runtime overhead
+
+Solution:
+	1. Use a centralized logging service that aggregates logs from each service instance.
+	2. The users can search and analyze the logs.
+	3. They can configure alerts that are triggered when certain messages appear in the logs.
+
+Examples
+	AWS Cloud Watch
+
+Drawbacks:
+	1. handling a large volume of logs requires substantial infrastructure
+
+----------------------- Pattern 2: Application metrics -------------------------------------
+
+Problem:
+	1. How to understand the behavior of an application and troubleshoot problems?
+	2. Any solution should have minimal runtime overhead
+
+Solution:
+	Instrument a service to gather statistics about individual operations. Aggregate metrics in centralized metrics service, which provides reporting and alerting. There are two models for aggregating metrics:
+	A. push - the service pushes metrics to the metrics service
+	B. pull - the metrics services pulls metrics from the service
+
+Benefit:
+	1. It provides deep insight into application behavior
+
+Drawbacks:
+	1. Metrics code is intertwined with business logic making it more complicated
+	2. Aggregating metrics can require significant infrastructure
+
+----------------------- Pattern 3: Audit logging -------------------------------------
+
+Problem:
+	1. How to understand the behavior of an application and troubleshoot problems?
+	2. It is useful to know what actions a user has recently performed: customer support, compliance, security, etc.
+
+Solution:
+	Record user activity in a database.
+
+Benefit:
+	1. Provides a record of user actions
+
+Drawbacks:
+	1. The auditing code is intertwined with the business logic, which makes the business logic more complicated
+
+----------------------- Pattern 4: Distributed tracing -------------------------------------
+
+Problem:
+	1. How to understand the behavior of an application and troubleshoot problems?
+	2. External monitoring only tells you the overall response time and number of invocations - no insight into the individual operations
+	3. Log entries for a request are scattered across numerous logs
+
+Solution:
+	1. Assigns each external request a unique external request id
+	2. Passes the external request id to all services that are involved in handling the request
+	3. Includes the external request id in all log messages
+	4. Records information (e.g. start time, end time) about the requests and operations performed when handling a external request in a centralized service
+
+Benefit:
+	1. It provides useful insight into the behavior of the system including the sources of latency
+	2. It enables developers to see how an individual request is handled by searching across aggregated logs for its external request id
+
+Drawbacks:
+	1. Aggregating and storing traces can require significant infrastructure
+
+
+----------------------- Pattern 5: Exception tracking -------------------------------------
+
+Context:
+	You have applied the Microservice architecture pattern. The application consists of multiple services and service instances that are running on multiple machines. Errors sometimes occur when handling requests. When an error occurs, a service instance throws an exception, which contains an error message and a stack trace.
+
+Problem:
+	1. How to understand the behavior of an application and troubleshoot problems?
+	2. Exceptions must be de-duplicated, recorded, investigated by developers and the underlying issue resolved
+	3. Any solution should have minimal runtime overhead
+
+Solution:
+	1. Report all exceptions to a centralized exception tracking service that aggregates and tracks exceptions and notifies developers.
+
+Benefit:
+	1. It is easier to view exceptions and track their resolution
+
+Drawbacks:
+	1. The exception tracking service is additional infrastructure

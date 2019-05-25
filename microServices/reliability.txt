@@ -1,0 +1,28 @@
+----------------------- Pattern: Circuit Breaker ----------------------------------------
+
+Context:
+	1. When one service synchronously invokes another there is always the possibility that the other service is unavailable or is exhibiting such high latency it is essentially unusable.
+	2. Precious resources such as threads might be consumed in the caller while waiting for the other service to respond.
+	3. This might lead to resource exhaustion, which would make the calling service unable to handle other requests.
+	4. The failure of one service can potentially cascade to other services throughout the application.
+
+Problem:
+How to prevent a network or service failure from cascading to other services?
+
+Solution:
+	1. A service client should invoke a remote service via a proxy that functions in a similar fashion to an electrical circuit breaker.
+	2. When the number of consecutive failures crosses a threshold, the circuit breaker trips, and for the duration of a timeout period all attempts to invoke the remote service will fail immediately.
+	3. After the timeout expires the circuit breaker allows a limited number of test requests to pass through. If those requests succeed the circuit breaker resumes normal operation.
+	4. Otherwise, if there is a failure the timeout period begins again. 
+
+Benefits:
+	1. Services handle the failure of the services that they invoke
+
+Drawbacks:
+	1. It is challenging to choose timeout values without creating false positives or introducing excessive latency.
+
+Libraries:
+	1. Netflix Hystrix
+	2. Sentinel by Alibaba
+
+https://dzone.com/articles/hystrix-vs-sentinel-a-tale-of-two-circuit-breakers

@@ -128,24 +128,3 @@ Benefits:
 Drawbacks:
 	1. The 3rd party registrar might only have superficial knowledge of the state of the service instance, e.g. RUNNING or NOT RUNNING and so might not know whether it can handle requests. 
 	2. Unless the registrar is part of the infrastructure it’s another component that must be installed, configured and maintained. Also, since it’s a critical system component it needs to be highly available
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
