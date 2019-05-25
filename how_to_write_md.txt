@@ -1,23 +1,44 @@
 RESULT								WHAT TO DO
 
 Italic								*Italic* OR _Italic_
-Bold								**Bold**
-Heading 1 							# Heading 1
-Heading 2							# Heading 2
-Link								[Link](http://a.com)
-Image								![Image](http://url/a.png)
-Blockquote							> Blockquote
 
+Bold								**Bold**
+
+Heading 1 							# Heading 1
+
+Heading 2							## Heading 2
+
+Blockquote							> Blockquote
+Blockquotes can be nested, and can also contain other formatting.
+
+Unordered lists can use either asterisks *, plus +, or hyphens - as list markers
+Ordered lists use numbers followed by period . or right paren ).
 List 								* list
 									* list
 									* list
-
 Number list 						1. number 1
 									2. number 2
 									3. number 3
+Nested list:  To nest one list within another, indent each item in the sublist by four spaces. You can also nest other elements like paragraphs, blockquotes or code blocks.
 
+Link: Links can be either inline with the text, or placed at the bottom of the text as references.
+Link text is enclosed by square brackets [], and for inline links, the link URL is enclosed by parens ().
+URLs may not become links in Markdown until enclosed in < and >. 
+Link								[Link](http://a.com)
+
+Images: Images are almost identical to links, but an image starts with an exclamation point !.
+Image								![Image](http://url/a.png)
+
+Paragraphs : For a line break, add either a backslash \ or 2 blank spaces at the end of the line.
+
+Code: 
+	To create inline code, wrap with backticks `.`
+	To create a code block, either indent each line by 4 spaces, or place 3 backticks ``` on a line above and below the code block.
 Inline code with backticks			`Inline code` with backticks
 
 # code block 						# code block
+```
 print '3 backticks or'				print '3 backticks or'
 print 'indent 4 spaces'				print 'indent 4 spaces'
+```
+
