@@ -1,0 +1,23 @@
+RESULT								WHAT TO DO
+
+Italic								*Italic* OR _Italic_
+Bold								**Bold**
+Heading 1 							# Heading 1
+Heading 2							# Heading 2
+Link								[Link](http://a.com)
+Image								![Image](http://url/a.png)
+Blockquote							> Blockquote
+
+List 								* list
+									* list
+									* list
+
+Number list 						1. number 1
+									2. number 2
+									3. number 3
+
+Inline code with backticks			`Inline code` with backticks
+
+# code block 						# code block
+print '3 backticks or'				print '3 backticks or'
+print 'indent 4 spaces'				print 'indent 4 spaces'
