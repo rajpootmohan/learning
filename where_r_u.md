@@ -1,6 +1,7 @@
 
-// design pattern
-
+# design pattern
+1. check
+2. again check
 
 
 // nodejs
