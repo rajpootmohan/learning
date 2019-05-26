@@ -122,7 +122,7 @@ Handy conversion guide:
 
 ## Step 4: Scale the design
 
-![Image](https://raw.githubusercontent.com/rajpootmohan/learning/master/images/twitter_design.png)
+![Image](https://raw.githubusercontent.com/rajpootmohan/learning/master/images/scaled_twitter_design.png)
 
 ## Some points for discussion
 The **Fanout Service** is a potential bottleneck.  Twitter users with millions of followers could take several minutes to have their tweets go through the fanout process.  This could lead to race conditions with @replies to the tweet, which we could mitigate by re-ordering the tweets at serve time.
@@ -139,3 +139,6 @@ Additional optimizations include:
 * Store only a month of tweets in the **Tweet Info Service**
 * Store only active users in the **User Info Service**
 * The **Search Cluster** would likely need to keep the tweets in memory to keep latency low
+
+## Current desing
+![Image](https://raw.githubusercontent.com/rajpootmohan/learning/master/images/twitter_current_design.png)
