@@ -140,5 +140,5 @@ Additional optimizations include:
 * Store only active users in the **User Info Service**
 * The **Search Cluster** would likely need to keep the tweets in memory to keep latency low
 
-## Current desing
+## Current design
 ![Image](https://raw.githubusercontent.com/rajpootmohan/learning/master/images/twitter_current_design.png)
