@@ -1,5 +1,6 @@
 # Long-polling vs WebSockets vs Server-Sent Events(SSEs)
 
+![Polling vs WebSocket Image](https://raw.githubusercontent.com/rajpootmohan/learning/master/images/polling_vs_socket.png)
 
 ## AJAX Polling
 * Polling is a standard technique used by the majority of AJAX applications. The basic idea is that the client
