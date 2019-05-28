@@ -63,7 +63,7 @@ Search
     * 15 billion tweets per month * (400 requests per second / 1 billion requests per month)
 * 60 thousand tweets delivered on fanout per second
     * 150 billion tweets delivered on fanout per month * (400 requests per second / 1 billion requests per month)
-* 4,000 search requests per second
+* 4000 search requests per second
 
 Handy conversion guide:
 
