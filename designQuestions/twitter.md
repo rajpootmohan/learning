@@ -122,7 +122,7 @@ Handy conversion guide:
 
 ## Step 4: Scale the design
 
-![Image](https://raw.githubusercontent.com/rajpootmohan/learning/master/images/scaled_twitter_design.png)
+![Image](https://raw.githubusercontent.com/rajpootmohan/learning/master/images/twitter_scaled_design.png)
 
 ## Some points for discussion
 The **Fanout Service** is a potential bottleneck.  Twitter users with millions of followers could take several minutes to have their tweets go through the fanout process.  This could lead to race conditions with @replies to the tweet, which we could mitigate by re-ordering the tweets at serve time.
