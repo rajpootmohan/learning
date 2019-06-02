@@ -95,8 +95,8 @@ Since​ ​we​ ​are​ ​likely​ ​going​ ​to​ ​store​ ​bil
 
 #### Issues in this solution:
 1. If​ ​multiple​ ​users​ ​enter​ ​the​ ​same​ ​URL,​ ​they​ ​can​ ​get​ ​the​ ​same​ ​shortened​ ​URL,​ ​which​ ​is​ ​not​ ​acceptable.
-2. What​​ if ​​parts ​​of ​​the ​​URL​ ​are​ ​URL-encoded?​​e.g.,​​​http://www.educative.io/distributed.php?id=design​, ​​and
-http://www.educative.io/distributed.php%3Fid%3Ddesign​​ ​are​ ​identical​ ​except​ ​for​ ​the​ ​URL​ ​encoding.
+2. What​​ if ​​parts ​​of ​​the ​​URL​ ​are​ ​URL-encoded?​​e.g.,​​​https://github.com/search?q=user:rajpootmohan+learning, ​​and
+https://github.com/search?q=user%3Arajpootmohan+learning ​are​ ​identical​ ​except​ ​for​ ​the​ ​URL​ ​encoding.
 
 #### Workaround​ ​for​ ​the​ ​issues:​​ 
 1. We​ ​can​ ​append​ ​an​ ​increasing​ ​sequence​ ​number​ ​to​ ​each​ ​input​ ​URL​ ​to​ ​make​ ​it​ ​unique​ ​and​ ​then​ ​generate a​ ​hash​ ​of​ ​it.​ ​We​ ​don’t​ ​need​ ​to​ ​store​ ​this​ ​sequence​ ​number​ ​in​ ​the​ ​databases,​ ​though.​ ​Possible​ ​problems​ ​with​ ​this​ ​approach​ ​could​ ​be how​ ​big​ ​this​ ​sequence​ ​number​ ​would​ ​be,​ ​can​ ​it​ ​overflow?​ ​Appending​ ​an​ ​increasing​ ​sequence​ ​number​ ​will​ ​impact​ ​the​ ​performance​ ​of the​ ​service​ ​too.
