@@ -124,15 +124,15 @@ We​ ​can​ ​use​ ​a​ ​relational​ ​database​ ​like​ ​
 We​ ​can​ ​store​ ​our ​​contents ​​in ​​a ​​block ​​storage ​​that ​​could​ ​be​ ​a ​​distributed ​​file​​ storage​ ​or ​​an ​​SQL-like​ ​database. Whenever​ ​we​ ​feel​ ​like​ ​hitting​ ​our​ ​full​ ​capacity​ ​on​ ​content​ ​storage,​ ​we​ ​can​ ​easily​ ​increase​ ​it​ ​by​ ​adding​ ​more​ ​servers.
 
 ## 9. Purging​ ​or​ ​DB​ ​Cleanup
-[link](https://github.com/rajpootmohan/learning/blob/master/designQuestions/url_shortening.md#9-purging-or-db-cleanup)
+[https://github.com/rajpootmohan/learning/blob/master/designQuestions/url_shortening.md#9-purging-or-db-cleanup](https://github.com/rajpootmohan/learning/blob/master/designQuestions/url_shortening.md#9-purging-or-db-cleanup)
 
 ## 10. ​Data​ ​Partitioning​ ​and​ ​Replication
-[link](https://github.com/rajpootmohan/learning/blob/master/designQuestions/url_shortening.md#6-data-partitioning-and-replication)
+[https://github.com/rajpootmohan/learning/blob/master/designQuestions/url_shortening.md#6-data-partitioning-and-replication](https://github.com/rajpootmohan/learning/blob/master/designQuestions/url_shortening.md#6-data-partitioning-and-replication)
 
 ## 11. Cache​ ​and​ ​Load​ ​Balancer
-[link](https://github.com/rajpootmohan/learning/blob/master/designQuestions/url_shortening.md#7-cache)
+[https://github.com/rajpootmohan/learning/blob/master/designQuestions/url_shortening.md#7-cache](https://github.com/rajpootmohan/learning/blob/master/designQuestions/url_shortening.md#7-cache)
 
 ## 12. Security​ ​and​ ​Permissions
-[link](https://github.com/rajpootmohan/learning/blob/master/designQuestions/url_shortening.md#10-security-and-permissions)
+[https://github.com/rajpootmohan/learning/blob/master/designQuestions/url_shortening.md#10-security-and-permissions](https://github.com/rajpootmohan/learning/blob/master/designQuestions/url_shortening.md#10-security-and-permissions)
 
 
