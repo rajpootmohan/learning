@@ -93,11 +93,11 @@ If we are using a simple hash-table, we can have a custom implementation for ‘
 ### How much memory would we need to store all of the user data?
 1. Let’s assume ‘UserID’ takes 8 bytes. Let’s also assume a 2 byte ‘Count’, which can count up to 65k, is sufficient for our use case. Although epoch time will need 4 bytes, we can choose to store only the minute and second part, which can fit into 2 bytes. Hence, we need a total of 12 bytes to store a user’s data:
 
- `8 + 2 + 2 = 12 bytes`
+	`8 + 2 + 2 = 12 bytes`
 
 2. Let’s assume our hash-table has an overhead of 20 bytes for each record. If we need to track one million users at any time, the total memory we would need would be 32MB:
 
- `(12 + 20) bytes * 1 million => 32MB`
+	`(12 + 20) bytes * 1 million => 32MB`
 
 ## 9. Sliding Window algorithm
 We can maintain a sliding window if we can keep track of each request per user. We can store the timestamp of each request in a Redis Sorted Set in our ‘value’ field of hash-table.
@@ -116,11 +116,11 @@ Let’s assume our rate limiter is allowing three requests per minute per user, 
 
 1. Let’s assume ‘UserID’ takes 8 bytes. Each epoch time will require 4 bytes. Let’s suppose we need a rate limiting of 500 requests per hour. Let’s assume 20 bytes overhead for hash-table and 20 bytes overhead for the Sorted Set. At max, we would need a total of 12KB to store one user’s data:
 
-  `8 + (4 + 20 (sorted set overhead)) * 500 + 20 (hash-table overhead) = 12KB`
+	`8 + (4 + 20 (sorted set overhead)) * 500 + 20 (hash-table overhead) = 12KB`
 
 2. If we need to track one million users at any time, total memory we would need would be 12GB:
 
-  `12KB * 1 million ~= 12GB`
+	`12KB * 1 million ~= 12GB`
 
 ## 10. Sliding Window with Counters
 What if we keep track of request counts for each user using multiple fixed time windows, e.g., 1/60th the size of our rate limit’s time window. For example, if we have an hourly rate limit we can keep a count for each minute and calculate the sum of all counters in the past hour when we receive a new request to calculate the throttling limit. This would reduce our memory footprint. Let’s take an example where we rate-limit at 500 requests per hour with an additional limit of 10 requests per minute. This means that when the sum of the counters with timestamps in the past hour exceeds the request threshold (500), Kristie has exceeded the rate limit. In addition to that, she can’t send more than ten requests per minute. This would be a reasonable and practical consideration, as none of the real users would send frequent requests. Even if they do, they will see success with retries since their limits get reset every minute.
