@@ -131,11 +131,11 @@ We can store our counters in a Redis Hash since it offers incredibly efficient s
 
 1. Let’s assume ‘UserID’ takes 8 bytes. Each epoch time will need 4 bytes, and the Counter would need 2 bytes. Let’s suppose we need a rate limiting of 500 requests per hour. Assume 20 bytes overhead for hash-table and 20 bytes for Redis hash. Since we’ll keep a count for each minute, at max, we would need 60 entries for each user. We would need a total of 1.6KB to store one user’s data:
   
-  `8 + (4 + 2 + 20 (Redis hash overhead)) * 60 + 20 (hash-table overhead) = 1.6KB`
+	`8 + (4 + 2 + 20 (Redis hash overhead)) * 60 + 20 (hash-table overhead) = 1.6KB`
 
 2. If we need to track one million users at any time, total memory we would need would be 1.6GB:
   
-  `1.6KB * 1 million ~= 1.6GB`
+	`1.6KB * 1 million ~= 1.6GB`
 
 ## 11. Data Sharding and Caching
 We can shard based on the ‘UserID’ to distribute the user’s data. For fault tolerance and replication we should use Consistent Hashing. If we want to have different throttling limits for different APIs, we can choose to shard per user per API.
