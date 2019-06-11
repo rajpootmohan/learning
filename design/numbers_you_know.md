@@ -1,7 +1,8 @@
------------------NUMBERS YOU KNOW -----------------------------------------------------
+# Numbers you know
 
-Latency Comparison Numbers
---------------------------
+## Latency Comparison Numbers
+
+```
 L1 cache reference                           0.5 ns
 Branch mispredict                            5   ns
 L2 cache reference                           7   ns                      14x L1 cache
@@ -17,9 +18,9 @@ Disk seek                           10,000,000   ns   10,000 us   10 ms  20x dat
 Read 1 MB sequentially from 1 Gbps  10,000,000   ns   10,000 us   10 ms  40x memory, 10X SSD
 Read 1 MB sequentially from disk    30,000,000   ns   30,000 us   30 ms 120x memory, 30X SSD
 Send packet CA->Netherlands->CA    150,000,000   ns  150,000 us  150 ms
+```
 
-
------------------ POIONTS TO CONSIDER -------------------------------------------------
+## Points to Consider 
 
 1. Writes are 40 times more expensive than reads.
 2. By using a cheap compression algorithm a lot (by a factor of 2) of network bandwidth can be saved.
