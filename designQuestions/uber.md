@@ -29,7 +29,9 @@ __How much memory we need for DriverLocationHT?__
 3. Old longitude (8 bytes)
 4. New latitude (8 bytes)
 5. New longitude (8 bytes) Total = 35 bytes
+
 If we have 1 million total drivers, we need the following memory (ignoring hash table overhead):
+
 `1 million * 35 bytes => 35 MB`
 
 __How much bandwidth will our service consume to receive location updates from all drivers?__
@@ -37,6 +39,7 @@ If we get DriverID and their location, it will be (3+16 => 19 bytes). If we rece
 
 __Do we need to distribute DriverLocationHT onto multiple servers?__
 We can distribute based on the DriverID to make the distribution completely random. Let’s call the machines holding DriverLocationHT the Driver Location server. Other than storing the driver’s location, each of these servers will do two things:
+
 1. As soon as the server receives an update for a driver’s location, they will broadcast that information to all the interested customers.
 2. The server needs to notify the respective QuadTree server to refresh the driver’s location. This can happen every 15 seconds.
 
@@ -45,12 +48,16 @@ We can have a Push Model where the server will push the positions to all the rel
 
 __How much memory will we need to store all these subscriptions?__
 we will have 1M daily active customers and 500K daily active drivers. On average let’s assume that five customers subscribe to one driver. Let’s assume we store all this information in a hash table so that we can update it efficiently. We need to store driver and customer IDs to maintain the subscriptions. Assuming we will need 3 bytes for DriverID and 8 bytes for CustomerID, we will need 21MB of memory.
+
 `(500K * 3) + (500K * 5 * 8 ) ~= 21 MB`
 
 __How much bandwidth will we need to broadcast the driver’s location to customers?__
 For every active driver, we have five subscribers, so the total subscribers we have:
+
 `5 * 500K => 2.5M`
+
 To all these customers we need to send DriverID (3 bytes) and their location (16 bytes) every second, so, we need the following bandwidth:
+
 `2.5M * 19 bytes => 47.5 MB/s`
 
 __How can we efficiently implement Notification service?__
