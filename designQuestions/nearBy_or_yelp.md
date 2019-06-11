@@ -62,7 +62,7 @@ __Should we keep our index in memory?__ Maintaining the index in memory will imp
 
 __How much memory will we need to store the index?__ Let’s assume our search radius is 10 miles; given that the total area of the earth is around 200 million square miles, we will have 20 million grids. We would need a four bytes number to uniquely identify each grid and, since LocationID is 8 bytes, we would need 4GB of memory (ignoring hash table overhead) to store the index.
 
-	`(4 * 20M) + (8 * 500M) ~= 4 GB`
+`(4 * 20M) + (8 * 500M) ~= 4 GB`
 
 ### C. Dynamic size grids
 Let’s assume we don’t want to have more than 500 places in a grid so that we can have a faster searching. So, whenever a grid reaches this limit, we break it down into four grids of equal size and distribute places among them. This means thickly populated areas like downtown San Francisco will have a lot of grids, and sparsely populated area like the Pacific Ocean will have large grids with places only around the coastal lines.
@@ -82,15 +82,15 @@ __What will be the search workflow?__ We will first find the node that contains 
 
 __How much memory will be needed to store the QuadTree?__ For each Place, if we cache only LocationID and Lat/Long, we would need 12GB to store all places.
 
-	`24 * 500M => 12 GB`
+`24 * 500M => 12 GB`
 
 Since each grid can have a maximum of 500 places, and we have 500M locations, how many total grids we will have?
 
-	`500M / 500 => 1M grids`
+`500M / 500 => 1M grids`
 
 Which means we will have 1M leaf nodes and they will be holding 12GB of location data. A QuadTree with 1M leaf nodes will have approximately 1/3rd internal nodes, and each internal node will have 4 pointers (for its children). If each pointer is 8 bytes, then the memory we need to store all internal nodes would be:
 
-	`1M * 1/3 * 4 * 8 = 10 MB`
+`1M * 1/3 * 4 * 8 = 10 MB`
 
 __How would we insert a new Place into our system?__ Whenever a new Place is added by a user, we need to insert it into the databases as well as in the QuadTree. If our tree resides on one server, it is easy to add a new Place, but if the QuadTree is distributed among different servers, first we need to find the grid/server of the new Place and then add it there.
 
