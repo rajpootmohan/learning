@@ -25,6 +25,3 @@ Asynchronous workflows help reduce request times for expensive operations that w
 
 ## Disadvantage
 - Use cases such as inexpensive calculations and realtime workflows might be better suited for synchronous operations, as introducing queues can add delays and complexity.
-
-
-

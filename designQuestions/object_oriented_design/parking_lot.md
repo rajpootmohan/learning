@@ -1,4 +1,5 @@
 # Design a parking lot
+[link](https://github.com/donnemartin/system-design-primer/blob/master/solutions/object_oriented_design/parking_lot/parking_lot.ipynb)
 
 ## Problem statment
 Design a parking slot.

@@ -18,3 +18,7 @@
 1. API and object-oriented design
 
 ## 4. Scale the design
+1. Load balancer
+2. Horizontal scaling
+3. Caching
+4. Database sharding
