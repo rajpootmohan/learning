@@ -19,3 +19,4 @@ With multiple copies of the same data, we are faced with options on how to synch
 - Data is replicated synchronously.
 - This approach is seen in file systems and RDBMSes.
 - Strong consistency works well in systems that need transactions.
+
